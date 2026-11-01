@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>pH Nhà Em — Bắp cải tím giải mã pH · KHTN 8</title>
+<meta name="description" content="Website dự án STEM KHTN 8 “pH Nhà Em” của lớp 8A4, Trường THCS Nguyễn An Khương: thông báo, ảnh hoạt động, bài tập, tài liệu và Trợ lý AI Bé pH.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🥬</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16202C; --ink-soft:#3F5266; --card:#FFFFFF; --tint:#F7F2FC; --line:#E6D9F3; --bg:#FFFBF0;
+    --c-red:#D7263D; --c-pink:#E8508C; --c-mauve:#B04FB0; --c-purple:#7B4FB8; --c-purple-dark:#55348A;
+    --c-blue:#4B5FC9; --c-teal:#2F9C9A; --c-green:#3DAA5C; --c-lime:#B8C934; --coral:#FF6B6B;
+    --radius:26px; --shadow:0 14px 28px rgba(31,92,134,.14);
+    --font-display:'Baloo 2', sans-serif; --font-body:'Be Vietnam Pro', sans-serif; --font-mono:'Roboto Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top:72px;}
+  body{ margin:0; font-family:var(--font-body); color:var(--ink);
+    background:
+      radial-gradient(circle at 8% 6%, rgba(232,80,140,.16), transparent 30%),
+      radial-gradient(circle at 92% 12%, rgba(123,79,184,.16), transparent 32%),
+      radial-gradient(circle at 12% 85%, rgba(61,170,92,.16), transparent 32%),
+      radial-gradient(circle at 90% 90%, rgba(75,95,201,.14), transparent 34%), var(--bg);
+    background-attachment:fixed; }
+  @media (prefers-reduced-motion: reduce){ *{ animation:none !important; transition:none !important; } html{scroll-behavior:auto;} }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 16px; }
+
+  /* ===== THANH ĐIỀU HƯỚNG ===== */
+  .topbar{ position:sticky; top:0; z-index:50; background:rgba(255,251,240,.88); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .topbar .wrap{ display:flex; align-items:center; gap:14px; height:60px; }
+  .brand{ font-family:var(--font-display); font-weight:800; font-size:21px; white-space:nowrap;
+    background:linear-gradient(92deg,var(--c-red),var(--c-purple) 50%,var(--c-green)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .nav{ display:flex; gap:4px; margin-left:auto; overflow-x:auto; scrollbar-width:none; }
+  .nav::-webkit-scrollbar{ display:none; }
+  .nav a{ font-family:var(--font-display); font-weight:700; font-size:14.5px; color:var(--ink-soft); padding:7px 12px; border-radius:14px; white-space:nowrap; }
+  .nav a:hover{ background:var(--tint); color:var(--c-purple-dark); }
+  .nav a.cta{ background:var(--c-purple); color:#fff; }
+  @media (max-width:720px){ .brand{ font-size:18px; } .nav a{ font-size:13.5px; padding:6px 9px; } }
+
+  /* ===== HERO ===== */
+  .hero{ text-align:center; padding:40px 12px 10px; }
+  .kicker{ font-size:14px; color:var(--ink-soft); margin:0 0 8px; }
+  .hero .pre{ font-family:var(--font-display); font-weight:700; letter-spacing:.32em; font-size:15px; color:var(--ink-soft); margin:0; }
+  .hero h1{ font-family:var(--font-display); font-weight:800; line-height:1.02; font-size:clamp(46px,9vw,80px); margin:2px 0 4px;
+    background:linear-gradient(92deg,var(--c-red),var(--c-pink) 22%,var(--c-purple) 45%,var(--c-blue) 62%,var(--c-green) 82%,var(--c-lime));
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero h2{ font-family:var(--font-display); font-weight:700; font-size:clamp(18px,2.8vw,25px); margin:0 0 14px; color:var(--c-purple); }
+  .hero p.lead{ max-width:660px; margin:0 auto; font-size:15.5px; line-height:1.75; color:var(--ink-soft); }
+  .ph-scale{ position:relative; max-width:640px; margin:30px auto 6px; }
+  .ph-bar{ height:26px; border-radius:20px; box-shadow:inset 0 2px 5px rgba(0,0,0,.15), var(--shadow);
+    background:linear-gradient(90deg,var(--c-red) 0%,var(--c-red) 12%,var(--c-pink) 25%,var(--c-mauve) 38%,var(--c-purple) 50%,var(--c-blue) 60%,var(--c-teal) 70%,var(--c-green) 80%,var(--c-lime) 95%); }
+  .ph-lb{ display:flex; justify-content:space-between; font-family:var(--font-mono); font-size:11.5px; color:var(--ink-soft); margin-top:6px; }
+  .slogan{ display:inline-block; margin-top:14px; font-size:13px; font-style:italic; color:var(--ink-soft); }
+  .hero-btns{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin-top:20px; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800; font-size:15px; color:#fff;
+    padding:12px 22px; border-radius:24px; background:linear-gradient(90deg,var(--c-pink),var(--c-purple) 55%,var(--c-blue)); box-shadow:var(--shadow); border:0; cursor:pointer; }
+  .btn.ghost{ background:#fff; color:var(--c-purple-dark); border:2px solid var(--c-purple); box-shadow:none; }
+
+  /* ===== CARD / SECTION ===== */
+  section.card{ background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:30px 26px 28px; margin:28px auto; border:1px solid #EFE2F5; }
+  .head{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:4px; }
+  .head .glyph{ font-size:26px; line-height:1; }
+  .head h3{ font-family:var(--font-display); font-weight:800; font-size:clamp(22px,3.2vw,29px); margin:0; line-height:1.15; }
+  .head .count{ font-family:var(--font-mono); font-size:12px; color:#fff; background:var(--c-purple); border-radius:10px; padding:2px 9px; }
+  .desc{ color:var(--ink-soft); font-size:14.5px; line-height:1.65; max-width:720px; margin:6px 0 20px; }
+  .empty{ background:var(--tint); border:2px dashed var(--line); border-radius:18px; padding:20px; text-align:center; color:var(--ink-soft); font-size:14px; }
+  .more-btn{ display:block; margin:16px auto 0; font-family:var(--font-display); font-weight:700; font-size:14px; color:var(--c-purple-dark);
+    background:#fff; border:2px solid var(--c-purple); border-radius:14px; padding:8px 18px; cursor:pointer; }
+  @media (max-width:520px){ section.card{ padding:24px 16px; } }
+
+  /* Thông báo */
+  .news{ display:flex; flex-direction:column; gap:12px; }
+  .news-item{ display:grid; grid-template-columns:auto minmax(0,1fr); gap:14px; background:#fff; border:2px solid var(--line); border-left:7px solid var(--c-purple); border-radius:18px; padding:14px 18px; }
+  .news-item.pin{ border-left-color:var(--c-red); background:#FFF8F9; }
+  .news-date{ font-family:var(--font-mono); font-size:12px; color:#fff; background:var(--c-purple); border-radius:12px; padding:6px 8px; text-align:center; line-height:1.25; min-width:58px; height:max-content; }
+  .news-item.pin .news-date{ background:var(--c-red); }
+  .news-date b{ display:block; font-size:20px; font-family:var(--font-display); }
+  .news-item h4{ font-family:var(--font-display); font-size:18px; margin:0 0 4px; }
+  .news-item h4 .tag{ font-family:var(--font-mono); font-size:10.5px; color:#fff; background:var(--c-red); border-radius:8px; padding:1px 7px; margin-left:6px; vertical-align:2px; }
+  .news-item p{ margin:0; font-size:14.2px; line-height:1.65; color:var(--ink); white-space:pre-line; overflow-wrap:anywhere; }
+  .news-item .lnk{ display:inline-block; margin-top:8px; font-family:var(--font-display); font-weight:700; font-size:13.5px; color:var(--c-purple); }
+
+  /* Kết quả */
+  .res-grid{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
+  @media (max-width:860px){ .res-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media (max-width:420px){ .res-grid{ grid-template-columns:1fr; } }
+  .res{ display:flex; flex-direction:column; gap:6px; background:#fff; border:2px solid var(--r); border-radius:20px; padding:16px; }
+  .res .big{ font-family:var(--font-display); font-weight:800; font-size:clamp(32px,4.4vw,40px); line-height:1; color:var(--r); }
+  .res .big small{ font-size:.5em; }
+  .res .was{ font-family:var(--font-mono); font-size:11.5px; color:var(--ink-soft); }
+  .res .was b{ color:#fff; background:var(--r); border-radius:8px; padding:1px 7px; margin-left:4px; }
+  .res .bar{ position:relative; height:10px; border-radius:6px; background:#EEE9F3; overflow:hidden; }
+  .res .bar i{ position:absolute; left:0; top:0; bottom:0; border-radius:6px; }
+  .res .bar i.b{ background:#B9B3C2; } .res .bar i.a{ background:var(--r); }
+  .res .what{ font-size:13px; line-height:1.5; }
+
+  /* 4 tình huống */
+  .cases{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
+  @media (max-width:900px){ .cases{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media (max-width:480px){ .cases{ grid-template-columns:1fr; } }
+  .case{ display:flex; flex-direction:column; gap:6px; border-radius:20px; padding:16px; background:#fff; border:2px solid var(--case); transition:transform .2s; }
+  .case:hover{ transform:translateY(-4px); }
+  .case .tag{ font-family:var(--font-mono); font-size:10.5px; font-weight:700; color:#fff; background:var(--case); align-self:flex-start; padding:3px 9px; border-radius:12px; }
+  .case h4{ font-family:var(--font-display); font-size:19px; margin:2px 0 0; }
+  .case p{ font-size:13px; color:var(--ink-soft); line-height:1.55; margin:0; }
+
+  /* Bài tập + tài liệu */
+  .list{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+  @media (max-width:720px){ .list{ grid-template-columns:1fr; } }
+  .item{ display:flex; gap:14px; align-items:flex-start; background:var(--tint); border:1.5px solid var(--line); border-radius:18px; padding:14px 16px; }
+  .item .ic{ flex:0 0 46px; height:46px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24px; background:#fff; box-shadow:0 4px 10px rgba(31,92,134,.10); }
+  .item .bd{ flex:1 1 auto; min-width:0; }
+  .item h4{ font-family:var(--font-display); font-size:16.5px; margin:0 0 3px; line-height:1.3; }
+  .item p{ font-size:13.2px; color:var(--ink-soft); line-height:1.55; margin:0 0 8px; overflow-wrap:anywhere; }
+  .item .meta{ display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
+  .chip{ font-family:var(--font-mono); font-size:11px; padding:2px 8px; border-radius:9px; background:#fff; border:1px solid var(--line); color:var(--ink-soft); }
+  .chip.due{ background:#FFF4F4; border-color:#F5C2C9; color:#9B1C2E; font-weight:700; }
+  .chip.over{ background:#EEE; color:#666; border-color:#DDD; }
+  .open{ font-family:var(--font-display); font-weight:700; font-size:13px; color:#fff; background:var(--c-purple); border-radius:11px; padding:5px 12px; }
+
+  /* Ảnh */
+  .gallery{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+  @media (max-width:860px){ .gallery{ grid-template-columns:repeat(3,minmax(0,1fr)); } }
+  @media (max-width:520px){ .gallery{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  .ph{ position:relative; border-radius:16px; overflow:hidden; aspect-ratio:4/3; background:var(--tint); cursor:zoom-in; border:0; padding:0; }
+  .ph img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .3s; }
+  .ph:hover img{ transform:scale(1.05); }
+  .ph span{ position:absolute; left:0; right:0; bottom:0; padding:18px 10px 8px; font-size:12.5px; font-weight:600; color:#fff; text-align:left;
+    background:linear-gradient(to top, rgba(0,0,0,.65), transparent); }
+  .lightbox{ position:fixed; inset:0; z-index:100; background:rgba(15,10,25,.88); display:none; align-items:center; justify-content:center; padding:20px; }
+  .lightbox.on{ display:flex; }
+  .lightbox figure{ margin:0; max-width:min(1000px,100%); text-align:center; }
+  .lightbox img{ max-width:100%; max-height:78vh; border-radius:12px; }
+  .lightbox figcaption{ color:#fff; margin-top:10px; font-size:14.5px; line-height:1.6; }
+  .lightbox figcaption b{ font-family:var(--font-display); font-size:17px; display:block; }
+  .lb-btn{ position:absolute; background:rgba(255,255,255,.15); color:#fff; border:0; width:46px; height:46px; border-radius:50%; font-size:22px; cursor:pointer; }
+  .lb-close{ top:16px; right:16px; } .lb-prev{ left:12px; top:50%; } .lb-next{ right:12px; top:50%; }
+
+  /* Trợ lý */
+  .ai{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+  @media (max-width:720px){ .ai{ grid-template-columns:1fr; } }
+  .ai-card{ border-radius:20px; padding:18px 20px; border:2px solid var(--line); background:linear-gradient(120deg,#EEF1FC,#F4ECFB 60%,#EEF8F1); }
+  .ai-card h4{ font-family:var(--font-display); font-size:20px; margin:0 0 4px; color:var(--c-purple-dark); }
+  .ai-card p{ font-size:13.8px; color:var(--ink-soft); line-height:1.6; margin:0 0 14px; }
+
+  [hidden]{ display:none !important; }
+  footer{ text-align:center; padding:10px 16px 40px; }
+  .stamp{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800; font-size:14px; color:#fff; padding:11px 22px; border-radius:24px;
+    background:linear-gradient(90deg,var(--c-red),var(--c-purple) 45%,var(--c-blue) 70%,var(--c-green)); box-shadow:var(--shadow); }
+  .credit{ font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); margin-top:12px; line-height:1.7; }
+  .updated{ font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); margin-top:4px; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top">🥬 pH Nhà Em</a>
+    <nav class="nav" aria-label="Điều hướng">
+      <a href="#thong-bao">Thông báo</a>
+      <a href="#bai-tap">Bài tập</a>
+      <a href="#anh">Ảnh</a>
+      <a href="#tai-lieu">Tài liệu</a>
+      <a href="#tro-ly">Trợ lý AI</a>
+      <a class="cta" href="https://sites.google.com/view/haltvstem8" target="_blank" rel="noopener">Website dự án ↗</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="top">
+  <div class="hero">
+    <p class="kicker">Khoa học tự nhiên 8 · Acid – Base – Thang pH – Oxide – Muối · Dự án STEM</p>
+    <p class="pre">WEBSITE</p>
+    <h1>pH NHÀ EM</h1>
+    <h2>🥬 Bắp cải tím giải mã pH</h2>
+    <p class="lead">Nhà em không có máy đo pH, nhưng trong bếp có bắp cải tím, trước nhà có giàn hoa đậu biếc. Lớp 8A4 đã tự chế tạo <b>Bộ kit thử pH tự nhiên</b>, thử 20 chất quen thuộc trong gia đình và chia sẻ kết quả tại đây.</p>
+    <div class="ph-scale" aria-label="Dãy màu dịch bắp cải tím theo pH">
+      <div class="ph-bar"></div>
+      <div class="ph-lb"><span>0 · acid</span><span>7 · trung tính</span><span>base · 14</span></div>
+    </div>
+    <span class="slogan">“Tự tay chế tạo – Tự tay kiểm chứng – Chia sẻ bằng công nghệ số – Kiểm chứng trước khi tin AI”</span>
+    <div class="hero-btns">
+      <a class="btn" href="#bai-tap">✍️ Bài tập của lớp</a>
+      <a class="btn ghost" href="#tro-ly">✨ Học cùng Bé pH</a>
+    </div>
+  </div>
+
+  <!-- THÔNG BÁO -->
+  <section class="card" id="thong-bao">
+    <div class="head"><span class="glyph">📢</span><h3>Thông báo</h3><span class="count" id="cntTB">0</span></div>
+    <p class="desc">Lịch học, nhiệm vụ và tin mới của dự án. Thông báo ghim luôn nằm trên cùng.</p>
+    <div class="news" id="listTB"></div>
+    <button class="more-btn" id="moreTB" hidden>Xem thêm thông báo</button>
+  </section>
+
+  <!-- KẾT QUẢ NỔI BẬT -->
+  <section class="card" style="border-top:7px solid var(--c-green)">
+    <div class="head"><span class="glyph">📊</span><h3>Kết quả nổi bật</h3></div>
+    <p class="desc">Lớp 8A4 · 35 học sinh · so sánh cuối Chương I (chưa áp dụng) và cuối Chương II (áp dụng dự án).</p>
+    <div class="res-grid">
+      <div class="res" style="--r:var(--c-green)"><span class="big">94,3%</span><span class="was">trước: 51,4%<b>▲ +42,9</b></span><span class="bar"><i class="a" style="width:94.3%"></i><i class="b" style="width:51.4%"></i></span><span class="what">học sinh đạt <b>mức Tốt</b> bài kiểm tra cuối chương; 100% đạt Khá trở lên</span></div>
+      <div class="res" style="--r:var(--c-blue)"><span class="big">90,6%</span><span class="was">trước: 20,8%<b>▲ +69,8</b></span><span class="bar"><i class="a" style="width:90.6%"></i><i class="b" style="width:20.8%"></i></span><span class="what">tự làm được hoặc làm tốt <b>14 tiêu chí năng lực số và AI</b></span></div>
+      <div class="res" style="--r:var(--c-purple)"><span class="big">82,9%</span><span class="was">trước: 8,6%<b>▲ +74,3</b></span><span class="bar"><i class="a" style="width:82.9%"></i><i class="b" style="width:8.6%"></i></span><span class="what">thường xuyên <b>kiểm chứng câu trả lời của AI</b></span></div>
+      <div class="res" style="--r:var(--c-pink)"><span class="big">7 <small>tình huống</small></span><span class="was">ghi cả lỗi, cách sửa, thử lại</span><span class="what"><b>kiểm thử Trợ lý AI “Bé pH”</b> trước khi cho học sinh dùng</span></div>
+    </div>
+  </section>
+
+  <!-- 4 TÌNH HUỐNG -->
+  <section class="card">
+    <div class="head"><span class="glyph">🏠</span><h3>4 tình huống trong ngôi nhà em</h3></div>
+    <p class="desc">Mỗi nhóm phụ trách một bài và một câu hỏi thật của gia đình, thử 5 chất an toàn và xếp thành dãy màu theo pH.</p>
+    <div class="cases">
+      <a class="case" style="--case:var(--c-red)" href="https://sites.google.com/view/haltvstem8/kiến-thức-bài-học" target="_blank" rel="noopener"><span class="tag">NHÓM 1 · BÀI 8 · ACID</span><h4>😁 Bảo vệ nụ cười</h4><p>Đồ uống nào trong nhà chua nhất, dễ làm mòn men răng?</p></a>
+      <a class="case" style="--case:var(--c-purple)" href="https://sites.google.com/view/haltvstem8/kiến-thức-bài-học" target="_blank" rel="noopener"><span class="tag">NHÓM 2 · BÀI 9 · BASE</span><h4>🧼 Đôi tay của mẹ</h4><p>Chất tẩy rửa nào có tính base mạnh, dễ làm khô da tay mẹ?</p></a>
+      <a class="case" style="--case:var(--c-teal)" href="https://sites.google.com/view/haltvstem8/kiến-thức-bài-học" target="_blank" rel="noopener"><span class="tag">NHÓM 3 · BÀI 10 · OXIDE</span><h4>🌱 Vườn rau của ông bà</h4><p>Vôi mạnh cỡ nào, bón bao nhiêu là vừa? CO₂ làm nước chua ra sao?</p></a>
+      <a class="case" style="--case:var(--c-green)" href="https://sites.google.com/view/haltvstem8/kiến-thức-bài-học" target="_blank" rel="noopener"><span class="tag">NHÓM 4 · BÀI 11 · MUỐI</span><h4>🧂 Gian bếp của mẹ</h4><p>Muối nào cũng trung tính? Vì sao baking soda dùng được khi bị kiến cắn?</p></a>
+    </div>
+  </section>
+
+  <!-- BÀI TẬP -->
+  <section class="card" id="bai-tap">
+    <div class="head"><span class="glyph">✍️</span><h3>Bài tập</h3><span class="count" id="cntBT">0</span></div>
+    <p class="desc">Bài tập, phiếu học tập và nhiệm vụ của lớp. Chú ý hạn nộp ghi trên từng bài.</p>
+    <div class="list" id="listBT"></div>
+  </section>
+
+  <!-- ẢNH -->
+  <section class="card" id="anh">
+    <div class="head"><span class="glyph">📸</span><h3>Ảnh hoạt động</h3><span class="count" id="cntAnh">0</span></div>
+    <p class="desc">Bộ kit, dãy màu pH và các hoạt động của lớp. Bấm vào ảnh để xem lớn.</p>
+    <div class="gallery" id="listAnh"></div>
+    <button class="more-btn" id="moreAnh" hidden>Xem thêm ảnh</button>
+  </section>
+
+  <!-- TÀI LIỆU -->
+  <section class="card" id="tai-lieu">
+    <div class="head"><span class="glyph">📚</span><h3>Tài liệu</h3><span class="count" id="cntTL">0</span></div>
+    <p class="desc">Tài liệu học tập, hướng dẫn thí nghiệm và minh chứng của dự án.</p>
+    <div class="list" id="listTL"></div>
+  </section>
+
+  <!-- TRỢ LÝ -->
+  <section class="card" id="tro-ly">
+    <div class="head"><span class="glyph">🤖</span><h3>Hai trợ lý của lớp</h3></div>
+    <p class="desc">Nguyên tắc chung: <b>AI nói, em kiểm chứng</b>. Không gửi họ tên, địa chỉ, ảnh có mặt người cho AI.</p>
+    <div class="ai">
+      <div class="ai-card"><h4>✨ Trợ lý AI “Bé pH”</h4><p>Trợ lý AI do cô tạo trên Gemini Gem, có 5 chế độ: Thám tử màu, Bài toán xanh, Đúng hay sai?, Đố vui pH, Hỏi đáp nhà em. Bé pH không làm bài hộ, mà đưa ra nhận định để em kiểm chứng bằng bộ kit.</p>
+        <a class="btn" href="https://gemini.google.com/gem/1G2BLDQJOIPfFr7lxRxok7tkje20A_G3-?usp=sharing" target="_blank" rel="noopener">💬 Mở Bé pH</a></div>
+      <div class="ai-card"><h4>💡 Trợ lý pH Nhà Em</h4><p>Trợ lý hỏi đáp theo kịch bản do Nhóm 4 viết, trả lời theo 4 khu vực: Đồ uống – Chất tẩy rửa – Vườn rau – Gian bếp. Không cần tài khoản.</p>
+        <a class="btn ghost" href="https://sites.google.com/view/haltvstem8/hỗ-trợ-học-sinh" target="_blank" rel="noopener">Mở trang Hỗ trợ học sinh ↗</a></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="stamp">🥬 WEBSITE pH NHÀ EM · DỰ ÁN STEM KHTN 8</div>
+  <div class="credit">Lớp thực hiện: 8A4 · Giáo viên phụ trách: Lê Thị Việt Hà · Trường THCS Nguyễn An Khương · Năm học 2026–2027</div>
+  <div class="updated" id="updated"></div>
+</footer>
+
+<div class="lightbox" id="lb" role="dialog" aria-modal="true" aria-label="Xem ảnh">
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Đóng">✕</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Ảnh trước">‹</button>
+  <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Ảnh sau">›</button>
+</div>
+
+<script>
+(function(){
+  var DATA_URL = 'data/content.json';
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function safeUrl(u){ u = String(u || '').trim(); return /^(https?:\/\/|uploads\/|\.\/uploads\/|data\/)/i.test(u) ? u : ''; }
+  function byDateDesc(a, b){ return String(b.ngay || '').localeCompare(String(a.ngay || '')); }
+  function fmtDate(d){ if(!d) return ''; var p = String(d).slice(0,10).split('-'); return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : d; }
+  function setCount(id, n){ document.getElementById(id).textContent = n; }
+  var ICON = { pdf:'📕', doc:'📘', docx:'📘', ppt:'📙', pptx:'📙', xls:'📗', xlsx:'📗', video:'🎬', mp4:'🎬', link:'🔗', form:'📝', anh:'🖼️', jpg:'🖼️', png:'🖼️', zip:'🗜️' };
+  function kindOf(it){
+    if (it.loai) return String(it.loai).toLowerCase();
+    var u = String(it.url || '').toLowerCase();
+    if (/forms\.gle|docs\.google\.com\/forms/.test(u)) return 'form';
+    var m = u.split('?')[0].match(/\.([a-z0-9]{2,4})$/); return m ? m[1] : 'link';
+  }
+
+  function renderTB(list){
+    var box = document.getElementById('listTB'), more = document.getElementById('moreTB');
+    list = list.slice().sort(function(a,b){ return (b.ghim?1:0) - (a.ghim?1:0) || byDateDesc(a,b); });
+    setCount('cntTB', list.length);
+    if (!list.length){ box.innerHTML = '<div class="empty">Chưa có thông báo mới.</div>'; return; }
+    var LIMIT = 4, shown = LIMIT;
+    function draw(){
+      box.innerHTML = list.slice(0, shown).map(function(t){
+        var p = String(t.ngay || '').slice(0,10).split('-');
+        var link = safeUrl(t.url);
+        return '<article class="news-item' + (t.ghim ? ' pin' : '') + '">' +
+          '<div class="news-date"><b>' + esc(p[2] || '') + '</b>' + esc((p[1] || '') + '/' + (p[0] || '')) + '</div>' +
+          '<div><h4>' + esc(t.tieu_de) + (t.ghim ? '<span class="tag">GHIM</span>' : '') + '</h4>' +
+          '<p>' + esc(t.noi_dung) + '</p>' +
+          (link ? '<a class="lnk" href="' + esc(link) + '" target="_blank" rel="noopener">Xem chi tiết →</a>' : '') + '</div></article>';
+      }).join('');
+      more.hidden = shown >= list.length;
+    }
+    more.onclick = function(){ shown += LIMIT; draw(); };
+    draw();
+  }
+
+  function renderBT(list){
+    var box = document.getElementById('listBT'); list = list.slice().sort(byDateDesc);
+    setCount('cntBT', list.length);
+    if (!list.length){ box.innerHTML = '<div class="empty">Chưa có bài tập.</div>'; return; }
+    var today = new Date().toISOString().slice(0,10);
+    box.innerHTML = list.map(function(b){
+      var link = safeUrl(b.url), k = kindOf(b);
+      var due = b.han ? '<span class="chip ' + (b.han < today ? 'over' : 'due') + '">' + (b.han < today ? 'Đã hết hạn ' : 'Hạn nộp ') + esc(fmtDate(b.han)) + '</span>' : '';
+      return '<div class="item"><div class="ic">' + (k === 'form' ? '📝' : (ICON[k] || '✍️')) + '</div><div class="bd">' +
+        '<h4>' + esc(b.tieu_de) + '</h4>' + (b.mo_ta ? '<p>' + esc(b.mo_ta) + '</p>' : '') +
+        '<div class="meta">' + due + (b.ngay ? '<span class="chip">Đăng ' + esc(fmtDate(b.ngay)) + '</span>' : '') +
+        (link ? '<a class="open" href="' + esc(link) + '" target="_blank" rel="noopener">Làm bài →</a>' : '') + '</div></div></div>';
+    }).join('');
+  }
+
+  function renderTL(list){
+    var box = document.getElementById('listTL'); list = list.slice().sort(byDateDesc);
+    setCount('cntTL', list.length);
+    if (!list.length){ box.innerHTML = '<div class="empty">Chưa có tài liệu.</div>'; return; }
+    box.innerHTML = list.map(function(t){
+      var link = safeUrl(t.url), k = kindOf(t);
+      return '<div class="item"><div class="ic">' + (ICON[k] || '📄') + '</div><div class="bd">' +
+        '<h4>' + esc(t.tieu_de) + '</h4>' + (t.mo_ta ? '<p>' + esc(t.mo_ta) + '</p>' : '') +
+        '<div class="meta"><span class="chip">' + esc(k.toUpperCase()) + '</span>' + (t.ngay ? '<span class="chip">' + esc(fmtDate(t.ngay)) + '</span>' : '') +
+        (link ? '<a class="open" href="' + esc(link) + '" target="_blank" rel="noopener">Mở tài liệu →</a>' : '') + '</div></div></div>';
+    }).join('');
+  }
+
+  var photos = [], cur = 0;
+  function renderAnh(list){
+    var box = document.getElementById('listAnh'), more = document.getElementById('moreAnh');
+    photos = list.filter(function(a){ return safeUrl(a.src); }).sort(byDateDesc);
+    setCount('cntAnh', photos.length);
+    if (!photos.length){ box.innerHTML = '<div class="empty" style="grid-column:1/-1">Chưa có ảnh.</div>'; return; }
+    var LIMIT = 8, shown = LIMIT;
+    function draw(){
+      box.innerHTML = photos.slice(0, shown).map(function(a, i){
+        return '<button class="ph" data-i="' + i + '" aria-label="Xem ảnh: ' + esc(a.tieu_de) + '"><img loading="lazy" src="' + esc(safeUrl(a.src)) + '" alt="' + esc(a.tieu_de) + '"><span>' + esc(a.tieu_de) + '</span></button>';
+      }).join('');
+      more.hidden = shown >= photos.length;
+    }
+    more.onclick = function(){ shown += LIMIT; draw(); };
+    box.onclick = function(e){ var b = e.target.closest('.ph'); if (b) open(+b.getAttribute('data-i')); };
+    draw();
+  }
+  var lb = document.getElementById('lb');
+  function show(){ var a = photos[cur]; document.getElementById('lbImg').src = safeUrl(a.src); document.getElementById('lbImg').alt = a.tieu_de || '';
+    document.getElementById('lbCap').innerHTML = '<b>' + esc(a.tieu_de) + '</b>' + esc(a.mo_ta || ''); }
+  function open(i){ cur = i; show(); lb.classList.add('on'); }
+  function close(){ lb.classList.remove('on'); }
+  document.getElementById('lbClose').onclick = close;
+  document.getElementById('lbPrev').onclick = function(){ cur = (cur - 1 + photos.length) % photos.length; show(); };
+  document.getElementById('lbNext').onclick = function(){ cur = (cur + 1) % photos.length; show(); };
+  lb.addEventListener('click', function(e){ if (e.target === lb) close(); });
+  document.addEventListener('keydown', function(e){ if (!lb.classList.contains('on')) return;
+    if (e.key === 'Escape') close(); if (e.key === 'ArrowLeft') document.getElementById('lbPrev').click(); if (e.key === 'ArrowRight') document.getElementById('lbNext').click(); });
+
+  fetch(DATA_URL + '?t=' + Date.now(), { cache:'no-store' })
+    .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(d){
+      renderTB(d.thong_bao || []); renderBT(d.bai_tap || []); renderAnh(d.anh || []); renderTL(d.tai_lieu || []);
+      if (d.cap_nhat){ var t = new Date(d.cap_nhat); if (!isNaN(t)) document.getElementById('updated').textContent = 'Cập nhật lần cuối: ' + t.toLocaleString('vi-VN'); }
+    })
+    .catch(function(){
+      ['listTB','listBT','listTL'].forEach(function(id){ document.getElementById(id).innerHTML = '<div class="empty">Chưa tải được nội dung. Vui lòng tải lại trang.</div>'; });
+      document.getElementById('listAnh').innerHTML = '<div class="empty" style="grid-column:1/-1">Chưa tải được ảnh.</div>';
+    });
+})();
+</script>
+</body>
+</html>
