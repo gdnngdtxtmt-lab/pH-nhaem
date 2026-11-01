@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bài tập | pH Nhà Em — KHTN 8</title>
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16202C; --ink-soft:#3F5266; --card:#FFFFFF; --tint:#F7F2FC; --line:#E6D9F3;
+    --c-red:#D7263D; --c-pink:#E8508C; --c-mauve:#B04FB0; --c-purple:#7B4FB8;
+    --c-blue:#4B5FC9; --c-teal:#2F9C9A; --c-green:#3DAA5C; --c-lime:#B8C934;
+    --radius:26px;
+    --shadow: 0 14px 28px rgba(31,92,134,.14);
+    --font-display:'Baloo 2', sans-serif; --font-body:'Be Vietnam Pro', sans-serif; --font-mono:'Roboto Mono', monospace;
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--font-body); color:var(--ink);
+    background:
+      radial-gradient(circle at 8% 6%, rgba(232,80,140,.18), transparent 30%),
+      radial-gradient(circle at 92% 12%, rgba(123,79,184,.18), transparent 32%),
+      radial-gradient(circle at 12% 85%, rgba(61,170,92,.18), transparent 32%),
+      radial-gradient(circle at 90% 90%, rgba(75,95,201,.16), transparent 34%),
+      #FFFBF0;
+    padding:30px 12px 60px;
+  }
+  .wrap{max-width:1060px; margin:0 auto;}
+
+  .page-title{ text-align:center; margin-bottom:14px; }
+  .page-title .badge{ font-family:var(--font-mono); font-size:12px; letter-spacing:1.2px; color:var(--c-purple);
+    background:#fff; border:2px solid var(--c-purple); display:inline-block; padding:5px 14px; border-radius:20px; box-shadow:var(--shadow); }
+  .page-title h1{ font-family:var(--font-display); font-weight:800; font-size:clamp(32px,5.6vw,50px); margin:12px 0 4px;
+    background: linear-gradient(92deg, var(--c-red), var(--c-pink) 22%, var(--c-purple) 45%, var(--c-blue) 62%, var(--c-green) 82%, var(--c-lime));
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .page-title h1 .h1-emo{ color:#000; -webkit-text-fill-color:initial; background:none; }
+  .page-title p{ color:var(--ink-soft); font-size:14.5px; max-width:600px; margin:0 auto 10px; line-height:1.6; }
+
+  .score{ position:sticky; top:8px; z-index:5; display:flex; align-items:center; gap:14px; flex-wrap:wrap; background:#fff; border-radius:18px;
+    box-shadow:var(--shadow); padding:10px 16px; margin:0 auto 22px; border:1px solid #EFE2F5; }
+  .score b{ font-family:var(--font-display); font-size:16px; }
+  .score .bar{ flex:1 1 160px; height:10px; border-radius:8px; background:#E9E1F2; overflow:hidden; }
+  .score .fill{ height:100%; width:0; border-radius:8px; background:linear-gradient(90deg, var(--c-red), var(--c-purple), var(--c-green)); transition:width .3s ease; }
+  .score button{ font-family:var(--font-display); font-weight:700; font-size:13px; border:2px solid var(--c-purple); color:var(--c-purple); background:#fff; border-radius:12px; padding:5px 12px; cursor:pointer; }
+
+  .card{ background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:26px 24px 20px; margin:0 auto 24px; border:1px solid #EFE2F5; border-top:8px solid var(--g); }
+  .sec-tag{ font-family:var(--font-mono); font-size:11.5px; font-weight:700; color:#fff; background:var(--g); display:inline-block; padding:3px 12px; border-radius:12px; letter-spacing:1px; }
+  .card h3{ font-family:var(--font-display); font-weight:800; font-size:clamp(21px,3vw,27px); margin:6px 0 14px; line-height:1.2; }
+
+  .q{ background:var(--tint); border-radius:16px; padding:14px 16px; margin-bottom:14px; }
+  .q .qt{ font-weight:700; font-size:14.5px; line-height:1.5; margin-bottom:10px; }
+  .q .qt span{ font-family:var(--font-display); color:var(--g); margin-right:4px; }
+  .opts{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+  @media (max-width:600px){ .opts{ grid-template-columns:1fr; } }
+  .opt{ font-family:var(--font-body); font-size:14px; text-align:left; background:#fff; border:2px solid var(--line); border-radius:12px; padding:9px 12px; cursor:pointer; color:var(--ink); line-height:1.4; }
+  .opt:hover{ border-color:var(--g); }
+  .opt.right{ background:#EAF7EE; border-color:var(--c-green); font-weight:600; }
+  .opt.wrong{ background:#FDECEE; border-color:var(--c-red); }
+  .q.done .opt{ cursor:default; }
+  .fb{ display:none; margin-top:10px; padding:9px 12px; border-radius:10px; font-size:13.5px; line-height:1.55; background:#fff; border-left:5px solid var(--c-green); }
+  .fb.bad{ border-left-color:var(--c-red); }
+  .fb.show{ display:block; }
+  textarea{ width:100%; font-family:var(--font-body); font-size:14px; border:2px solid var(--line); border-radius:12px; padding:10px 12px; min-height:70px; resize:vertical; background:#fff; }
+  .btn{ font-family:var(--font-display); font-weight:700; font-size:13.5px; cursor:pointer; background:var(--g); color:#fff; border:none; border-radius:12px; padding:8px 16px; margin-top:8px; }
+
+  footer{ text-align:center; margin-top:10px; }
+  .stamp{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800; font-size:14px;
+    color:#fff; padding:11px 22px; border-radius:24px; background: linear-gradient(90deg, var(--c-red), var(--c-purple) 45%, var(--c-blue) 70%, var(--c-green)); box-shadow:var(--shadow); }
+  .credit{ font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); margin-top:12px; line-height:1.7; }
+  @media (max-width:520px){ .card{ padding:20px 14px 14px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-title">
+    <span class="badge">KHTN 8 · CHƯƠNG II · BÀI TẬP</span>
+    <h1><span class="h1-emo">📝</span> Bài tập</h1>
+    <p>17 câu luyện tập: 4 phần theo bài và 1 phần <b>Bài toán xanh</b>. Bấm chọn đáp án để xem ngay đúng sai và lời giải thích. Không cần in giấy.</p>
+  </div>
+
+  <div class="score"><b id="scoreText">Đúng 0 / 11 câu trắc nghiệm</b><div class="bar"><div class="fill" id="scoreFill"></div></div><button type="button" id="resetBtn">↺ Làm lại</button></div>
+
+  <div id="quiz"></div>
+
+  <footer>
+    <div class="stamp">🥬 WEBSITE pH NHÀ EM · SÁNG KIẾN KHTN 8 · AI &amp; HÓA HỌC XANH</div>
+    <div class="credit">Tác giả sáng kiến: GV Lê Thị Việt Hà · Đối tượng: học sinh lớp 8 · Trường THCS Nguyễn An Khương · Năm học 2026–2027</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  // a: vị trí đáp án đúng (0 = A). Câu có essay: tự luận, bấm để xem lời giải.
+  var SECTIONS = [
+    { tag:"BÀI 8 · ACID · NHÓM 1", title:"🦷 Acid", color:"var(--c-red)", qs:[
+      { t:"Dung dịch có pH = 3 có môi trường", o:["Base","Acid","Trung tính","Không xác định"], a:1,
+        e:"pH < 7 là môi trường acid; pH càng nhỏ tính acid càng mạnh." },
+      { t:"Men răng bắt đầu bị hòa tan khi tiếp xúc lâu với đồ uống có pH", o:["Dưới 5,5","Bằng 7","Từ 8 đến 9","Trên 12"], a:0,
+        e:"Dưới khoảng 5,5, acid bắt đầu hòa tan men răng. Nước ngọt có gas (pH ≈ 3) nằm trong vùng này." },
+      { t:"Vì sao không nên đánh răng ngay sau khi uống nước cam?", o:["Kem đánh răng phản ứng với nước cam tạo chất độc","Acid làm men răng mềm tạm thời, chải ngay sẽ làm mòn men","Nước cam làm kem đánh răng mất tác dụng","Vì nước cam có tính base"], a:1,
+        e:"Nên súc miệng bằng nước lọc và chờ khoảng 30 phút cho men răng cứng lại rồi mới đánh răng." }
+    ]},
+    { tag:"BÀI 9 · BASE & THANG pH · NHÓM 2", title:"🧤 Base và thang pH", color:"var(--c-purple)", qs:[
+      { t:"Nhỏ dịch bắp cải tím vào nước xà phòng, màu dung dịch chuyển sang", o:["Đỏ","Hồng","Xanh lục","Tím"], a:2,
+        e:"Xà phòng có tính base (pH ≈ 9 – 10) nên dịch bắp cải tím chuyển xanh ngọc đến xanh lục." },
+      { t:"Chất nào khi tan trong nước làm quỳ tím hóa xanh?", o:["HCl","NaOH","NaCl","H₂SO₄"], a:1,
+        e:"NaOH là base tan (kiềm), tạo ion OH⁻ nên làm quỳ tím hóa xanh." },
+      { t:"Một chatbot trả lời: “Bột giặt có pH = 7, không ảnh hưởng da tay”. Em nên", o:["Chia sẻ ngay cho người thân","Đối chiếu với nguồn tin cậy và kết quả thử bằng kit, không lan truyền khi chưa kiểm chứng","Đăng lên website","Hỏi lại đến khi AI đồng ý với em"], a:1,
+        e:"Bột giặt có tính base: dịch bắp cải tím chuyển xanh lá, pH tham khảo ≈ 10 – 11. AI có thể sai, cần kiểm chứng trước khi dùng." }
+    ]},
+    { tag:"BÀI 10 · OXIDE · NHÓM 3", title:"🌱 Oxide", color:"var(--c-teal)", qs:[
+      { t:"Bón vôi sống (CaO) giúp khử chua đất vì", o:["CaO là muối","CaO là oxide base, tác dụng với nước tạo base trung hòa acid trong đất","CaO là acid","CaO là oxide trung tính"], a:1,
+        e:"CaO + H₂O → Ca(OH)₂; Ca(OH)₂ là base trung hòa acid trong đất chua." },
+      { t:"Thổi hơi thở vào ly nước vôi trong có dịch bắp cải tím, màu dung dịch chuyển dần từ xanh về tím vì", o:["Hơi thở có nhiều O₂ làm mất màu","CO₂ trong hơi thở là oxide acid, làm giảm tính base của nước vôi","Nước vôi bị loãng do hơi nước","Dịch bắp cải tím bị hỏng"], a:1,
+        e:"CO₂ (oxide acid) tác dụng với Ca(OH)₂ tạo CaCO₃ làm nước vẩn đục; tính base giảm nên màu về tím." },
+      { essay:true, t:"Đất vườn nhà bạn Bình có pH = 4,5. Em hãy nhận xét và đề xuất hướng xử lí.",
+        e:"pH = 4,5 < 7 nên đất chua, không thuận lợi cho đa số rau (thích hợp pH 6 – 7). Hướng xử lí: bón vôi vừa đủ (CaO là oxide base, tạo Ca(OH)₂ trung hòa acid), bổ sung phân hữu cơ, hạn chế phân gây chua và thử lại pH đất bằng kit sau một thời gian." }
+    ]},
+    { tag:"BÀI 11 · MUỐI · NHÓM 4", title:"🍳 Muối", color:"var(--c-green)", qs:[
+      { t:"Baking soda (NaHCO₃) dùng để chấm vết kiến cắn thuộc loại hợp chất nào?", o:["Acid","Base","Oxide","Muối"], a:3,
+        e:"NaHCO₃ gồm ion kim loại Na⁺ và gốc acid HCO₃⁻ nên là muối; dung dịch của nó có tính base nhẹ (pH ≈ 8,3)." },
+      { t:"Thử bằng dịch bắp cải tím, muối ăn, phèn chua, baking soda lần lượt cho màu", o:["Tím – hồng – xanh dương","Hồng – tím – xanh dương","Tím – tím – tím","Xanh dương – hồng – tím"], a:0,
+        e:"Muối ăn trung tính (tím), phèn chua cho môi trường acid nhẹ (hồng), baking soda cho môi trường base nhẹ (xanh dương). Không phải muối nào cũng trung tính." },
+      { t:"Nhỏ giấm vào ly baking soda thấy sủi bọt. Khí thoát ra là", o:["O₂","H₂","CO₂","N₂"], a:2,
+        e:"NaHCO₃ + CH₃COOH → CH₃COONa + CO₂ + H₂O. Chỉ làm trong ly hở, không đậy nắp kín." }
+    ]},
+    { tag:"BÀI TOÁN XANH · LIÊN HỆ MÔI TRƯỜNG", title:"🌿 Bài toán xanh", color:"var(--c-lime)", qs:[
+      { t:"Nước mưa bình thường có pH khoảng 5,6. Mưa acid là mưa có pH", o:["Lớn hơn 7","Bằng 7","Nhỏ hơn 5,6","Đúng bằng 5,6"], a:2,
+        e:"Khí SO₂, NO₂ từ đốt than, xăng dầu tan vào nước mưa tạo acid, làm pH của mưa thấp hơn 5,6." },
+      { t:"Đốt than đá có lẫn sulfur thải ra khí nào là nguyên nhân chính gây mưa acid?", o:["O₂","SO₂","N₂","H₂"], a:1,
+        e:"S + O₂ → SO₂. SO₂ là oxide acid, tan trong nước mưa làm mưa chua hơn." },
+      { t:"Đốt cháy hoàn toàn 1,2 kg than (coi là carbon) thải ra bao nhiêu kg CO₂? (C = 12, O = 16)", o:["1,2 kg","2,4 kg","3,2 kg","4,4 kg"], a:3,
+        e:"C + O₂ → CO₂. n(C) = 1200 : 12 = 100 mol → m(CO₂) = 100 × 44 = 4400 g = 4,4 kg. Khối lượng CO₂ lớn hơn than vì có thêm oxygen từ không khí." },
+      { t:"Phần trăm khối lượng nitrogen trong phân urea (NH₂)₂CO là (H = 1, C = 12, N = 14, O = 16)", o:["23,3%","28,0%","46,7%","60,0%"], a:2,
+        e:"M = 60 g/mol; %N = 28 : 60 × 100% ≈ 46,7%. Biết hàm lượng N giúp bón đúng liều, tránh thừa phân gây ô nhiễm nguồn nước." },
+      { essay:true, t:"Nêu 2 việc gia đình em có thể làm để giảm ô nhiễm khi dùng chất tẩy rửa hoặc phân bón.",
+        e:"Gợi ý: đong chất tẩy rửa đúng liều trên bao bì; dùng baking soda + giấm cho việc làm sạch nhẹ; thử nước đất trước khi bón vôi; bón phân đúng loại, đúng liều, đúng lúc; không đổ hóa chất thừa xuống kênh rạch." }
+    ]}
+  ];
+
+  var total = 0, answered = {}, correct = 0;
+  var html = '', n = 0;
+  SECTIONS.forEach(function(s){
+    html += '<section class="card" style="--g:'+s.color+'"><span class="sec-tag">'+s.tag+'</span><h3>'+s.title+'</h3>';
+    s.qs.forEach(function(q){
+      n++; var id = 'q'+n;
+      html += '<div class="q" id="'+id+'"><div class="qt"><span>Câu '+n+'.</span>'+q.t+'</div>';
+      if(q.essay){
+        html += '<textarea placeholder="Em viết câu trả lời vào đây..."></textarea><button class="btn" type="button" data-essay="'+id+'">Xem lời giải</button>';
+      } else {
+        total++;
+        html += '<div class="opts">'+q.o.map(function(o,i){ return '<button type="button" class="opt" data-q="'+id+'" data-i="'+i+'">'+'ABCD'[i]+'. '+o+'</button>'; }).join('')+'</div>';
+      }
+      html += '<div class="fb"></div></div>';
+      q.id = id;
+    });
+    html += '</section>';
+  });
+  document.getElementById('quiz').innerHTML = html;
+
+  var byId = {};
+  SECTIONS.forEach(function(s){ s.qs.forEach(function(q){ byId[q.id] = q; }); });
+
+  function updateScore(){
+    document.getElementById('scoreText').textContent = 'Đúng ' + correct + ' / ' + total + ' câu trắc nghiệm';
+    document.getElementById('scoreFill').style.width = (correct/total*100) + '%';
+  }
+
+  document.getElementById('quiz').addEventListener('click', function(ev){
+    var b = ev.target.closest('button'); if(!b) return;
+    if(b.dataset.essay){
+      var box = document.getElementById(b.dataset.essay), fb = box.querySelector('.fb');
+      if(!box.querySelector('textarea').value.trim()){ fb.className = 'fb bad show'; fb.innerHTML = 'Em viết câu trả lời của mình trước rồi mới xem lời giải nhé.'; return; }
+      fb.className = 'fb show'; fb.innerHTML = '<b>Lời giải gợi ý:</b> ' + byId[b.dataset.essay].e; return;
+    }
+    var qid = b.dataset.q, q = byId[qid], box = document.getElementById(qid);
+    if(answered[qid]) return;
+    answered[qid] = true; box.classList.add('done');
+    var i = +b.dataset.i, ok = i === q.a, btns = box.querySelectorAll('.opt');
+    btns[q.a].classList.add('right'); if(!ok) b.classList.add('wrong');
+    if(ok) correct++;
+    var fb = box.querySelector('.fb');
+    fb.className = 'fb show' + (ok ? '' : ' bad');
+    fb.innerHTML = (ok ? '<b>✅ Chính xác!</b> ' : '<b>❌ Chưa đúng.</b> Đáp án: ' + 'ABCD'[q.a] + '. ') + q.e;
+    updateScore();
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    answered = {}; correct = 0;
+    Array.prototype.forEach.call(document.querySelectorAll('.q'), function(box){
+      box.classList.remove('done');
+      Array.prototype.forEach.call(box.querySelectorAll('.opt'), function(o){ o.classList.remove('right','wrong'); });
+      var fb = box.querySelector('.fb'); fb.className = 'fb'; fb.innerHTML = '';
+      var ta = box.querySelector('textarea'); if(ta) ta.value = '';
+    });
+    updateScore(); window.scrollTo(0,0);
+  });
+  updateScore();
+})();
+</script>
+</body>
+</html>

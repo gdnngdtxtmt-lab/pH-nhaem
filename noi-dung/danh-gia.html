@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đánh giá | pH Nhà Em — KHTN 8</title>
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16202C; --ink-soft:#3F5266; --card:#FFFFFF; --tint:#F7F2FC; --line:#E6D9F3;
+    --c-red:#D7263D; --c-pink:#E8508C; --c-mauve:#B04FB0; --c-purple:#7B4FB8;
+    --c-blue:#4B5FC9; --c-teal:#2F9C9A; --c-green:#3DAA5C; --c-lime:#B8C934;
+    --radius:26px;
+    --shadow: 0 14px 28px rgba(31,92,134,.14);
+    --font-display:'Baloo 2', sans-serif; --font-body:'Be Vietnam Pro', sans-serif; --font-mono:'Roboto Mono', monospace;
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--font-body); color:var(--ink);
+    background:
+      radial-gradient(circle at 8% 6%, rgba(232,80,140,.18), transparent 30%),
+      radial-gradient(circle at 92% 12%, rgba(123,79,184,.18), transparent 32%),
+      radial-gradient(circle at 12% 85%, rgba(61,170,92,.18), transparent 32%),
+      radial-gradient(circle at 90% 90%, rgba(75,95,201,.16), transparent 34%),
+      #FFFBF0;
+    padding:30px 12px 60px;
+  }
+  .wrap{max-width:1060px; margin:0 auto;}
+
+  .page-title{ text-align:center; margin-bottom:14px; }
+  .page-title .badge{ font-family:var(--font-mono); font-size:12px; letter-spacing:1.2px; color:var(--c-purple);
+    background:#fff; border:2px solid var(--c-purple); display:inline-block; padding:5px 14px; border-radius:20px; box-shadow:var(--shadow); }
+  .page-title h1{ font-family:var(--font-display); font-weight:800; font-size:clamp(32px,5.6vw,50px); margin:12px 0 4px;
+    background: linear-gradient(92deg, var(--c-red), var(--c-pink) 22%, var(--c-purple) 45%, var(--c-blue) 62%, var(--c-green) 82%, var(--c-lime));
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .page-title h1 .h1-emo{ color:#000; -webkit-text-fill-color:initial; background:none; }
+  .page-title p{ color:var(--ink-soft); font-size:14.5px; max-width:620px; margin:0 auto 10px; line-height:1.6; }
+
+  .eyebrow{ display:inline-flex; align-items:center; gap:6px; font-family:var(--font-display); font-weight:700; font-size:14px;
+    color:#fff; background:var(--e, var(--c-purple)); padding:6px 16px; border-radius:20px; margin-bottom:14px; }
+  .card{ position:relative; background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:32px 26px 30px; margin:0 auto 30px; border:1px solid #EFE2F5; }
+  .card h3{ font-family:var(--font-display); font-weight:800; font-size:clamp(23px,3.3vw,32px); margin:0 0 10px; line-height:1.15; }
+  .card > p.desc{ color:var(--ink-soft); font-size:14.5px; line-height:1.65; max-width:760px; margin:0 0 20px; }
+
+  /* CÔNG THỨC */
+  .formulas{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+  @media (max-width:820px){ .formulas{ grid-template-columns:1fr; } }
+  .fcard{ background:var(--tint); border-radius:18px; padding:16px; border-top:6px solid var(--f); }
+  .fcard .k{ font-family:var(--font-mono); font-size:11px; font-weight:700; color:#fff; background:var(--f); padding:2px 10px; border-radius:10px; }
+  .fcard h4{ font-family:var(--font-display); font-size:17px; margin:8px 0 6px; }
+  .fcard .eq{ font-family:var(--font-mono); font-size:13px; font-weight:700; background:#fff; border:1.5px dashed var(--f); border-radius:10px; padding:8px 10px; line-height:1.5; }
+  .fcard p{ font-size:13px; color:var(--ink-soft); line-height:1.55; margin:8px 0 0; }
+
+  /* BẢNG */
+  .table-wrap{ overflow-x:auto; border-radius:16px; border:1.5px solid var(--line); background:#fff; }
+  table{ width:100%; border-collapse:collapse; min-width:820px; font-size:13px; }
+  th, td{ padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; line-height:1.5; }
+  th{ background:var(--c-purple); color:#fff; font-family:var(--font-display); font-size:14px; font-weight:700; }
+  th.m4{ background:var(--c-green); } th.m3{ background:var(--c-teal); } th.m2{ background:var(--c-blue); } th.m1{ background:var(--c-pink); }
+  tr:nth-child(even) td{ background:#FBF8FE; }
+  tr:last-child td{ border-bottom:0; }
+  td.crit{ font-weight:700; width:20%; }
+  td.crit .w{ display:inline-block; margin-top:4px; font-family:var(--font-mono); font-size:11px; color:#fff; background:var(--c-purple); padding:1px 8px; border-radius:8px; }
+  td.pick{ width:110px; }
+  select{ font-family:var(--font-body); font-size:13px; border:2px solid var(--line); border-radius:10px; padding:6px 8px; background:var(--tint); width:100%; }
+  .calc{ display:flex; flex-wrap:wrap; align-items:center; gap:14px; margin-top:14px; background:var(--tint); border-radius:16px; padding:12px 16px; }
+  .calc .big{ font-family:var(--font-display); font-weight:800; font-size:26px; color:var(--c-purple); }
+  .calc span{ font-size:13px; color:var(--ink-soft); }
+
+  .peer{ display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px; }
+  @media (max-width:860px){ .peer{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media (max-width:420px){ .peer{ grid-template-columns:1fr; } }
+  .peer div{ background:var(--tint); border-radius:16px; padding:14px 12px; text-align:center; font-size:13.5px; font-weight:600; line-height:1.45; border-bottom:5px solid var(--p); }
+  .peer div span{ display:block; font-size:28px; margin-bottom:4px; }
+  .note{ margin-top:16px; background:#EEF3FD; border-left:5px solid var(--c-blue); border-radius:0 14px 14px 0; padding:11px 15px; font-size:13.5px; line-height:1.6; }
+
+  /* FORM */
+  .embed-row{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; }
+  @media (max-width:760px){ .embed-row{ grid-template-columns:1fr; } }
+  .embed-label{ font-family:var(--font-display); font-weight:700; font-size:17px; margin-bottom:10px; }
+  .embed-frame{ width:100%; height:720px; border-radius:18px; overflow:hidden; border:2px solid var(--line); background:#fff; box-shadow:var(--shadow); }
+  .embed-frame iframe{ width:100%; height:100%; border:0; display:block; }
+  .embed-openlink{ display:inline-block; margin-top:8px; font-size:13px; color:var(--c-purple); text-decoration:underline; font-weight:600; }
+
+  footer{ text-align:center; margin-top:10px; }
+  .stamp{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800; font-size:14px;
+    color:#fff; padding:11px 22px; border-radius:24px; background: linear-gradient(90deg, var(--c-red), var(--c-purple) 45%, var(--c-blue) 70%, var(--c-green)); box-shadow:var(--shadow); }
+  .credit{ font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); margin-top:12px; line-height:1.7; }
+  @media (max-width:520px){ .card{ padding:24px 16px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-title">
+    <span class="badge">KHTN 8 · CHƯƠNG II · ĐÁNH GIÁ</span>
+    <h1><span class="h1-emo">⭐</span> Đánh giá</h1>
+    <p>Tiêu chí chấm Bộ kit thử pH và phần đóng góp website, rubric thuyết trình, đánh giá đồng đẳng, tự đánh giá năng lực số và cách đo hiệu quả sáng kiến.</p>
+  </div>
+
+  <!-- CÁCH TÍNH ĐIỂM -->
+  <section class="card">
+    <span class="eyebrow" style="--e:var(--c-green)">🎓 Cách tính điểm</span>
+    <h3>Điểm được tính như thế nào?</h3>
+    <div class="formulas">
+      <div class="fcard" style="--f:var(--c-purple)"><span class="k">BƯỚC 1</span><h4>Điểm sản phẩm nhóm</h4>
+        <div class="eq">(Σ mức × hệ số) ÷ 56 × 10</div>
+        <p>Giáo viên chấm 8 tiêu chí theo rubric sản phẩm, mỗi tiêu chí từ mức 1 đến mức 4. Tổng hệ số là 14 nên điểm tối đa là 56.</p></div>
+      <div class="fcard" style="--f:var(--c-blue)"><span class="k">BƯỚC 2</span><h4>Hệ số đóng góp</h4>
+        <div class="eq">TB điểm bạn chấm ÷ TB của nhóm<br>(giới hạn 0,8 – 1,1)</div>
+        <p>Mỗi bạn được các bạn trong nhóm chấm 5 tiêu chí, thang 1 – 5, qua phiếu đánh giá đồng đẳng.</p></div>
+      <div class="fcard" style="--f:var(--c-red)"><span class="k">BƯỚC 3</span><h4>Điểm của mỗi em</h4>
+        <div class="eq">Điểm nhóm × hệ số đóng góp</div>
+        <p>Điểm nhóm gồm điểm sản phẩm và điểm thuyết trình. Trang này chỉ công bố kết quả theo nhóm, không công khai điểm cá nhân.</p></div>
+    </div>
+  </section>
+
+  <!-- RUBRIC SẢN PHẨM -->
+  <section class="card">
+    <span class="eyebrow">📋 Rubric sản phẩm</span>
+    <h3>Bộ kit thử pH và phần đóng góp website (theo nhóm)</h3>
+    <p class="desc">Nhóm chọn mức tự đánh giá ở cột cuối để ước tính điểm sản phẩm trước khi nộp.</p>
+    <div class="table-wrap">
+      <table id="rubric">
+        <tr><th>Tiêu chí</th><th class="m4">Mức 4 – Xuất sắc</th><th class="m3">Mức 3 – Tốt</th><th class="m2">Mức 2 – Đạt</th><th class="m1">Mức 1 – Cần cố gắng</th><th>Nhóm tự chấm</th></tr>
+      </table>
+    </div>
+    <div class="calc"><span>Ước tính điểm sản phẩm:</span><span class="big" id="calcScore">—</span><span id="calcRaw">Chọn mức cho đủ 8 tiêu chí</span></div>
+  </section>
+
+  <!-- RUBRIC THUYẾT TRÌNH -->
+  <section class="card">
+    <span class="eyebrow" style="--e:var(--c-blue)">🎤 Rubric thuyết trình</span>
+    <h3>Trình bày 4 phút trên tivi (Tiết 2)</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Tiêu chí</th><th class="m4">4 điểm</th><th class="m3">3 điểm</th><th class="m2">2 điểm</th><th class="m1">1 điểm</th></tr>
+        <tr><td class="crit">Cấu trúc “Tình huống – Giải pháp (kit) – Bằng chứng – Khuyến cáo – Cải tiến”</td><td>Đủ các phần, mạch lạc</td><td>Đủ, chưa mạch lạc</td><td>Thiếu 1 phần</td><td>Thiếu từ 2 phần</td></tr>
+        <tr><td class="crit">Sử dụng bằng chứng (số liệu, phản hồi người dùng)</td><td>Thuyết phục</td><td>Có, chưa phân tích</td><td>Rất ít</td><td>Không có</td></tr>
+        <tr><td class="crit">Trả lời câu hỏi phản biện</td><td>Chính xác, tự tin</td><td>Đúng, còn lúng túng</td><td>Đúng một phần</td><td>Chưa trả lời được</td></tr>
+        <tr><td class="crit">Đúng thời gian (4 phút), phân vai trình bày</td><td>Đúng giờ, nhiều thành viên tham gia</td><td>Lệch không quá 30 giây</td><td>Lệch không quá 1 phút</td><td>Lệch hơn 1 phút</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ĐỒNG ĐẲNG -->
+  <section class="card">
+    <span class="eyebrow" style="--e:var(--c-teal)">🤝 Đánh giá đồng đẳng</span>
+    <h3>5 tiêu chí chấm bạn trong nhóm (thang 1 – 5)</h3>
+    <div class="peer">
+      <div style="--p:var(--c-red)"><span>⏰</span>Hoàn thành phần việc đúng hạn</div>
+      <div style="--p:var(--c-pink)"><span>🏅</span>Chất lượng phần việc</div>
+      <div style="--p:var(--c-purple)"><span>🤲</span>Hỗ trợ bạn</div>
+      <div style="--p:var(--c-blue)"><span>👂</span>Tôn trọng ý kiến</div>
+      <div style="--p:var(--c-green)"><span>🔍</span>Trung thực khi dùng AI và ghi nguồn</div>
+    </div>
+    <div class="note">💡 Chấm công bằng, dựa trên việc bạn đã thực sự làm, không dựa vào tình cảm. Kết quả chỉ giáo viên xem.</div>
+  </section>
+
+  <!-- BIỂU MẪU -->
+  <section class="card">
+    <span class="eyebrow" style="--e:var(--c-red)">📊 Biểu mẫu trực tuyến</span>
+    <h3>Điền đánh giá ngay tại đây</h3>
+    <p class="desc">Sau Tiết 2, mỗi em điền phiếu đánh giá đồng đẳng cho các bạn trong nhóm và phiếu tự đánh giá năng lực của bản thân.</p>
+    <div class="embed-row">
+      <div>
+        <div class="embed-label">🤝 Phiếu đánh giá đồng đẳng</div>
+        <div class="embed-frame"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdw6sWMdhmO7dUQHQmw1y5Vevd8JSNj-p1rOfz1rYWz7gGN8Q/viewform?embedded=true" title="Phiếu đánh giá đồng đẳng" loading="lazy">Đang tải…</iframe></div>
+        <a class="embed-openlink" href="https://docs.google.com/forms/d/e/1FAIpQLSdw6sWMdhmO7dUQHQmw1y5Vevd8JSNj-p1rOfz1rYWz7gGN8Q/viewform" target="_blank" rel="noopener">Không thấy phiếu? Mở trực tiếp ↗</a>
+      </div>
+      <div>
+        <div class="embed-label">⭐ Phiếu tự đánh giá năng lực số &amp; AI</div>
+        <div class="embed-frame" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:24px;background:linear-gradient(135deg,#F4ECFB,#EEF8F1);height:auto;min-height:320px">
+          <div style="font-size:46px">⭐</div>
+          <div style="font-family:var(--font-display);font-weight:800;font-size:20px">18 tiêu chí năng lực số và AI</div>
+          <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.6;max-width:340px">Em tự đánh giá đầu và cuối chủ đề theo 4 mức: Chưa làm được – Cần hướng dẫn – Tự làm được – Tốt và hướng dẫn được bạn.</div>
+          <a href="https://script.google.com/macros/s/AKfycbzCsZs5OQRfKTQm2hh2b1KnY0nAS3maT-ngLPkRmdNmGaTG8bBOxWiJxsGNxJzCTPALhg/exec" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;font-family:var(--font-display);font-weight:800;font-size:15px;color:#fff;text-decoration:none;padding:11px 22px;border-radius:24px;background:linear-gradient(90deg,var(--c-pink),var(--c-purple) 50%,var(--c-blue));box-shadow:var(--shadow)">⭐ Mở phiếu tự đánh giá</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ĐO HIỆU QUẢ SÁNG KIẾN -->
+  <section class="card">
+    <span class="eyebrow" style="--e:var(--c-lime)">📈 Đo hiệu quả sáng kiến</span>
+    <h3>Khảo sát trước và sau khi học</h3>
+    <p class="desc">Học sinh trả lời cùng một bộ câu hỏi trước và sau khi học bằng website, để so sánh. Phiếu không thu họ tên, chỉ ghi lớp.</p>
+    <div class="formulas">
+      <div class="fcard" style="--f:var(--c-pink)"><span class="k">TRƯỚC KHI HỌC</span><h4>Phiếu khảo sát trước</h4>
+        <p>1. Em thấy acid, base, pH khó ở mức nào? (1 – 5)<br>2. Em hứng thú với việc ôn tập KHTN ở mức nào? (1 – 5)<br>3. Em có thấy hóa học liên quan đến môi trường quanh em không? (1 – 5)<br>4. Kể 1 hành động em có thể làm để giảm ô nhiễm.</p></div>
+      <div class="fcard" style="--f:var(--c-green)"><span class="k">SAU KHI HỌC</span><h4>Phiếu khảo sát sau</h4>
+        <p>Câu 1 – 4 giống phiếu trước, cộng thêm:<br>5. Phần nào trên website giúp em nhiều nhất?<br>6. Em có kiểm chứng được câu trả lời của AI không?<br>7. Em có muốn tiếp tục học bằng website này không?</p></div>
+      <div class="fcard" style="--f:var(--c-blue)"><span class="k">CHỈ SỐ THEO DÕI</span><h4>Số liệu cần tổng hợp</h4>
+        <p>% học sinh thấy khó và % hứng thú (trước → sau)<br>Điểm trung bình trang Bài tập<br>% nêu được hành động xanh (trước → sau)<br>Số lỗi AI học sinh phát hiện<br>Số tờ giấy tiết kiệm</p></div>
+    </div>
+    <div style="margin-top:16px"><a href="https://script.google.com/macros/s/AKfycbwLcUxaw7TP6OhhpQVkvBI10aEy0pFDAFHroYJnQna6c3EGZ1hLr17JBdpebJv6TNXU/exec" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;font-family:var(--font-display);font-weight:800;font-size:15px;color:#fff;text-decoration:none;padding:11px 22px;border-radius:24px;background:linear-gradient(90deg,var(--c-pink),var(--c-purple) 50%,var(--c-blue));box-shadow:var(--shadow)">📝 Mở Phiếu khảo sát học sinh – Lớp học số pH Nhà Em</a></div>
+    <div class="note">📌 <b>Kết quả lớp 8A4 (35 học sinh):</b> thích hoặc rất thích các bài Chương II tăng từ <b>28,6% lên 97,1%</b>; thường xuyên kiểm chứng câu trả lời AI tăng từ <b>8,6% lên 82,9%</b>; luôn ghi nguồn tăng từ <b>8,6% lên 91,4%</b>; trung bình 14 tiêu chí năng lực số và AI đạt mức 3–4 tăng từ <b>20,8% lên 90,6%</b>; mức Tốt bài kiểm tra cuối chương tăng từ <b>51,4% (Chương I) lên 94,3% (Chương II)</b>. Chi tiết ở trang Minh chứng.</div>
+  </section>
+
+  <footer>
+    <div class="stamp">🥬 WEBSITE pH NHÀ EM · SÁNG KIẾN KHTN 8 · AI &amp; HÓA HỌC XANH</div>
+    <div class="credit">Tác giả sáng kiến: GV Lê Thị Việt Hà · Đối tượng: học sinh lớp 8 · Trường THCS Nguyễn An Khương · Năm học 2026–2027</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var R = [
+    ["Bộ kit thử pH tự nhiên", 2, "Màu rõ ở 3 vùng acid – trung tính – base; giữ màu ít nhất 3 ngày; nhãn, bảng màu đầy đủ; cải tiến 1 → 2 có lí do", "Đạt tiêu chí, cải tiến ghi chép chưa đủ", "Màu khó phân biệt ở 1 vùng; thiếu nhãn hoặc bảng màu", "Kit không dùng được"],
+    ["Tính khoa học", 3, "Nội dung chính xác; thử đủ 5 chất × 2 lần; giải thích kết quả bằng kiến thức bài; trả lời đúng câu hỏi tình huống", "Chính xác, có số liệu; giải thích còn ngắn", "Còn 1 – 2 lỗi nhỏ; ít số liệu", "Nhiều lỗi khoa học"],
+    ["Tính thực tiễn, hữu ích", 2, "Khuyến cáo cụ thể, đúng, gia đình làm theo được; có hướng dẫn tự làm an toàn, bảng màu dễ tra", "Hữu ích, hướng dẫn chưa thật chi tiết", "Ít gắn với nhu cầu người dùng", "Không rõ người dùng"],
+    ["Thiết kế, trải nghiệm người dùng", 2, "Bố cục rõ, nhất quán; hiển thị tốt trên điện thoại và tivi; điều hướng dễ", "Rõ ràng; còn 1 – 2 lỗi hiển thị nhỏ", "Bố cục chưa thống nhất", "Khó sử dụng, lỗi liên kết"],
+    ["Dùng AI có trách nhiệm, “Trợ lý pH Nhà Em”", 2, "Trợ lý trả lời đúng, có nguồn, có lối quay lại; nội dung có hỗ trợ AI được kiểm chứng, gắn nhãn; nhật ký AI đầy đủ", "Thiếu 1 yếu tố", "Có dùng AI nhưng chưa kiểm chứng, gắn nhãn; trợ lý còn lỗi", "Sao chép nội dung AI, không kiểm chứng"],
+    ["Xử lí số liệu", 1, "Bảng, biểu đồ đúng, có nhận xét; tính đúng tỉ lệ %, chênh lệch", "Có biểu đồ, nhận xét sơ sài", "Chỉ có bảng số liệu", "Không có số liệu"],
+    ["Bản quyền, an toàn, dữ liệu cá nhân", 1, "Ghi nguồn đầy đủ, đúng quy cách; bảo vệ thông tin cá nhân", "Ghi nguồn còn thiếu 1 – 2 mục", "Ghi nguồn chưa đúng quy cách", "Vi phạm bản quyền hoặc lộ thông tin cá nhân"],
+    ["Quy trình thiết kế và cải tiến", 1, "Có phiên bản 1 → 2 rõ ràng, cải tiến dựa trên phản hồi người dùng", "Có cải tiến, ghi chép chưa đầy đủ", "Cải tiến ít", "Không cải tiến"]
+  ];
+  var t = document.getElementById('rubric');
+  R.forEach(function(r, i){
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td class="crit">'+(i+1)+'. '+r[0]+'<br><span class="w">hệ số ×'+r[1]+'</span></td><td>'+r[2]+'</td><td>'+r[3]+'</td><td>'+r[4]+'</td><td>'+r[5]+'</td>'+
+      '<td class="pick"><select data-w="'+r[1]+'"><option value="">--</option><option value="4">Mức 4</option><option value="3">Mức 3</option><option value="2">Mức 2</option><option value="1">Mức 1</option></select></td>';
+    t.appendChild(tr);
+  });
+  function calc(){
+    var sum = 0, n = 0, sels = t.querySelectorAll('select');
+    Array.prototype.forEach.call(sels, function(s){ if(s.value){ n++; sum += (+s.value) * (+s.dataset.w); } });
+    if(n < sels.length){ document.getElementById('calcScore').textContent = '—'; document.getElementById('calcRaw').textContent = 'Đã chọn ' + n + ' / ' + sels.length + ' tiêu chí'; return; }
+    var score = Math.round(sum / 56 * 100) / 10;
+    document.getElementById('calcScore').textContent = score.toString().replace('.', ',') + ' / 10';
+    document.getElementById('calcRaw').textContent = 'Tổng mức × hệ số = ' + sum + ' / 56';
+  }
+  t.addEventListener('change', calc);
+})();
+</script>
+</body>
+</html>

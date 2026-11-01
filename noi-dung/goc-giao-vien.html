@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Góc giáo viên | pH Nhà Em — KHTN 8</title>
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+/* ==========================================================
+   DÁN LINK Ở ĐÂY (giữ nguyên dấu ngoặc kép ở hai đầu)
+   ========================================================== */
+var LINK = {
+  gem_tro_ly_hoa8: "https://gemini.google.com/gem/1G2BLDQJOIPfFr7lxRxok7tkje20A_G3-?usp=sharing",          // link chia sẻ Gem "Trợ lý Hóa 8"
+  ban_sao_site:    "DAN_LINK_HUONG_DAN_SAO_CHEP",  // link Google Doc hướng dẫn / xin quyền sao chép site
+  khao_sat_truoc:  "https://script.google.com/macros/s/AKfycbwLcUxaw7TP6OhhpQVkvBI10aEy0pFDAFHroYJnQna6c3EGZ1hLr17JBdpebJv6TNXU/exec",   // Phiếu khảo sát học sinh – Lớp học số pH Nhà Em
+  khao_sat_sau:    "DAN_LINK_FORM_KHAO_SAT_SAU"
+};
+</script>
+<style>
+  :root{
+    --ink:#16202C; --ink-soft:#3F5266; --card:#FFFFFF; --tint:#F7F2FC; --line:#E6D9F3;
+    --c-red:#D7263D; --c-pink:#E8508C; --c-mauve:#B04FB0; --c-purple:#7B4FB8; --c-purple-dark:#55348A;
+    --c-blue:#4B5FC9; --c-teal:#2F9C9A; --c-green:#3DAA5C; --c-lime:#B8C934;
+    --radius:26px;
+    --shadow: 0 14px 28px rgba(31,92,134,.14);
+    --font-display:'Baloo 2', sans-serif; --font-body:'Be Vietnam Pro', sans-serif; --font-mono:'Roboto Mono', monospace;
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{
+    font-family:var(--font-body); color:var(--ink);
+    background:
+      radial-gradient(circle at 8% 6%, rgba(232,80,140,.18), transparent 30%),
+      radial-gradient(circle at 92% 12%, rgba(123,79,184,.18), transparent 32%),
+      radial-gradient(circle at 12% 85%, rgba(61,170,92,.18), transparent 32%),
+      radial-gradient(circle at 90% 90%, rgba(75,95,201,.16), transparent 34%),
+      #FFFBF0;
+    padding:30px 12px 60px;
+  }
+  .wrap{max-width:1060px; margin:0 auto;}
+  a{color:inherit;}
+
+  .page-title{ text-align:center; margin-bottom:18px; }
+  .page-title .badge{ font-family:var(--font-mono); font-size:12px; letter-spacing:1.2px; color:var(--c-purple);
+    background:#fff; border:2px solid var(--c-purple); display:inline-block; padding:5px 14px; border-radius:20px; box-shadow:var(--shadow); }
+  .page-title h1{ font-family:var(--font-display); font-weight:800; font-size:clamp(32px,5.6vw,50px); margin:12px 0 4px;
+    background: linear-gradient(92deg, var(--c-red), var(--c-pink) 22%, var(--c-purple) 45%, var(--c-blue) 62%, var(--c-green) 82%, var(--c-lime));
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .page-title h1 .h1-emo{ color:#000; -webkit-text-fill-color:initial; background:none; }
+  .page-title p{ color:var(--ink-soft); font-size:15px; max-width:680px; margin:0 auto 10px; line-height:1.65; }
+  .pill-row{ display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-top:10px; }
+  .pill{ font-family:var(--font-display); font-weight:700; font-size:13px; padding:5px 13px; border-radius:20px; background:#fff; border:2px solid var(--p); color:var(--p); }
+
+  .eyebrow{ display:inline-flex; align-items:center; gap:6px; font-family:var(--font-display); font-weight:700; font-size:14px;
+    color:#fff; background:var(--e, var(--c-purple)); padding:6px 16px; border-radius:20px; margin-bottom:12px; }
+  .card{ position:relative; background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:30px 26px 28px; margin:0 auto 28px; border:1px solid #EFE2F5; }
+  .card h3{ font-family:var(--font-display); font-weight:800; font-size:clamp(23px,3.3vw,31px); margin:0 0 10px; line-height:1.15; }
+  .card > p.desc{ color:var(--ink-soft); font-size:14.5px; line-height:1.65; max-width:760px; margin:0 0 18px; }
+
+  .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+  .box{ background:var(--tint); border-radius:18px; padding:16px; border-top:5px solid var(--b, var(--c-purple)); }
+  .box .ico{ font-size:26px; }
+  .box h4{ font-family:var(--font-display); font-size:17px; margin:4px 0 6px; }
+  .box p, .box li{ font-size:13.5px; color:var(--ink-soft); line-height:1.6; margin:0; }
+  .box ul{ margin:0; padding-left:18px; }
+
+  .steps{ list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; counter-reset:s; }
+  .steps li{ background:#fff; border:2px solid var(--line); border-radius:18px; padding:16px; position:relative; }
+  .steps li::before{ counter-increment:s; content:counter(s); display:flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%;
+    background:var(--st); color:#fff; font-family:var(--font-display); font-weight:800; font-size:17px; margin-bottom:8px; }
+  .steps h4{ font-family:var(--font-display); font-size:16.5px; margin:0 0 4px; }
+  .steps p{ font-size:13.3px; color:var(--ink-soft); line-height:1.55; margin:0; }
+
+  .table-wrap{ overflow-x:auto; border-radius:16px; border:1.5px solid var(--line); background:#fff; }
+  table{ width:100%; border-collapse:collapse; min-width:720px; font-size:13.3px; }
+  th, td{ padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; line-height:1.55; }
+  th{ background:var(--c-purple); color:#fff; font-family:var(--font-display); font-size:14px; font-weight:700; }
+  tr:nth-child(even) td{ background:#FBF8FE; }
+  tr:last-child td{ border-bottom:0; }
+  td.k{ font-weight:700; white-space:nowrap; }
+  .tag{ display:inline-block; font-family:var(--font-mono); font-size:11px; font-weight:700; color:#fff; background:var(--t); padding:2px 8px; border-radius:8px; white-space:nowrap; }
+
+  details{ background:var(--tint); border-radius:14px; padding:12px 16px; margin-bottom:10px; border:1.5px solid var(--line); }
+  summary{ font-family:var(--font-display); font-weight:700; cursor:pointer; font-size:15px; }
+  summary .dot{ display:inline-block; width:12px; height:12px; border-radius:50%; background:var(--g); margin-right:8px; }
+  .prompt{ position:relative; margin-top:10px; background:#2A1F3D; color:#F1E9FB; font-family:var(--font-mono); font-size:12.6px; line-height:1.6;
+    padding:14px 16px; border-radius:14px; white-space:pre-wrap; }
+  .copy{ font-family:var(--font-display); font-weight:700; font-size:12.5px; cursor:pointer; color:var(--c-purple-dark); background:#fff;
+    border:1.5px solid var(--c-purple); border-radius:10px; padding:5px 12px; margin-top:8px; }
+  .use{ font-size:12.5px; color:var(--ink-soft); margin:8px 0 0; }
+
+  .btn{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800; font-size:15px; color:#fff; text-decoration:none;
+    padding:11px 22px; border-radius:24px; background: linear-gradient(90deg, var(--c-pink), var(--c-purple) 50%, var(--c-blue)); box-shadow:var(--shadow); margin:4px 8px 4px 0; }
+  .btn.off{ background:#C9C2D3; box-shadow:none; pointer-events:none; }
+  .pending{ font-size:12.5px; color:var(--ink-soft); font-style:italic; }
+
+  .copy-guide{ margin-top:14px; background:var(--tint); border:1.5px solid var(--line); border-radius:16px; padding:14px 18px; }
+  .copy-guide h4{ font-family:var(--font-display); font-size:17px; margin:0 0 6px; }
+  .copy-guide ol{ margin:0; padding-left:20px; font-size:13.5px; line-height:1.7; }
+  .copy-guide code{ font-family:var(--font-mono); font-size:12px; background:#fff; padding:1px 5px; border-radius:4px; }
+  .quotes{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; }
+  .quotes blockquote{ margin:0; background:var(--tint); border-left:5px solid var(--c-pink); border-radius:0 14px 14px 0; padding:12px 14px; font-size:14px; line-height:1.55; font-style:italic; }
+  td.tbd{ color:#B8AFC6; font-style:italic; }
+  .ok{ color:#256B45; font-weight:700; } .part{ color:#8A5A00; font-weight:700; } .bad{ color:#B23A2F; font-weight:700; }
+  .note{ margin-top:14px; background:#EEF3FD; border-left:5px solid var(--c-blue); border-radius:0 14px 14px 0; padding:11px 15px; font-size:13.5px; line-height:1.6; }
+  .green{ margin-top:14px; background:#EEF8F1; border-left:5px solid var(--c-green); border-radius:0 14px 14px 0; padding:11px 15px; font-size:13.5px; line-height:1.6; color:#2D5A40; }
+
+  .kpi{ display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; }
+  .kpi div{ background:var(--tint); border-radius:16px; padding:14px; text-align:center; border-bottom:5px solid var(--k); }
+  .kpi b{ display:block; font-family:var(--font-display); font-size:24px; color:var(--k); line-height:1.1; }
+  .kpi b{ font-size:21px; }
+  .chart-box{ margin-top:18px; background:#fff; border:1.5px solid var(--line); border-radius:18px; padding:16px 16px 10px; }
+  .chart-ttl{ font-family:var(--font-display); font-weight:700; font-size:16px; margin-bottom:6px; }
+  .legend-row{ display:flex; flex-wrap:wrap; gap:16px; font-size:12.5px; color:var(--ink-soft); margin-bottom:8px; }
+  .legend-row i{ display:inline-block; width:12px; height:12px; border-radius:3px; margin-right:6px; vertical-align:-1px; }
+  .ba-row{ display:grid; grid-template-columns:minmax(120px,210px) 1fr; gap:4px 12px; align-items:center; padding:7px 0; border-bottom:1px dashed var(--line); }
+  .ba-row:last-child{ border-bottom:0; }
+  .ba-lb{ font-size:13px; line-height:1.35; }
+  .ba-bars{ display:flex; flex-direction:column; gap:4px; }
+  .ba-bar{ display:flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:11.5px; color:var(--ink-soft); }
+  .ba-bar span{ display:block; height:12px; border-radius:6px; }
+  @media (max-width:520px){ .ba-row{ grid-template-columns:1fr; } }
+  .kpi span{ font-size:12.5px; color:var(--ink-soft); line-height:1.45; display:block; margin-top:4px; }
+
+  footer{ text-align:center; margin-top:10px; }
+  .stamp{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800; font-size:14px;
+    color:#fff; padding:11px 22px; border-radius:24px; background: linear-gradient(90deg, var(--c-red), var(--c-purple) 45%, var(--c-blue) 70%, var(--c-green)); box-shadow:var(--shadow); }
+  .credit{ font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); margin-top:12px; line-height:1.7; }
+  @media (max-width:520px){ .card{ padding:24px 16px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-title">
+    <span class="badge">SÁNG KIẾN · KHTN 8 · CHƯƠNG II · BÀI 8 – 12</span>
+    <h1><span class="h1-emo">👩‍🏫</span> Góc giáo viên</h1>
+    <p><b>Website “pH Nhà Em”</b>: học liệu số tích hợp AI có trách nhiệm và tiêu chí xanh, giúp học sinh lớp 8 học acid – base – thang pH – oxide – muối bằng bộ kit chỉ thị tự nhiên làm từ bắp cải tím và hoa đậu biếc.</p>
+    <div class="pill-row">
+      <span class="pill" style="--p:var(--c-purple)">📚 Học liệu số</span>
+      <span class="pill" style="--p:var(--c-blue)">🤖 AI có trách nhiệm</span>
+      <span class="pill" style="--p:var(--c-green)">🌿 Hóa học xanh</span>
+      <span class="pill" style="--p:var(--c-teal)">♻️ Chi phí 0 đồng</span>
+    </div>
+  </div>
+
+  <!-- 1. BỐI CẢNH -->
+  <section class="card">
+    <span class="eyebrow" style="--e:var(--c-red)">1 · Bối cảnh và vấn đề</span>
+    <h3>Vì sao cần sáng kiến này?</h3>
+    <div class="grid">
+      <div class="box" style="--b:var(--c-red)"><div class="ico">🧪</div><h4>Thiếu dụng cụ đo pH</h4><p>Nhà trường và gia đình ít có máy đo pH, giấy chỉ thị; học sinh khó tự kiểm chứng tính acid – base của chất quanh mình.</p></div>
+      <div class="box" style="--b:var(--c-purple)"><div class="ico">🤔</div><h4>Kiến thức trừu tượng</h4><p>Khái niệm acid, base, thang pH, oxide, muối dễ học thuộc nhưng khó liên hệ với đồ uống, chất tẩy rửa, đất trồng trong nhà.</p></div>
+      <div class="box" style="--b:var(--c-blue)"><div class="ico">🤖</div><h4>AI phổ biến nhưng chưa được kiểm chứng</h4><p>Học sinh ngày càng hỏi chatbot AI, nhưng chưa có thói quen đối chiếu câu trả lời với SGK và thí nghiệm.</p></div>
+      <div class="box" style="--b:var(--c-green)"><div class="ico">🌍</div><h4>Ít liên hệ môi trường</h4><p>Mưa acid, khí thải CO₂, đất chua, bón phân thừa là những vấn đề thật ở địa phương nhưng ít được gắn vào bài học.</p></div>
+    </div>
+    <div class="note">🧪 <b>Đã tổ chức thử nghiệm</b> năm học 2026–2027 với lớp 8A4 (35 học sinh) tại phòng thí nghiệm của trường theo hình thức <b>4 trạm</b>: học sinh pha dịch chỉ thị bắp cải tím, nhỏ vào các mẫu, đọc màu và ghi phiếu kết quả. Hình ảnh ở trang <b>Minh chứng</b>; ý kiến học sinh thu qua <b>Phiếu khảo sát học sinh – Lớp học số pH Nhà Em</b>.</div>
+  </section>
+
+  <!-- 2. GIẢI PHÁP -->
+  <section class="card">
+    <span class="eyebrow" style="--e:var(--c-purple)">2 · Giải pháp</span>
+    <h3>4 thành phần của sáng kiến</h3>
+    <div class="grid">
+      <div class="box" style="--b:var(--c-purple)"><div class="ico">🌐</div><h4>Website học liệu số</h4><p>Google Sites gồm kiến thức Bài 8 – 12, thang pH tương tác, bài tập tự chấm, phiếu KWL, rubric và khảo sát — học sinh học trên điện thoại, không cần in giấy.</p></div>
+      <div class="box" style="--b:var(--c-pink)"><div class="ico">🥬</div><h4>Bộ kit chỉ thị tự nhiên</h4><p>Dịch bắp cải tím và hoa đậu biếc thay hóa chất chỉ thị; 4 tình huống trong gia đình, mỗi tình huống 5 chất an toàn.</p></div>
+      <div class="box" style="--b:var(--c-blue)"><div class="ico">💬</div><h4>Trợ lý và AI có trách nhiệm</h4><p>Chatbot kịch bản “Bé pH” (trả lời có nguồn), trạm tập đặt câu hỏi cho AI và nhật ký kiểm chứng AI: AI gợi ý, học sinh kiểm chứng bằng SGK và bộ kit.</p></div>
+      <div class="box" style="--b:var(--c-green)"><div class="ico">🌿</div><h4>Tiêu chí xanh 3 tầng</h4><p>Thí nghiệm xanh (lượng nhỏ, trung hòa chất thải), kiến thức xanh (mưa acid, CO₂, đất chua), học tập xanh (không in giấy, hành động xanh tại nhà).</p></div>
+    </div>
+  </section>
+
+  <!-- 3. CÔNG CỤ -->
+  <section class="card">
+    <span class="eyebrow" style="--e:var(--c-blue)">3 · Công cụ sử dụng</span>
+    <h3>Công cụ AI và công cụ số</h3>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Công cụ</th><th>Loại</th><th>Dùng để</th><th>Chi phí</th></tr>
+        <tr><td class="k">Chatbot AI (Gemini)</td><td><span class="tag" style="--t:var(--c-blue)">AI tạo sinh</span></td><td>Gem “Bé pH” với 5 chế độ: <b>Thám tử màu</b> (đọc ảnh, ghi mức tin cậy), <b>Bài toán xanh</b>, <b>Đúng hay sai?</b> (học sinh kiểm chứng nhận định bằng kit, xuất phiếu nhật ký), <b>Đố vui pH</b>, <b>Hỏi đáp 4 khu vực nhà em</b>; giáo viên điều khiển trên tivi</td><td>Miễn phí</td></tr>
+        <tr><td class="k">“Bé pH”</td><td><span class="tag" style="--t:var(--c-purple)">Chatbot kịch bản</span></td><td>Trả lời theo kịch bản giáo viên soạn, đối chiếu SGK, mỗi câu ghi nguồn; câu ngoài kịch bản nói “chưa biết”</td><td>Miễn phí</td></tr>
+        <tr><td class="k">Google Sites</td><td><span class="tag" style="--t:var(--c-teal)">Nền tảng</span></td><td>Chứa toàn bộ học liệu, dễ sao chép cho lớp và trường khác</td><td>Miễn phí</td></tr>
+        <tr><td class="k">Google Forms</td><td><span class="tag" style="--t:var(--c-teal)">Khảo sát</span></td><td>Phiếu KWL, khảo sát trước – sau, đánh giá đồng đẳng</td><td>Miễn phí</td></tr>
+        <tr><td class="k">PhET pH Scale</td><td><span class="tag" style="--t:var(--c-green)">Mô phỏng</span></td><td>Thử pH an toàn trước khi làm thí nghiệm thật</td><td>Miễn phí</td></tr>
+      </table>
+    </div>
+    <div style="margin-top:16px">
+      <a class="btn" id="btnGem" href="#" target="_blank" rel="noopener">💬 Mở Gem “Bé pH”</a>
+      <span class="pending" id="gemNote"></span>
+    </div>
+  </section>
+
+  <!-- 4. QUY TRÌNH -->
+  <section class="card">
+    <span class="eyebrow" style="--e:var(--c-teal)">4 · Hình thức triển khai</span>
+    <h3>Quy trình 4 bước</h3>
+    <ol class="steps">
+      <li style="--st:var(--c-red)"><h4>Xác định nhu cầu</h4><p>Phiếu KWL và khảo sát trước: học sinh thấy khó ở đâu, gia đình có câu hỏi gì về pH.</p></li>
+      <li style="--st:var(--c-purple)"><h4>Học và thử nghiệm</h4><p>Tiết 1: học trên website, chế tạo kit, chia 4 nhóm theo 4 tình huống. Ở nhà: thử 5 chất, có người lớn giám sát.</p></li>
+      <li style="--st:var(--c-blue)"><h4>Kiểm chứng AI</h4><p>Nhóm soạn câu hỏi cho AI; giáo viên hỏi AI trên tivi; nhóm đối chiếu với SGK và kết quả kit, ghi nhật ký.</p></li>
+      <li style="--st:var(--c-green)"><h4>Báo cáo và đánh giá</h4><p>Tiết 2: trình bày, khuyến cáo và hành động xanh; bài tập tự chấm, rubric, khảo sát sau.</p></li>
+    </ol>
+  </section>
+
+  <!-- 5. NHẬT KÝ RÀ SOÁT AI CỦA GV -->
+  <section class="card">
+    <span class="eyebrow" style="--e:var(--c-red)">5 · AI có trách nhiệm</span>
+    <h3>Nhật ký rà soát nội dung có AI hỗ trợ</h3>
+    <p class="desc">Giáo viên đối chiếu toàn bộ nội dung với SGK KHTN 8 (Kết nối tri thức) trước khi đưa lên website. Bảng ghi lại những lỗi đã phát hiện và cách sửa.</p>
+    <div class="table-wrap">
+      <table>
+        <tr><th>Nội dung</th><th>Lỗi phát hiện</th><th>Đã sửa</th></tr>
+        <tr><td class="k">Số bài trong SGK</td><td>Ghi “Bài 7 · Acid”, “Bài 8 &amp; 9 · Base”, lệch với mục lục SGK</td><td>Acid là Bài 8; Base – Thang pH là Bài 9</td></tr>
+        <tr><td class="k">Danh pháp</td><td>Ghi “acid citric” theo cách cũ</td><td>Dùng tên IUPAC: citric acid</td></tr>
+        <tr><td class="k">Xử lí chất thải</td><td>Chatbot hướng dẫn đổ dung dịch thẳng vào bồn rửa</td><td>Gộp acid và base để trung hòa (kiểm tra về màu tím) rồi mới đổ; bã rau ủ phân</td></tr>
+        <tr><td class="k">Số liệu kết quả</td><td>Bảng kết quả điền sẵn màu “lần 1”, “lần 2” như đã thử thật</td><td>Đổi thành “màu tham khảo”; cột lần 1, lần 2 để trống cho học sinh điền</td></tr>
+      </table>
+    </div>
+    <div class="note">📌 Nguyên tắc: <b>giáo viên định hướng – AI hỗ trợ – giáo viên thẩm định</b>. Học sinh không nhập thông tin cá nhân vào AI; mọi kết luận được kiểm chứng bằng SGK và bộ kit.</div>
+  </section>
+
+  <!-- 6. THƯ VIỆN PROMPT -->
+  <section class="card">
+    <span class="eyebrow" style="--e:var(--c-purple)">6 · Thư viện prompt</span>
+    <h3>Câu lệnh mẫu cho giáo viên</h3>
+    <p class="desc">Giáo viên khác có thể sao chép và chỉnh lại cho bài của mình. Luôn kiểm tra kết quả AI trước khi dùng.</p>
+
+    <details id="gemGuide" style="--g:var(--c-blue)">
+      <summary><span class="dot"></span>Hướng dẫn cho Gem “Trợ lý Hóa 8”</summary>
+      <ol class="use" style="margin:10px 0 0;padding-left:20px;line-height:1.7"><li>Vào <b>gemini.google.com</b> → <b>Gem</b> → <b>Tạo Gem mới</b>, đặt tên “Trợ lý Hóa 8”.</li><li>Sao chép đoạn hướng dẫn bên dưới, dán vào ô <b>Hướng dẫn</b>.</li><li>Ở mục <b>Kiến thức</b>, tải lên tài liệu kiến thức Chương II (đã đối chiếu SGK).</li><li>Bấm <b>Lưu</b> → <b>Chia sẻ</b> → sao chép đường liên kết.</li></ol>
+      <div class="prompt" id="p1">Bạn là "Trợ lý Hóa 8", trợ giảng ôn tập KHTN 8 (Kết nối tri thức), Chương II: Acid, Base – Thang pH, Oxide, Muối, Phân bón. Người dùng là học sinh 13–14 tuổi.
+
+CÁCH TRẢ LỜI
+- Xưng "mình", gọi "bạn", câu ngắn, thân thiện.
+- KHÔNG đưa đáp án ngay. Hỏi lại từng bước: đề cho gì, cần tìm gì, dùng kiến thức nào. Chỉ xác nhận khi học sinh tự đưa ra kết quả.
+- Dùng tên chất theo IUPAC như SGK (sulfuric acid, sodium hydroxide, calcium oxide...).
+- Ưu tiên tài liệu được cung cấp; nếu không chắc, nói "Bạn hãy hỏi lại cô giáo nhé".
+
+HÓA HỌC XANH
+- Khi phù hợp, liên hệ mưa acid, khí CO₂, đất chua, bón phân đúng liều, xử lí chất thải.
+- Khi học sinh gõ "Bài toán xanh", đưa 1 bài toán trong tài liệu và gợi ý từng bước.
+
+ĐỌC ẢNH
+- Khi học sinh gửi ảnh các ly có dịch bắp cải tím: mô tả màu từng ly, ước lượng khoảng pH theo bảng màu trong tài liệu, nói rõ đây chỉ là ước lượng vì ánh sáng làm lệch màu; nhắc học sinh so với ly nước lọc đối chứng và thử lại bằng kit.
+- Nếu ảnh có mặt người hoặc thông tin cá nhân, nhắc học sinh không gửi ảnh như vậy.
+
+AN TOÀN
+- Không hỏi, không lưu họ tên, số điện thoại, địa chỉ.
+- Chỉ hướng dẫn thí nghiệm an toàn với bắp cải tím, hoa đậu biếc, giấm, chanh, baking soda, có người lớn giám sát. Không hướng dẫn dùng Javel, chất thông cống, axit đặc.</div>
+      <button class="copy" data-copy="p1">📋 Sao chép</button>
+      <p class="use">Dùng ở: gemini.google.com → Gem → Tạo Gem mới → dán vào ô Hướng dẫn; mục Kiến thức tải lên tệp <b>tai-lieu-gem-tro-ly-hoa8.txt</b>.</p>
+    </details>
+
+    <details style="--g:var(--c-pink)">
+      <summary><span class="dot"></span>Soạn kịch bản cho chatbot “Bé pH”</summary>
+      <div class="prompt" id="p2">Em là giáo viên KHTN 8 (Kết nối tri thức). Hãy viết 10 câu hỏi – đáp ngắn cho chatbot ôn tập chủ đề [TÊN BÀI], dành cho học sinh lớp 8.
+Yêu cầu:
+- Mỗi câu trả lời tối đa 3 câu, có 1 ví dụ chất quen thuộc trong gia đình.
+- Dùng tên chất theo IUPAC như SGK.
+- Ghi rõ màu dịch bắp cải tím tương ứng (đỏ – tím – xanh – vàng).
+- Có 1 câu nhắc an toàn khi thử chất tẩy rửa hoặc nước vôi.
+- Không bịa số liệu; chỗ nào không chắc thì ghi [CẦN KIỂM TRA].</div>
+      <button class="copy" data-copy="p2">📋 Sao chép</button>
+      <p class="use">Sau đó giáo viên đối chiếu từng câu với SGK rồi mới đưa vào kịch bản.</p>
+    </details>
+
+    <details style="--g:var(--c-green)">
+      <summary><span class="dot"></span>Soạn câu hỏi trắc nghiệm có bối cảnh môi trường</summary>
+      <div class="prompt" id="p3">Soạn 5 câu trắc nghiệm 4 lựa chọn cho học sinh lớp 8, chủ đề [TÊN BÀI] (KHTN 8 – Kết nối tri thức).
+- Ít nhất 2 câu có bối cảnh môi trường: mưa acid, khí CO₂, đất chua, bón phân, nước thải.
+- 1 câu tính toán theo phương trình hóa học, số liệu hợp lí với thực tế.
+- Ghi đáp án đúng và lời giải thích 1–2 câu.
+- Dùng tên chất theo IUPAC.</div>
+      <button class="copy" data-copy="p3">📋 Sao chép</button>
+      <p class="use">Kiểm tra lại phép tính và tính hợp lí của số liệu trước khi đưa vào trang Bài tập.</p>
+    </details>
+  </section>
+
+  <!-- 7. BỀN VỮNG – NHÂN RỘNG -->
+  <section class="card">
+    <span class="eyebrow" style="--e:var(--c-green)">7 · Bền vững và nhân rộng</span>
+    <h3>Giáo viên khác áp dụng thế nào?</h3>
+    <div class="grid">
+      <div class="box" style="--b:var(--c-green)"><div class="ico">💰</div><h4>Chi phí 0 đồng</h4><p>Công cụ miễn phí; nguyên liệu kit có sẵn trong bếp; lọ đựng tái sử dụng.</p></div>
+      <div class="box" style="--b:var(--c-teal)"><div class="ico">📱</div><h4>Điều kiện tối thiểu</h4><p>1 máy tính và tivi trên lớp; học sinh mở website bằng điện thoại ở nhà hoặc dùng chung theo nhóm.</p></div>
+      <div class="box" style="--b:var(--c-blue)"><div class="ico">🔁</div><h4>Mở rộng</h4><p>Dùng lại khung website cho các chương khác của KHTN 8, 9; thay 4 tình huống theo địa phương.</p></div>
+    </div>
+    <ol class="steps" style="margin-top:16px">
+      <li style="--st:var(--c-teal)"><h4>Xin quyền</h4><p>Liên hệ tác giả để được thêm làm người chỉnh sửa website.</p></li>
+      <li style="--st:var(--c-teal)"><h4>Tạo bản sao</h4><p>Trong Google Sites, bấm menu ⋮ → Tạo bản sao, đặt tên site mới.</p></li>
+      <li style="--st:var(--c-teal)"><h4>Thay nội dung</h4><p>Đổi tên lớp, tình huống, link Form; mã nhúng có chú thích chỗ cần sửa.</p></li>
+      <li style="--st:var(--c-teal)"><h4>Xuất bản</h4><p>Bấm Xuất bản, chọn chế độ xem và tạo mã QR cho học sinh.</p></li>
+    </ol>
+    <div style="margin-top:14px"><a class="btn" id="btnCopySite" href="#huong-dan-sao-chep">📄 Hướng dẫn sao chép website</a> <span class="pending" id="copyNote"></span></div>
+    <div id="huong-dan-sao-chep" class="copy-guide" hidden>
+      <h4>📄 Hướng dẫn sao chép website pH Nhà Em</h4>
+      <ol>
+        <li><b>Xin quyền:</b> gửi email cho tác giả (GV Lê Thị Việt Hà, Trường THCS Nguyễn An Khương) để được thêm làm <b>Người chỉnh sửa</b> website.</li>
+        <li><b>Tạo bản sao:</b> mở website trong Google Sites → bấm dấu <b>⋮</b> (góc trên bên phải) → <b>Tạo bản sao trang web</b> → đặt tên mới, chọn thư mục Drive của thầy cô.</li>
+        <li><b>Thay thông tin:</b> ở mỗi khung nhúng, bấm <b>Chỉnh sửa mã</b>. Đầu mã có khối chú thích <code>DÁN LINK Ở ĐÂY</code> để thay link Gem, Form, video; đổi tên lớp, tình huống cho phù hợp.</li>
+        <li><b>Tạo phiếu khảo sát riêng:</b> sao chép phiếu khảo sát và phiếu tự đánh giá về Drive của thầy cô, rồi dán link mới vào trang Đánh giá.</li>
+        <li><b>Xuất bản:</b> bấm <b>Xuất bản</b> → đặt địa chỉ web → chọn <b>Bất kỳ ai</b> được xem → tạo mã QR gửi học sinh.</li>
+      </ol>
+      <p class="use">Toàn bộ công cụ miễn phí: Google Sites, Google Forms, Gemini. Bộ kit dùng bắp cải tím, hoa đậu biếc có sẵn trong bếp.</p>
+    </div>
+    <div class="green">🌿 Tiêu chí xanh của sáng kiến: chỉ thị tự nhiên thay hóa chất, mỗi mẫu chỉ 2 thìa, trung hòa chất thải trước khi đổ, học liệu và bài tập trên web thay cho đề cương in giấy.</div>
+  </section>
+
+  <!-- 8. MINH CHỨNG (đã chuyển sang trang riêng) -->
+  <section class="card">
+    <span class="eyebrow" style="--e:var(--c-lime)">8 · Kết quả và minh chứng</span>
+    <h3>Xem trang Minh chứng</h3>
+    <p class="desc">Kết quả khảo sát 35 học sinh lớp 8A4 (trước – sau), ý kiến học sinh, nhật ký kiểm thử Gem và phần hạn chế – hướng phát triển được trình bày đầy đủ ở trang Minh chứng, tránh lặp lại ở đây.</p>
+    <a class="btn" href="/minh-chung" target="_top">📊 Mở trang Minh chứng</a>
+  </section>
+
+
+  <footer>
+    <div class="stamp">🥬 WEBSITE pH NHÀ EM · SÁNG KIẾN KHTN 8 · AI &amp; HÓA HỌC XANH</div>
+    <div class="credit">Tác giả sáng kiến: GV Lê Thị Việt Hà · Đối tượng: học sinh lớp 8 · Trường THCS Nguyễn An Khương · Năm học 2026–2027</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  function ok(u){ return typeof u === 'string' && u.indexOf('http') === 0; }
+  function setBtn(id, url, noteId, msg){
+    var b = document.getElementById(id);
+    if(ok(url)){ b.href = url; }
+    else { b.classList.add('off'); b.removeAttribute('href'); if(noteId){ document.getElementById(noteId).textContent = msg; } }
+  }
+  // Nút Gem: có link thì mở Gem; chưa có thì dẫn tới hướng dẫn tạo Gem
+  (function(){
+    var b = document.getElementById('btnGem');
+    if(ok(LINK.gem_tro_ly_hoa8)){ b.href = LINK.gem_tro_ly_hoa8; document.getElementById('gemNote').textContent = 'Mở ở tab mới · cần tài khoản Google'; }
+    else {
+      b.removeAttribute('target'); b.href = '#gemGuide'; b.textContent = '💬 Xem cách tạo Gem “Trợ lý Hóa 8”';
+      b.addEventListener('click', function(e){ e.preventDefault(); var g = document.getElementById('gemGuide'); g.open = true; g.scrollIntoView({behavior:'smooth', block:'start'}); });
+    }
+  })();
+  // Nút hướng dẫn sao chép: có link Doc thì mở; chưa có thì mở hướng dẫn ngay trên trang
+  (function(){
+    var b = document.getElementById('btnCopySite'), box = document.getElementById('huong-dan-sao-chep');
+    if(ok(LINK.ban_sao_site)){ b.href = LINK.ban_sao_site; b.target = '_blank'; b.rel = 'noopener'; }
+    else { b.addEventListener('click', function(e){ e.preventDefault(); box.hidden = !box.hidden; if(!box.hidden) box.scrollIntoView({behavior:'smooth', block:'nearest'}); }); }
+  })();
+  Array.prototype.forEach.call(document.querySelectorAll('.copy'), function(btn){
+    btn.addEventListener('click', function(){
+      var text = document.getElementById(btn.getAttribute('data-copy')).textContent;
+      var done = function(){ btn.textContent = '✅ Đã sao chép'; setTimeout(function(){ btn.textContent = '📋 Sao chép'; }, 1600); };
+      try{
+        if(navigator.clipboard){ navigator.clipboard.writeText(text).then(done, function(){ window.prompt('Chép thủ công:', text); }); }
+        else { window.prompt('Chép thủ công:', text); }
+      }catch(e){ window.prompt('Chép thủ công:', text); }
+    });
+  });
+})();
+</script>
+</body>
+</html>

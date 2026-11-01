@@ -4,12 +4,36 @@
 
 | Tệp | Công dụng |
 |---|---|
-| `index.html` | Trang chủ, tự đọc nội dung từ `data/content.json`. |
+| `index.html` và 13 tệp `.html` khác | 14 trang của website. |
+| `noi-dung/` | Nội dung riêng của từng trang. |
+| `assets/` | Giao diện chung: menu, banner, chân trang, bảng tin. |
 | `admin.html` | Trang quản trị (đăng nhập bằng tên và mật khẩu). Địa chỉ: `/admin` |
 | `api/` | Phần máy chủ chạy trên Vercel: kiểm tra mật khẩu, ghi nội dung lên GitHub. |
 | `data/content.json` | Nơi lưu nội dung: thông báo, ảnh, bài tập, tài liệu. |
 | `uploads/` | Nơi lưu ảnh và tệp tải lên. |
 | `vercel.json` | Cho phép gõ `/admin` không cần `.html`, luôn lấy nội dung mới nhất. |
+
+### 14 trang của website (giống menu Google Site)
+
+| Địa chỉ | Trang | Ghi chú |
+|---|---|---|
+| `/` | Trang chủ | Có **Bảng tin lớp** lấy từ trang admin (thông báo, bài tập, ảnh, tài liệu mới) |
+| `/mo-dau` | Mở đầu | |
+| `/kien-thuc-bai-hoc` | Kiến thức bài học | |
+| `/mo-rong-kien-thuc` | Mở rộng kiến thức | Chưa có mã – tạm dẫn sang Google Site |
+| `/ho-tro-hoc-sinh` | Hỗ trợ học sinh | Có Trợ lý AI “Bé pH” |
+| `/tien-do-lam-viec` | Tiến độ làm việc | Chưa có mã – tạm dẫn sang Google Site |
+| `/trung-bay-san-pham` | Trưng bày sản phẩm | Có **toàn bộ ảnh** đăng từ admin |
+| `/quy-tac-an-toan` | Quy tắc an toàn | Chưa có mã – tạm dẫn sang Google Site |
+| `/bai-tap` | Bài tập | Có **bài tập** đăng từ admin |
+| `/danh-gia` | Đánh giá | |
+| `/goc-giao-vien` | Góc giáo viên | |
+| `/minh-chung` | Minh chứng | |
+| `/tai-lieu-tham-khao` | Tài liệu tham khảo | Có **tài liệu** đăng từ admin |
+| `/y-kien-cha-me-hoc-sinh` | Ý kiến cha mẹ học sinh | |
+| `/admin` | Trang quản trị | |
+
+Mỗi trang gồm khung chung (thanh menu, banner, chân trang trong `assets/`) và phần nội dung trong thư mục `noi-dung/`.
 
 Mật khẩu và mã GitHub **không nằm trong tệp nào**. Chúng được cất trong phần cài đặt bí mật của Vercel, người xem trang không đọc được.
 
@@ -19,7 +43,7 @@ Mật khẩu và mã GitHub **không nằm trong tệp nào**. Chúng được c
 
 1. Mở kho GitHub đang liên kết với Vercel (kho của trang ph-nhaem.vercel.app).
 2. Bấm **Add file → Upload files**.
-3. Mở thư mục `phnhaem_web` trên máy, chọn **tất cả** bên trong (`index.html`, `admin.html`, `vercel.json`, thư mục `api`, `data`, `uploads`) rồi kéo vào trang GitHub.
+3. Mở thư mục `phnhaem_web` trên máy, chọn **tất cả** bên trong (các tệp `.html`, `vercel.json`, thư mục `api`, `assets`, `noi-dung`, `data`, `uploads`) rồi kéo vào trang GitHub.
    Kéo **cả thư mục** để GitHub giữ nguyên cấu trúc `api/login.js`, `data/content.json`…
 4. Bấm **Commit changes**.
 

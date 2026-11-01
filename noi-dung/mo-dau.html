@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mở đầu | pH Nhà Em — Thử thách STEM KHTN 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --coral:#FF6B6B; --sky-ink:#8A4A1E;
+    --ink:#16202C; --ink-soft:#3F5266; --card:#FFFFFF;
+    /* Dãy màu dịch bắp cải tím theo pH – giống trang chủ */
+    --c-red:#D7263D; --c-pink:#E8508C; --c-mauve:#B04FB0; --c-purple:#7B4FB8;
+    --c-blue:#4B5FC9; --c-teal:#2F9C9A; --c-green:#3DAA5C; --c-lime:#B8C934;
+    --tint:#F7F2FC;
+    --radius:26px;
+    --shadow: 0 14px 28px rgba(31,92,134,.14);
+    --font-display:'Baloo 2', sans-serif; --font-body:'Be Vietnam Pro', sans-serif; --font-mono:'Roboto Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0; scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; } }
+  body{
+    font-family:var(--font-body); color:var(--ink);
+    background:
+      radial-gradient(circle at 8% 6%, rgba(232,80,140,.18), transparent 30%),
+      radial-gradient(circle at 92% 12%, rgba(123,79,184,.18), transparent 32%),
+      radial-gradient(circle at 12% 85%, rgba(61,170,92,.18), transparent 32%),
+      radial-gradient(circle at 90% 90%, rgba(75,95,201,.16), transparent 34%),
+      #FFFBF0;
+    padding: 22px 12px 60px;
+  }
+  .wrap{max-width:1040px; margin:0 auto;}
+  a{ color:inherit; }
+
+  /* HERO */
+  .sub-hero{ text-align:center; padding:20px 16px 10px; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:6px; font-family:var(--font-display); font-weight:700; font-size:13px;
+    letter-spacing:1px; color:var(--c-purple); background:#fff; border:2px solid var(--c-purple);
+    padding:7px 20px; border-radius:40px; margin-bottom:18px; text-transform:uppercase; }
+  .sub-hero h1{ font-family:var(--font-display); font-weight:800; line-height:1.08; font-size:clamp(32px,5.4vw,54px); margin:4px 0 6px;
+    background: linear-gradient(92deg, var(--c-red), var(--c-pink) 22%, var(--c-purple) 45%, var(--c-blue) 62%, var(--c-green) 82%, var(--c-lime));
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .sub-hero .tagline{ font-family:var(--font-display); font-weight:700; font-size:clamp(17px,2.6vw,22px); color:var(--c-purple); margin:0 0 10px; }
+  .sub-hero p{ max-width:700px; margin:0 auto 14px; font-size:15px; color:var(--ink-soft); line-height:1.7; }
+  .mini-bar{ max-width:420px; height:12px; margin:8px auto 0; border-radius:10px;
+    background: linear-gradient(90deg, var(--c-red), var(--c-pink) 25%, var(--c-mauve) 38%, var(--c-purple) 50%, var(--c-blue) 60%, var(--c-teal) 70%, var(--c-green) 80%, var(--c-lime)); }
+
+  /* CARD */
+  .card{ position:relative; background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:32px 26px 30px; margin:0 auto 28px; border:1px solid #EFE2F5; }
+  .card h3{ font-family:var(--font-display); font-weight:800; font-size:clamp(22px,3.2vw,30px); margin:0 0 14px; line-height:1.2; display:flex; align-items:center; gap:10px; }
+  .card > p{ color:var(--ink-soft); font-size:15px; line-height:1.75; margin:0 0 14px; }
+  .card p b{ color:var(--ink); }
+
+  /* KHỞI ĐỘNG */
+  .kickoff-card{ background: linear-gradient(135deg, #FDE7F0, #F1E6FB 55%, #E3EEFB); border:none; }
+  .kickoff-card h3{ color:var(--c-purple); }
+  .kickoff-hook{ background:#fff; border-radius:18px; padding:18px 20px; box-shadow:var(--shadow);
+    font-size:15.5px; line-height:1.75; margin-bottom:18px; border-left:6px solid var(--c-pink); }
+  .emoji-row{ display:flex; gap:10px; justify-content:center; font-size:30px; margin:6px 0 18px; }
+  .emoji-row span{ animation: bounce 2.4s ease-in-out infinite; display:inline-block; }
+  .emoji-row span:nth-child(2){ animation-delay:.2s; } .emoji-row span:nth-child(3){ animation-delay:.4s; }
+  .emoji-row span:nth-child(4){ animation-delay:.6s; } .emoji-row span:nth-child(5){ animation-delay:.8s; }
+  @keyframes bounce{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-8px);} }
+
+  .video-frame{ margin-top:6px; border-radius:16px; overflow:hidden; position:relative; padding-top:56.25%; background:#000; box-shadow:var(--shadow); }
+  .video-frame iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .video-caption{ text-align:center; font-size:13px; color:var(--ink-soft); margin-top:8px; }
+  .video-caption a{ color:var(--c-purple); font-weight:600; text-decoration:none; }
+
+
+  .predict-box{ background:#fff; border-radius:18px; padding:18px 20px; margin-top:18px; box-shadow:var(--shadow); border:2px dashed #D9C6EE; }
+  .predict-box p.q{ font-family:var(--font-display); font-weight:700; font-size:16px; color:var(--c-purple); margin:0 0 12px; }
+  .predict-options{ display:flex; flex-wrap:wrap; gap:10px; }
+  .predict-options .opt{ flex:1 1 160px; text-align:center; background:var(--tint); border-radius:14px; padding:12px 10px; font-size:13.5px; font-weight:600;
+    border:2px solid transparent; cursor:pointer; transition: transform .15s, border-color .15s, background .15s; user-select:none; }
+  .predict-options .opt:hover{ transform:translateY(-2px); }
+  .predict-options .opt .e{ display:block; font-size:26px; margin-bottom:4px; }
+  .predict-options .opt.a{ border-color:var(--c-pink); } .predict-options .opt.b{ border-color:var(--c-purple); } .predict-options .opt.c{ border-color:var(--c-blue); }
+  .predict-options.answered .opt{ cursor:default; } .predict-options.answered .opt:hover{ transform:none; }
+  .predict-options.answered .opt:not(.correct-answer){ opacity:.55; }
+  .predict-options .opt.correct-answer{ background:#E9F7EE; border-color:var(--c-green); box-shadow:0 0 0 3px rgba(61,170,92,.25); }
+  .predict-options .opt.wrong-pick{ background:#FDECF2; border-color:var(--c-red); }
+  .predict-note{ font-size:12.5px; color:var(--ink-soft); margin-top:10px; text-align:center; }
+  .predict-feedback{ margin-top:14px; padding:12px 16px; border-radius:14px; font-size:14px; line-height:1.6; display:none; }
+  .predict-feedback.show{ display:block; }
+  .predict-feedback.ok{ background:#E9F7EE; color:#256B45; border:1px solid #BEE6CB; }
+  .predict-feedback.no{ background:#F4ECFB; color:#5A3A8A; border:1px solid #DCCBF0; }
+
+  /* BỐI CẢNH */
+  .story-box{ background: linear-gradient(135deg, var(--tint), #EEF3FD); border-radius:20px; padding:22px 24px; border:2px dashed #D9C6EE;
+    font-size:15.5px; line-height:1.8; font-style:italic; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800; font-size:15px; color:#fff; text-decoration:none;
+    padding:11px 22px; border-radius:26px; background: linear-gradient(90deg, var(--c-pink), var(--c-purple) 50%, var(--c-blue)); box-shadow:var(--shadow); }
+
+  /* KWL */
+  .form-frame{ border-radius:18px; overflow:hidden; background:#fff; box-shadow:var(--shadow); border:2px solid #E6D9F3; }
+  .form-frame iframe{ display:block; width:100%; height:1150px; border:0; }
+  .kwl-card h3{ color:var(--c-purple); }
+  .kwl-guide{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-bottom:18px; }
+  @media (max-width:760px){ .kwl-guide{ grid-template-columns:1fr; } }
+  .kcol{ border-radius:18px; padding:16px; background:var(--tint); border-top:5px solid var(--k); }
+  .kcol .big{ font-family:var(--font-display); font-weight:800; font-size:30px; color:var(--k); line-height:1; }
+  .kcol .ttl{ font-family:var(--font-display); font-weight:700; font-size:16px; margin:4px 0 6px; }
+  .kcol ul{ margin:0; padding-left:18px; font-size:13px; line-height:1.6; color:var(--ink-soft); }
+  .kcol .when{ display:inline-block; margin-top:8px; font-family:var(--font-mono); font-size:11px; font-weight:700; color:#fff; background:var(--k); padding:2px 9px; border-radius:10px; }
+  .hint{ font-size:12px; color:var(--ink-soft); margin-top:4px; }
+
+  /* NHÓM – 2 hàng */
+  .group-grid{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:18px; margin-top:8px; }
+  @media (max-width:640px){ .group-grid{ grid-template-columns:1fr; } }
+  .group-card{ border-radius:20px; padding:20px 18px; background:#fff; border:2px solid var(--g); box-shadow:var(--shadow); display:flex; flex-direction:column; gap:8px; }
+  .group-card .top{ display:flex; align-items:center; gap:12px; }
+  .icon-badge{ flex:0 0 52px; width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:26px; background:var(--g); box-shadow:var(--shadow); }
+  .tag{ font-family:var(--font-mono); font-size:11px; font-weight:700; color:#fff; background:var(--g); padding:3px 10px; border-radius:12px; }
+  .g-topic{ font-family:var(--font-display); font-weight:800; font-size:19px; margin:2px 0 0; line-height:1.2; }
+  .g-story{ font-size:13.5px; color:var(--ink-soft); line-height:1.6; margin:0; }
+  .g-q{ font-size:13.5px; line-height:1.55; margin:0; padding:10px 12px; border-radius:12px; background:var(--tint); }
+  .g-q ol{ margin:6px 0 0; padding-left:20px; } .g-q li{ margin-bottom:4px; }
+  .g-green{ font-size:13px; line-height:1.55; margin:0; padding:8px 12px; border-radius:12px; background:#EEF8F1; color:#256B45; }
+  .chem{ list-style:none; margin:2px 0 0; padding:0; display:flex; flex-direction:column; gap:6px; }
+  .chem li{ display:flex; align-items:center; gap:10px; font-size:13px; line-height:1.4; }
+  .chem .dot{ flex:0 0 18px; width:18px; height:18px; border-radius:50%; background:var(--d); box-shadow: inset 0 -3px 0 rgba(0,0,0,.12); }
+
+  /* NHIỆM VỤ */
+  .step-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
+  .step-list li{ display:flex; gap:14px; align-items:flex-start; background:var(--tint); border-radius:16px; padding:14px 16px; border:1px solid #EFE2F5; }
+  .step-list li.highlight{ border:2px solid var(--c-pink); background:#FDF0F5; }
+  .step-list li.ai{ border:2px solid var(--c-blue); background:#EEF1FC; }
+  .step-num{ flex:0 0 auto; width:34px; height:34px; border-radius:50%; background:var(--n, var(--c-purple));
+    color:#fff; font-family:var(--font-display); font-weight:800; font-size:16px; display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow); }
+  .step-list p{ margin:0; font-size:14.5px; line-height:1.65; }
+  .step-list p b{ color:var(--c-purple); }
+  .safety{ margin-top:16px; padding:12px 16px; border-radius:14px; background:#FFF4F4; border-left:5px solid var(--coral); font-size:13.5px; color:var(--ink-soft); line-height:1.6; }
+  .green-box{ margin-top:12px; padding:12px 16px; border-radius:14px; background:#EEF8F1; border-left:5px solid var(--c-green); font-size:13.5px; color:#2D5A40; line-height:1.6; }
+  .green-box ul{ margin:6px 0 0; padding-left:20px; }
+
+  /* SẢN PHẨM */
+  .deliver-grid{ display:grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap:16px; margin-top:8px; }
+  .deliver-card{ background:var(--tint); border-radius:18px; padding:18px; text-align:center; box-shadow:var(--shadow); border-top:5px solid var(--d); }
+  .deliver-card .emoji{ font-size:34px; display:block; margin-bottom:8px; }
+  .deliver-card p{ margin:0; font-size:13.5px; line-height:1.55; }
+  .deliver-card p.title{ font-family:var(--font-display); font-weight:700; font-size:15px; margin-bottom:4px; }
+
+  .tip{ display:flex; gap:14px; align-items:center; background:#fff; border-radius:18px; padding:14px 16px; margin-top:4px; border:2px dashed #D9C6EE; }
+  .tip p{ margin:0; font-size:13.5px; line-height:1.55; color:var(--ink-soft); }
+  .tip b{ font-family:var(--font-display); color:var(--c-purple); }
+  footer{ text-align:center; margin-top:28px; }
+  .stamp{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800; font-size:14px;
+    color:#fff; padding:11px 22px; border-radius:24px; background: linear-gradient(90deg, var(--c-red), var(--c-purple) 45%, var(--c-blue) 70%, var(--c-green)); box-shadow:var(--shadow); }
+  .credit{ font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); margin-top:12px; line-height:1.7; }
+  @media (max-width:520px){ .card{ padding:24px 16px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="sub-hero">
+    <span class="eyebrow">KHTN 8 · Bài 8 – 11 · Thử thách STEM · AI &amp; Hóa học xanh</span>
+    <h1>Biệt đội Hóa học xanh</h1>
+    <p class="tagline">🥬 Giải mã pH trong ngôi nhà em</p>
+    <p>Nhà em không có máy đo pH, nhưng trong bếp có bắp cải tím, trước nhà có giàn hoa đậu biếc. Cả lớp sẽ tự chế tạo <b>Bộ kit thử pH tự nhiên</b>, học cùng <b>trợ lý AI</b> và trả lời 4 câu hỏi thật trong gia đình — theo cách thân thiện với môi trường.</p>
+    <div class="mini-bar" aria-hidden="true"></div>
+  </div>
+
+  <!-- KHỞI ĐỘNG -->
+  <section class="card kickoff-card">
+    <h3>🎉 Khởi động — Bí mật giấu trong màu sắc!</h3>
+    <div class="kickoff-hook">
+      Các em có biết? Chỉ vài giọt nước bắp cải tím là có thể <b>đổi màu như tắc kè hoa</b>: đỏ, hồng, tím, xanh lam, xanh lục, vàng — tùy chất mà nó gặp trong căn bếp. Đó chính là <b>chất chỉ thị màu tự nhiên</b>. Xem đoạn video ngắn dưới đây để thấy điều kỳ diệu đó 👇
+    </div>
+    <div class="emoji-row"><span>🧪</span><span>🌈</span><span>🥬</span><span>🍋</span><span>✨</span></div>
+
+    <div class="video-frame">
+      <iframe src="https://www.youtube-nocookie.com/embed/4phd0XRMKHU?rel=0&modestbranding=1" title="Khởi động: Bí mật chất chỉ thị màu tự nhiên" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen loading="lazy"></iframe>
+    </div>
+    <p class="video-caption">Video không hiện lên? <a href="https://www.youtube.com/watch?v=4phd0XRMKHU" target="_blank" rel="noopener">▶️ Xem trực tiếp trên YouTube</a></p>
+
+
+    <div class="predict-box">
+      <p class="q">🔮 Dự đoán nhanh: Theo em, vì sao nước bắp cải tím lại đổi màu?</p>
+      <div class="predict-options" id="predictOptions">
+        <div class="opt a" data-correct="false" onclick="selectPredict(this)"><span class="e">🎨</span>Do nó vốn nhiều màu sẵn</div>
+        <div class="opt b" data-correct="true" onclick="selectPredict(this)"><span class="e">⚗️</span>Do môi trường acid hay base khác nhau</div>
+        <div class="opt c" data-correct="false" onclick="selectPredict(this)"><span class="e">🌡️</span>Do nhiệt độ thay đổi</div>
+      </div>
+      <p class="predict-note">Thảo luận nhanh với nhóm, chọn 1 đáp án — chúng ta sẽ kiểm chứng bằng chính bộ kit của mình!</p>
+      <div class="predict-feedback" id="predictFeedback"></div>
+    </div>
+  </section>
+
+  <!-- BỐI CẢNH -->
+  <section class="card">
+    <h3>🏘️ Bối cảnh</h3>
+    <div class="story-box">
+      “Trong ngôi nhà nào cũng có những câu hỏi về pH: đồ uống nào làm mòn răng, chất tẩy rửa nào làm khô da tay, vôi bón vườn mạnh cỡ nào, muối nào dùng vào việc gì. Lớp 8 được giao nhiệm vụ: thành lập <b>Biệt đội Hóa học xanh</b>, chế tạo Bộ kit thử pH tự nhiên, dùng kiến thức acid – base – thang pH – oxide – muối để giải mã pH trong ngôi nhà em. Biệt đội được dùng <b>trợ lý AI</b> để hỏi khi bí, nhưng mọi kết luận phải được <b>kiểm chứng bằng kit</b>, và mọi thí nghiệm phải <b>thân thiện với môi trường</b>. Kết quả được chia sẻ trên website <b>pH Nhà Em</b>.”
+    </div>
+  </section>
+
+
+  <!-- 4 NHÓM -->
+  <section class="card">
+    <h3>👥 4 nhóm · 4 tình huống</h3>
+    <p>Mỗi nhóm 8 – 9 học sinh phụ trách một bài và một tình huống. Mỗi nhóm thử 5 chất an toàn, xếp theo pH tăng dần thành một dãy màu (màu dưới đây là dự kiến với dịch bắp cải tím).</p>
+    <div class="group-grid">
+
+      <div class="group-card" style="--g:var(--c-red)">
+        <div class="top"><div class="icon-badge">😁</div><div><span class="tag">NHÓM 1 · BÀI 8 · ACID</span><p class="g-topic">Bảo vệ nụ cười</p></div></div>
+        <p class="g-story">Em trai bạn Minh thích nước cam, nước ngọt có gas; nha sĩ nói men răng của em bị mòn.</p>
+        <div class="g-q"><b>❓ Nhóm cần trả lời:</b><ol><li>Trong 5 đồ uống, loại nào có màu đỏ đậm nhất (chua nhất, pH thấp nhất)?</li><li>Những đồ uống nào có pH dưới 5,5 — mức men răng bắt đầu bị mòn?</li><li>Em khuyên em trai Minh uống những đồ uống này thế nào để bảo vệ răng?</li></ol></div>
+        <p class="g-green">🌿 <b>Câu hỏi xanh:</b> nước mưa bình thường có pH khoảng 5,6. Vì sao có nơi mưa còn chua hơn (mưa acid)?</p>
+        <ul class="chem">
+          <li><span class="dot" style="--d:#D7263D"></span>Nước chanh · đỏ</li>
+          <li><span class="dot" style="--d:#D93450"></span>Giấm ăn · đỏ</li>
+          <li><span class="dot" style="--d:#E04468"></span>Nước ngọt có gas · đỏ hồng</li>
+          <li><span class="dot" style="--d:#E8508C"></span>Nước cam · hồng</li>
+          <li><span class="dot" style="--d:#C24FA6"></span>Sữa chua uống · hồng tím</li>
+        </ul>
+      </div>
+
+      <div class="group-card" style="--g:var(--c-purple)">
+        <div class="top"><div class="icon-badge">🧼</div><div><span class="tag">NHÓM 2 · BÀI 9 · BASE &amp; THANG pH</span><p class="g-topic">Đôi tay của mẹ</p></div></div>
+        <p class="g-story">Mẹ bạn Lan rửa chén, giặt đồ bằng tay nên da tay khô, nứt nẻ. Da khỏe có pH khoảng 4,5 – 5,5.</p>
+        <div class="g-q"><b>❓ Nhóm cần trả lời:</b><ol><li>Xếp 5 chất tẩy rửa theo màu, từ tím (base yếu) đến xanh lục (base mạnh).</li><li>Chất nào có pH cao nhất, khác xa pH của da tay (4,5 – 5,5) nhất?</li><li>Khi dùng chất đó, mẹ Lan cần làm gì để bảo vệ da tay?</li></ol></div>
+        <p class="g-green">🌿 <b>Câu hỏi xanh:</b> dùng chất tẩy rửa quá liều ảnh hưởng thế nào đến nguồn nước? Gia đình em có thể làm gì?</p>
+        <ul class="chem">
+          <li><span class="dot" style="--d:#7B4FB8"></span>Dầu gội, sữa tắm (pha loãng) · tím</li>
+          <li><span class="dot" style="--d:#6157C2"></span>Nước rửa chén (pha loãng) · tím xanh</li>
+          <li><span class="dot" style="--d:#4B5FC9"></span>Kem đánh răng hòa nước · xanh lam</li>
+          <li><span class="dot" style="--d:#2F9C9A"></span>Nước xà phòng bánh · xanh ngả lục</li>
+          <li><span class="dot" style="--d:#3DAA5C"></span>Bột giặt (pha loãng) · xanh lục</li>
+        </ul>
+      </div>
+
+      <div class="group-card" style="--g:var(--c-teal)">
+        <div class="top"><div class="icon-badge">🌱</div><div><span class="tag">NHÓM 3 · BÀI 10 · OXIDE</span><p class="g-topic">Vườn rau của ông bà</p></div></div>
+        <p class="g-story">Ông bà bạn An trồng rau ở Hóc Môn, định rắc vôi khử chua đất nhưng không biết rắc bao nhiêu là vừa.</p>
+        <div class="g-q"><b>❓ Nhóm cần trả lời:</b><ol><li>Nước vôi càng đậm thì màu đổi thế nào? pH tăng hay giảm?</li><li>Vì sao nước soda có gas và hơi thở (chứa CO₂) làm màu chuyển về phía acid?</li><li>Vì sao vôi khử được đất chua, nhưng ông bà phải bón đúng liều?</li></ol></div>
+        <p class="g-green">🌿 <b>Câu hỏi xanh:</b> thử nước đất vườn bằng kit — đất có chua không? CO₂ thải ra nhiều thì ảnh hưởng gì đến khí hậu?</p>
+        <ul class="chem">
+          <li><span class="dot" style="--d:#E8508C"></span>Nước soda có gas (CO₂) · hồng</li>
+          <li><span class="dot" style="--d:#4B5FC9"></span>Nước vôi trong pha loãng 100 lần · xanh lam</li>
+          <li><span class="dot" style="--d:#3DAA5C"></span>Nước vôi trong pha loãng 10 lần · xanh lục</li>
+          <li><span class="dot" style="--d:#B8C934"></span>Nước vôi trong nguyên chất · vàng lục</li>
+          <li><span class="dot" style="--d:#7B4FB8"></span>Thổi hơi thở vào nước vôi · xanh lam → tím, vẩn đục</li>
+        </ul>
+      </div>
+
+      <div class="group-card" style="--g:var(--c-green)">
+        <div class="top"><div class="icon-badge">🧂</div><div><span class="tag">NHÓM 4 · BÀI 11 · MUỐI</span><p class="g-topic">Gian bếp của mẹ</p></div></div>
+        <p class="g-story">Em bạn Hà bị kiến cắn, mẹ chấm nước baking soda; mẹ còn dùng phèn chua làm trong nước.</p>
+        <div class="g-q"><b>❓ Nhóm cần trả lời:</b><ol><li>Trong 4 muối, muối nào trung tính, muối nào có tính acid, muối nào có tính base?</li><li>Nhỏ giấm vào baking soda, em thấy những hiện tượng gì (bọt khí, màu)?</li><li>Vậy vì sao chấm nước baking soda giúp đỡ đau khi bị kiến cắn (nọc kiến có acid)?</li></ol></div>
+        <p class="g-green">🌿 <b>Câu hỏi xanh:</b> baking soda và giấm có thể thay chất tẩy rửa mạnh trong việc nào ở nhà?</p>
+        <ul class="chem">
+          <li><span class="dot" style="--d:#E8508C"></span>Phèn chua (pha loãng) · hồng</li>
+          <li><span class="dot" style="--d:#7B4FB8"></span>Nước muối ăn · tím (đối chứng)</li>
+          <li><span class="dot" style="--d:#4B5FC9"></span>Baking soda · xanh lam</li>
+          <li><span class="dot" style="--d:#3DAA5C"></span>Nước tro tàu (pha loãng) · xanh lục</li>
+          <li><span class="dot" style="--d:#B04FB0"></span>Baking soda nhỏ giấm · sủi bọt, xanh → tím → hồng</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- NHIỆM VỤ -->
+  <section class="card">
+    <h3>🎯 Nhiệm vụ của mỗi nhóm</h3>
+    <p>Bốn nhóm khác tình huống nhưng <b>cùng một sản phẩm, cùng độ khó</b>:</p>
+    <ul class="step-list">
+      <li class="highlight"><span class="step-num" style="--n:var(--c-red)">1</span><p><b>Chế tạo Bộ kit thử pH tự nhiên:</b> chiết dịch bắp cải tím và hoa đậu biếc, thử 2 nồng độ với giấm – nước lọc – baking soda, đóng vào lọ tái sử dụng, dán nhãn, lập bảng màu; cải tiến từ phiên bản 1 lên 2.</p></li>
+      <li><span class="step-num" style="--n:var(--c-pink)">2</span><p><b>Thử 5 chất</b> của tình huống: 2 thìa mẫu + 10 giọt dịch, mỗi chất thử 2 lần; xếp 5 ly theo pH tăng dần, chụp ảnh dãy màu, quay clip. Thu gom và <b>trung hòa chất thải</b> trước khi đổ bỏ.</p></li>
+      <li class="ai"><span class="step-num" style="--n:var(--c-blue)">3</span><p><b>Kiểm chứng AI:</b> hỏi Trợ lý pH Nhà Em 1 câu về một chất của nhóm (ví dụ “nước rửa chén có tính acid hay base?”), ghi lại câu trả lời, rồi thử bằng kit. AI đúng hay sai? Ghi vào <b>Nhật ký kiểm chứng AI</b>.</p></li>
+      <li><span class="step-num" style="--n:var(--c-purple)">4</span><p><b>Giải quyết tình huống:</b> từ kết quả, trả lời câu hỏi của nhóm, viết <b>khuyến cáo</b> cho gia đình và đề xuất <b>1 hành động xanh</b>.</p></li>
+      <li><span class="step-num" style="--n:var(--c-teal)">5</span><p><b>Đóng góp cho website:</b> gửi ảnh dãy màu, khuyến cáo và nhật ký kiểm chứng AI để giáo viên cập nhật lên website. Ghi rõ phần nào có AI hỗ trợ.</p></li>
+      <li><span class="step-num" style="--n:var(--c-green)">6</span><p><b>Thử nghiệm với người dùng:</b> mời 3 người thân, bạn bè xem phần web của nhóm và góp ý để sửa.</p></li>
+      <li><span class="step-num" style="--n:var(--c-lime)">7</span><p><b>Trình bày ở Tiết 2</b> trước “Hội đồng chuyên môn” — chính là lớp học của chúng ta — và tham gia thử thách <b>“Mẫu bí ẩn – Đổi kit”</b>.</p></li>
+    </ul>
+    <div class="safety">⚠️ <b>An toàn:</b> có người lớn giám sát khi dùng nước sôi, pha nước vôi, nước tro; không nếm, không ngửi trực tiếp; đeo găng khi thử chất tẩy rửa, nước vôi, nước tro tàu, phèn chua. <b>Không</b> thử nước Javel, chất thông cống, nước tẩy bồn cầu, xăng dầu, thuốc trừ sâu, phân bón.</div>
+    <div class="green-box">🌿 <b>Nguyên tắc xanh của Biệt đội:</b>
+      <ul>
+        <li>Dùng lượng nhỏ: đủ để thấy màu là được.</li>
+        <li>Gộp cốc acid và cốc base dư, nhỏ dịch bắp cải kiểm tra đến khi có màu tím (trung tính) rồi mới đổ.</li>
+        <li>Bã bắp cải, hoa đậu biếc bỏ thùng rác hữu cơ hoặc ủ phân.</li>
+        <li>Rửa và giữ lại chai, lọ để dùng cho kit phiên bản 2.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SẢN PHẨM -->
+  <section class="card">
+    <h3>📋 Sản phẩm cần nộp</h3>
+    <div class="deliver-grid">
+      <div class="deliver-card" style="--d:var(--c-pink)"><span class="emoji">🧪</span><p class="title">Bộ kit thử pH</p><p>2 lọ dịch chỉ thị có nhãn, bảng màu; mang lên lớp ở Tiết 2.</p></div>
+      <div class="deliver-card" style="--d:var(--c-purple)"><span class="emoji">🌈</span><p class="title">Dãy màu &amp; kết quả</p><p>Ảnh dãy màu 5 chất, số liệu đã nhập Google Forms.</p></div>
+      <div class="deliver-card" style="--d:var(--c-blue)"><span class="emoji">🎬</span><p class="title">Clip ≤ 3 phút</p><p>Quá trình chế tạo kit, thử 5 chất và xử lý chất thải.</p></div>
+      <div class="deliver-card" style="--d:var(--c-teal)"><span class="emoji">🔍</span><p class="title">Nhật ký kiểm chứng AI</p><p>Câu hỏi đã hỏi AI, câu trả lời, kết quả thử bằng kit.</p></div>
+      <div class="deliver-card" style="--d:var(--c-green)"><span class="emoji">💡</span><p class="title">Khuyến cáo &amp; hành động xanh</p><p>Lời khuyên cho gia đình và 1 hành động xanh, đăng trên website.</p></div>
+    </div>
+  </section>
+
+  <div class="tip">
+    <span>🌟</span>
+    <p><b>Tiếp theo:</b> các nhóm sang trang <b>“Quy tắc an toàn”</b> để đọc kĩ trước khi làm thí nghiệm, rồi sang <b>“Kiến thức bài học”</b> để ôn nền tảng khoa học.</p>
+  </div>
+
+  <!-- PHIẾU KWL -->
+  <section class="card kwl-card" id="kwl" style="margin-top:28px">
+    <h3>📝 Phiếu KWL — Em biết gì về pH?</h3>
+    <p>Mỗi bạn điền <b>2 lần</b>: <b>trước Tiết 1</b> điền cột K và W; <b>cuối Tiết 2</b> điền cột L. Em điền phiếu ở khung ngay bên dưới.</p>
+    <div class="kwl-guide">
+      <div class="kcol" style="--k:var(--c-pink)"><div class="big">K</div><div class="ttl">Em đã biết gì?</div>
+        <ul><li>Acid, base là gì? pH cho biết điều gì?</li><li>Kể 2 chất có vị chua và 2 chất tẩy rửa trong nhà em.</li><li>Em đã từng thấy chất nào đổi màu chưa?</li></ul><span class="when">TRƯỚC TIẾT 1</span></div>
+      <div class="kcol" style="--k:var(--c-purple)"><div class="big">W</div><div class="ttl">Em và gia đình muốn biết gì?</div>
+        <ul><li>Hỏi bố mẹ, ông bà 1 câu về đồ uống, chất tẩy rửa, vôi bón vườn hoặc muối trong bếp.</li><li>Viết thành câu hỏi bắt đầu bằng “Vì sao…”, “Có… không?”, “Nên… thế nào?”.</li></ul><span class="when">TRƯỚC TIẾT 1</span></div>
+      <div class="kcol" style="--k:var(--c-green)"><div class="big">L</div><div class="ttl">Em đã học được gì?</div>
+        <ul><li>1 điều mới em học được về acid, base, oxide hoặc muối.</li><li>Câu hỏi ở cột W đã có câu trả lời chưa?</li><li>1 lời khuyên em sẽ nói với gia đình.</li><li>1 hành động xanh em sẽ làm.</li></ul><span class="when">CUỐI TIẾT 2</span></div>
+    </div>
+
+    <p class="hint" style="text-align:center;margin-top:4px">🔒 Chỉ ghi tên, không ghi họ, địa chỉ, số điện thoại.</p>
+    <p style="text-align:center;font-family:var(--font-display);font-weight:800;font-size:20px;color:var(--c-purple);margin:10px 0 12px">⬇️ Điền phiếu KWL ngay bên dưới ⬇️</p>
+    <div class="form-frame"><iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc48SbQtBM_c6ZIbwcVnii3jiA18xhvTekjatmL3on_EVH0YA/viewform?embedded=true" title="Phiếu KWL – pH Nhà Em" loading="lazy">Đang tải phiếu…</iframe></div>
+    <p class="video-caption">Phiếu không hiện lên? <a href="https://docs.google.com/forms/d/e/1FAIpQLSc48SbQtBM_c6ZIbwcVnii3jiA18xhvTekjatmL3on_EVH0YA/viewform" target="_blank" rel="noopener">📝 Mở phiếu KWL trong tab mới</a></p>
+  </section>
+
+  <footer>
+    <div class="stamp">🥬 WEBSITE pH NHÀ EM · SÁNG KIẾN KHTN 8 · AI &amp; HÓA HỌC XANH</div>
+    <div class="credit">Tác giả sáng kiến: GV Lê Thị Việt Hà · Đối tượng: học sinh lớp 8 · Trường THCS Nguyễn An Khương · Năm học 2026–2027</div>
+  </footer>
+
+</div>
+
+<script>
+  function selectPredict(el){
+    var group = document.getElementById('predictOptions');
+    if (group.classList.contains('answered')) return;
+    group.classList.add('answered');
+    var isCorrect = el.getAttribute('data-correct') === 'true';
+    group.querySelectorAll('.opt').forEach(function(opt){
+      if (opt.getAttribute('data-correct') === 'true') opt.classList.add('correct-answer');
+    });
+    if (!isCorrect) el.classList.add('wrong-pick');
+    var fb = document.getElementById('predictFeedback');
+    if (isCorrect){
+      fb.className = 'predict-feedback show ok';
+      fb.innerHTML = '✅ <b>Chính xác!</b> Bắp cải tím chứa sắc tố <b>anthocyanin</b>, đổi màu theo môi trường acid hay base. Vì vậy nó là một <b>chất chỉ thị màu tự nhiên</b> — và chúng ta sẽ dùng nó để làm Bộ kit thử pH!';
+    } else {
+      fb.className = 'predict-feedback show no';
+      fb.innerHTML = '🤔 Chưa đúng rồi. Đáp án đúng là <b>“Do môi trường acid hay base khác nhau”</b>: sắc tố anthocyanin trong bắp cải tím đổi màu theo pH của chất mà nó gặp.';
+    }
+  }
+</script>
+</body>
+</html>

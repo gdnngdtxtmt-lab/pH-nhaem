@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ý kiến cha mẹ học sinh | pH Nhà Em — KHTN 8</title>
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script>
+/* ===== CÔ CHỈ CẦN SỬA 2 CHỖ NÀY ===== */
+
+/* 1) Link phiếu góp ý của phụ huynh (Google Forms). Để trống "" nếu chưa có. */
+var LINK_FORM = "";
+
+/* 2) Ý kiến cha mẹ học sinh – chỉ dán ý kiến THẬT, phụ huynh đã đồng ý công khai, KHÔNG ghi họ tên.
+   Mỗi ý kiến là một dòng { nhom: "...", vai: "...", y: "..." }, cách nhau bằng dấu phẩy. Ví dụ định dạng:
+   { nhom: "Nhóm 2", vai: "Mẹ của học sinh", y: "Nội dung ý kiến..." },
+*/
+var Y_KIEN = [
+  { nhom: "", vai: "Phụ huynh lớp 8A4", y: "Nhờ có trang web hướng dẫn chi tiết các bước làm việc, bố mẹ có thể theo dõi sát sao tiến độ học tập và sản phẩm của con ngay tại nhà. Tôi rất ủng hộ nhà trường và giáo viên bộ môn ứng dụng công nghệ như thế này để phụ huynh dễ dàng đồng hành cùng con trong các dự án học tập." },
+  { nhom: "", vai: "Phụ huynh lớp 8A4", y: "Con nhà tôi vốn rụt rè, nhưng khi tham gia dự án STEM này, con chủ động phân công nhiệm vụ với nhóm, tự quay video thí nghiệm và giải thích các hiện tượng khoa học rất tự tin. Gia đình rất cảm ơn thầy cô đã tạo ra một sân chơi bổ ích để các con phát triển toàn diện cả kiến thức lẫn kỹ năng mềm." },
+  { nhom: "", vai: "Phụ huynh lớp 8A4", y: "Website trình bày rất trực quan, khoa học, dễ sử dụng. Nội dung dự án thiết thực, giúp học sinh rèn luyện tư duy sáng tạo và gắn kết tình cảm gia đình qua việc cùng con làm thí nghiệm." },
+  { nhom: "", vai: "Phụ huynh lớp 8A4", y: "Website hướng dẫn rất trực quan, dễ hiểu; giúp phụ huynh dễ dàng theo dõi và đồng hành cùng con thực hiện thí nghiệm ngay tại nhà." },
+  { nhom: "", vai: "Phụ huynh lớp 8A4", y: "Dự án rất thiết thực và bổ ích, giúp học sinh gắn kết kiến thức khoa học với đời sống thực tế và tránh xa điện thoại, game." },
+  { nhom: "", vai: "Phụ huynh lớp 8A4", y: "Con hào hứng và chủ động hơn hẳn khi được tự tay làm các thí nghiệm sắc màu từ nguyên liệu tự nhiên." },
+  { nhom: "", vai: "Phụ huynh lớp 8A4", y: "Hoạt động STEM kết hợp nền tảng số này rất hay, tăng cường sự kết nối hiệu quả giữa gia đình và nhà trường trong việc giáo dục học sinh." },
+  { nhom: "", vai: "Phụ huynh lớp 8A4", y: "Gia đình rất bất ngờ khi thấy con tự tin thuyết trình về tính chất pH của các chất trong nhà sau khi hoàn thành dự án." },
+  { nhom: "", vai: "Phụ huynh lớp 8A4", y: "Các video hướng dẫn thí nghiệm trên website rất trực quan, giúp phụ huynh và con dễ dàng thực hiện lại vào cuối tuần một cách an toàn." },
+  { nhom: "", vai: "Phụ huynh lớp 8A4", y: "Mong nhà trường và thầy cô nhân rộng nhiều dự án STEM thế này để các con vừa học vừa chơi, phát triển thêm kỹ năng thực tế." },
+  { nhom: "", vai: "Phụ huynh lớp 8A4", y: "Hoạt động giúp bố mẹ có thêm thời gian chất lượng bên con, cùng con tìm hiểu khoa học qua những nguyên liệu gần gũi trong bếp." },
+  { nhom: "", vai: "Phụ huynh lớp 8A4", y: "Website trình bày khoa học, thông báo rõ ràng từng giai đoạn giúp phụ huynh không bị bỏ lỡ tiến độ học tập của con." },
+  { nhom: "", vai: "Phụ huynh lớp 8A4", y: "Con tiến bộ rõ rệt về ý thức tự giác, biết cách phân công việc nhóm và có trách nhiệm hơn với nhiệm vụ được giao." }
+];
+
+/* Số phụ huynh đã tham gia dự án */
+var SO_PHU_HUYNH = 28;
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16202C; --ink-soft:#3F5266; --card:#FFFFFF; --tint:#F7F2FC; --line:#E6D9F3;
+    --c-red:#D7263D; --c-pink:#E8508C; --c-mauve:#B04FB0; --c-purple:#7B4FB8; --c-purple-dark:#55348A;
+    --c-blue:#4B5FC9; --c-teal:#2F9C9A; --c-green:#3DAA5C; --c-lime:#B8C934;
+    --radius:26px; --shadow:0 14px 28px rgba(31,92,134,.14);
+    --font-display:'Baloo 2', sans-serif; --font-body:'Be Vietnam Pro', sans-serif; --font-mono:'Roboto Mono', monospace;
+  }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{ font-family:var(--font-body); color:var(--ink);
+    background:
+      radial-gradient(circle at 8% 6%, rgba(232,80,140,.18), transparent 30%),
+      radial-gradient(circle at 92% 12%, rgba(123,79,184,.18), transparent 32%),
+      radial-gradient(circle at 12% 85%, rgba(61,170,92,.18), transparent 32%),
+      radial-gradient(circle at 90% 90%, rgba(75,95,201,.16), transparent 34%), #FFFBF0;
+    padding:30px 12px 60px; }
+  a{ color:inherit; }
+  .wrap{max-width:1060px; margin:0 auto;}
+  .page-title{ text-align:center; margin-bottom:18px; }
+  .page-title .badge{ font-family:var(--font-mono); font-size:12px; letter-spacing:1.2px; color:var(--c-purple);
+    background:#fff; border:2px solid var(--c-purple); display:inline-block; padding:5px 14px; border-radius:20px; box-shadow:var(--shadow); }
+  .page-title h1{ font-family:var(--font-display); font-weight:800; font-size:clamp(32px,5.6vw,50px); margin:12px 0 4px;
+    background:linear-gradient(92deg, var(--c-red), var(--c-pink) 22%, var(--c-purple) 45%, var(--c-blue) 62%, var(--c-green) 82%, var(--c-lime));
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .page-title h1 .h1-emo{ color:#000; -webkit-text-fill-color:initial; }
+  .page-title p{ color:var(--ink-soft); font-size:14.5px; max-width:640px; margin:0 auto; line-height:1.6; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:6px; font-family:var(--font-display); font-weight:700; font-size:14px;
+    color:#fff; background:var(--c-purple); padding:6px 16px; border-radius:20px; margin-bottom:12px; }
+  .card{ background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:30px 26px 28px; margin:0 auto 28px; border:1px solid #EFE2F5; }
+  .card h3{ font-family:var(--font-display); font-weight:800; font-size:clamp(23px,3.3vw,31px); margin:0 0 8px; line-height:1.15; }
+  .card p.desc{ color:var(--ink-soft); font-size:14.5px; line-height:1.65; max-width:740px; margin:0 0 20px; }
+
+  .stats{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+  @media (max-width:640px){ .stats{ grid-template-columns:1fr; } }
+  .stat{ background:#fff; border:2px solid var(--r); border-radius:20px; padding:16px 18px; box-shadow:var(--shadow); }
+  .stat b{ display:block; font-family:var(--font-display); font-weight:800; font-size:40px; line-height:1; color:var(--r); }
+  .stat span{ font-size:13.5px; color:var(--ink); line-height:1.5; }
+
+  .ways{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
+  @media (max-width:860px){ .ways{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media (max-width:460px){ .ways{ grid-template-columns:1fr; } }
+  .way{ background:var(--tint); border:1.5px solid var(--line); border-top:6px solid var(--g); border-radius:18px; padding:14px 15px; }
+  .way .ic{ font-size:28px; }
+  .way h4{ font-family:var(--font-display); font-size:16.5px; margin:4px 0 4px; }
+  .way p{ font-size:13.2px; color:var(--ink-soft); line-height:1.55; margin:0; }
+
+  .quotes{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+  @media (max-width:700px){ .quotes{ grid-template-columns:1fr; } }
+  .quote{ position:relative; background:#fff; border:2px solid var(--line); border-left:7px solid var(--g); border-radius:18px; padding:16px 46px 14px 20px; }
+  .quote::before{ content:"“"; position:absolute; top:-8px; right:14px; font-family:Georgia, serif; font-size:64px; color:var(--g); opacity:.25; }
+  .quote p{ margin:0 0 10px; font-size:14.5px; line-height:1.65; }
+  .quote .who{ font-family:var(--font-display); font-weight:700; font-size:13px; color:var(--g); }
+  .empty{ background:var(--tint); border:2px dashed var(--line); border-radius:18px; padding:22px; text-align:center; color:var(--ink-soft); font-size:14px; line-height:1.6; }
+
+  .form-wrap iframe{ width:100%; height:900px; border:0; border-radius:16px; background:#fff; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800; font-size:15px; color:#fff; text-decoration:none;
+    padding:12px 22px; border-radius:24px; background:linear-gradient(90deg, var(--c-pink), var(--c-purple)); box-shadow:0 5px 0 var(--c-purple-dark); margin-bottom:16px; }
+  .note{ margin-top:14px; background:#EEF3FD; border-left:5px solid var(--c-blue); border-radius:0 14px 14px 0; padding:11px 15px; font-size:13.5px; line-height:1.55; }
+
+  footer{ text-align:center; margin-top:6px; }
+  .stamp{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800; font-size:14px; color:#fff; padding:11px 22px; border-radius:24px;
+    background:linear-gradient(90deg, var(--c-red), var(--c-purple) 45%, var(--c-blue) 70%, var(--c-green)); box-shadow:var(--shadow); }
+  .credit{ font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); margin-top:12px; line-height:1.7; }
+  @media (max-width:520px){ .card{ padding:24px 16px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-title">
+    <span class="badge">KHTN 8 · CHƯƠNG II · GIA ĐÌNH</span>
+    <h1><span class="h1-emo">👨‍👩‍👧</span> Ý kiến cha mẹ học sinh</h1>
+    <p>Dự án “pH Nhà Em” bắt đầu từ những câu hỏi trong chính ngôi nhà của các em. Trang này ghi lại cách phụ huynh đồng hành cùng con và những góp ý của gia đình dành cho lớp 8A4.</p>
+  </div>
+
+  <!-- CON SỐ -->
+  <section class="card">
+    <span class="eyebrow">📊 Gia đình cùng tham gia</span>
+    <div class="stats">
+      <div class="stat" style="--r:var(--c-purple)"><b id="soPH">28</b><span>phụ huynh tham gia, tương tác trong quá trình các em thực hiện dự án</span></div>
+      <div class="stat" style="--r:var(--c-blue)"><b>35</b><span>học sinh lớp 8A4 mang câu hỏi về pH từ gian bếp, phòng tắm, vườn rau của gia đình</span></div>
+      <div class="stat" style="--r:var(--c-green)"><b>4</b><span>tình huống trong nhà: Đồ uống · Chất tẩy rửa · Vườn rau · Gian bếp</span></div>
+    </div>
+  </section>
+
+  <!-- CÁCH ĐỒNG HÀNH -->
+  <section class="card">
+    <span class="eyebrow">🤝 Phụ huynh đồng hành</span>
+    <h3>Gia đình cùng con học như thế nào?</h3>
+    <p class="desc">Website giúp phụ huynh biết con đang học gì, làm gì ở nhà và cần lưu ý gì về an toàn.</p>
+    <div class="ways">
+      <div class="way" style="--g:var(--c-pink)"><div class="ic">📱</div><h4>Theo dõi qua mã QR</h4><p>Mở website từ nhóm Zalo lớp để xem tiến độ, sản phẩm và khuyến cáo của các nhóm.</p></div>
+      <div class="way" style="--g:var(--c-red)"><div class="ic">🛡️</div><h4>Giám sát thí nghiệm</h4><p>Có mặt khi con thử 5 chất an toàn ở nhà; không để con thử Javel, chất thông cống, nước tẩy bồn cầu.</p></div>
+      <div class="way" style="--g:var(--c-blue)"><div class="ic">🧪</div><h4>Làm người dùng thật</h4><p>Mở website trên điện thoại, làm thử một nhiệm vụ do nhóm của con đưa ra và cho biết chỗ nào khó hiểu.</p></div>
+      <div class="way" style="--g:var(--c-green)"><div class="ic">✍️</div><h4>Góp ý cho lớp</h4><p>Gửi nhận xét qua phiếu góp ý bên dưới để các em sửa website và cô điều chỉnh cách dạy.</p></div>
+    </div>
+  </section>
+
+  <!-- Ý KIẾN -->
+  <section class="card">
+    <span class="eyebrow">💬 Phụ huynh nói gì?</span>
+    <h3>Ý kiến của phụ huynh</h3>
+    <p class="desc">Trích từ phiếu góp ý, chỉ đăng những ý kiến phụ huynh đồng ý công khai và không ghi họ tên.</p>
+    <div class="quotes" id="quotes"></div>
+  </section>
+
+  <!-- PHIẾU GÓP Ý -->
+  <section class="card" id="gop-y">
+    <span class="eyebrow">📝 Phiếu góp ý</span>
+    <h3>Gửi ý kiến của gia đình</h3>
+    <p class="desc">Phiếu ngắn, khoảng 3 phút. Ý kiến của phụ huynh giúp lớp hoàn thiện website và giúp cô điều chỉnh cách tổ chức dự án.</p>
+    <div class="form-wrap" id="formWrap"></div>
+    <div class="note">🔒 Phiếu không hỏi họ tên, số điện thoại hay địa chỉ. Ý kiến chỉ được đăng lên trang này khi phụ huynh chọn đồng ý công khai.</div>
+  </section>
+
+  <footer>
+    <div class="stamp">🥬 WEBSITE pH NHÀ EM · DỰ ÁN STEM KHTN 8</div>
+    <div class="credit">Lớp thực hiện: 8A4 · Giáo viên phụ trách: Lê Thị Việt Hà · Trường THCS Nguyễn An Khương · Năm học 2026–2027</div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  document.getElementById('soPH').textContent = SO_PHU_HUYNH;
+  var colors = ['var(--c-pink)','var(--c-purple)','var(--c-blue)','var(--c-green)','var(--c-teal)','var(--c-red)'];
+  var box = document.getElementById('quotes');
+  var list = (Y_KIEN || []).filter(function(q){ return q && q.y && String(q.y).trim(); });
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  if(!list.length){
+    box.className = 'empty';
+    box.innerHTML = 'Ý kiến của phụ huynh đang được tổng hợp từ phiếu góp ý.<br>Mời quý phụ huynh gửi ý kiến ở phần bên dưới.';
+  } else {
+    box.innerHTML = list.map(function(q, i){
+      var who = [q.vai, q.nhom].filter(Boolean).map(esc).join(' · ');
+      return '<div class="quote" style="--g:'+colors[i % colors.length]+'"><p>'+esc(q.y)+'</p><span class="who">'+(who || 'Phụ huynh lớp 8A4')+'</span></div>';
+    }).join('');
+  }
+  var fw = document.getElementById('formWrap');
+  if(typeof LINK_FORM === 'string' && LINK_FORM.indexOf('http') === 0){
+    var embed = LINK_FORM.indexOf('embedded=true') > -1 ? LINK_FORM : LINK_FORM + (LINK_FORM.indexOf('?') > -1 ? '&' : '?') + 'embedded=true';
+    fw.innerHTML = '<a class="btn" href="'+esc(LINK_FORM)+'" target="_blank" rel="noopener">📝 Mở phiếu góp ý ở tab mới</a><iframe src="'+esc(embed)+'" title="Phiếu góp ý của phụ huynh" loading="lazy"></iframe>';
+  } else {
+    fw.innerHTML = '<div class="empty">Phiếu góp ý sẽ được cập nhật tại đây.</div>';
+  }
+})();
+</script>
+</body>
+</html>

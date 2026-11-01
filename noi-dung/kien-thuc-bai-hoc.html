@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiến thức bài học | pH Nhà Em — KHTN 8</title>
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --coral:#FF6B6B; --sky-ink:#8A4A1E;
+    --ink:#16202C; --ink-soft:#3F5266; --card:#FFFFFF; --tint:#F7F2FC;
+    /* Dãy màu dịch bắp cải tím theo pH – giống trang chủ */
+    --c-red:#D7263D; --c-pink:#E8508C; --c-mauve:#B04FB0; --c-purple:#7B4FB8;
+    --c-blue:#4B5FC9; --c-teal:#2F9C9A; --c-green:#3DAA5C; --c-lime:#B8C934;
+    --radius:26px;
+    --shadow: 0 14px 28px rgba(31,92,134,.14);
+    --font-display:'Baloo 2', sans-serif; --font-body:'Be Vietnam Pro', sans-serif; --font-mono:'Roboto Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0; scroll-behavior:smooth;}
+  body{
+    font-family:var(--font-body); color:var(--ink);
+    background:
+      radial-gradient(circle at 8% 6%, rgba(232,80,140,.18), transparent 30%),
+      radial-gradient(circle at 92% 12%, rgba(123,79,184,.18), transparent 32%),
+      radial-gradient(circle at 12% 85%, rgba(61,170,92,.18), transparent 32%),
+      radial-gradient(circle at 90% 90%, rgba(75,95,201,.16), transparent 34%),
+      #FFFBF0;
+    padding: 30px 12px 60px;
+  }
+  .wrap{max-width:1060px; margin:0 auto;}
+  a{color:inherit;}
+
+  .page-title{ text-align:center; margin-bottom:14px; }
+  .page-title .badge{ font-family:var(--font-mono); font-size:12px; letter-spacing:1.2px; color:var(--c-purple);
+    background:#fff; border:2px solid var(--c-purple); display:inline-block; padding:5px 14px; border-radius:20px; box-shadow:var(--shadow); }
+  .page-title h1{ font-family:var(--font-display); font-weight:800; font-size:clamp(32px,5.6vw,50px); margin:12px 0 4px;
+    background: linear-gradient(92deg, var(--c-red), var(--c-pink) 22%, var(--c-purple) 45%, var(--c-blue) 62%, var(--c-green) 82%, var(--c-lime));
+    -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .page-title h1 .h1-emo{ color:#000; -webkit-text-fill-color:initial; background:none; }
+  .page-title p{ color:var(--ink-soft); font-size:14.5px; max-width:640px; margin:0 auto 10px; line-height:1.6; }
+  .ai-note{ display:inline-flex; align-items:center; gap:8px; font-size:12.5px; color:#3B4A9E; background:#EEF1FC; border:1.5px solid #C9D1F4; padding:6px 14px; border-radius:16px; }
+
+  .eyebrow{ display:inline-flex; align-items:center; gap:6px; font-family:var(--font-display); font-weight:700; font-size:14px;
+    color:#fff; background:var(--c-purple); padding:6px 16px; border-radius:20px; margin-bottom:14px; }
+  .card{ position:relative; background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:32px 26px 30px; margin:0 auto 30px; border:1px solid #EFE2F5; }
+  .card h3{ font-family:var(--font-display); font-weight:800; font-size:clamp(23px,3.3vw,32px); margin:0 0 10px; line-height:1.15; }
+  .card > p.desc{ color:var(--ink-soft); font-size:14.5px; line-height:1.65; max-width:720px; margin:0 0 22px; }
+
+  .mascot{ width:54px; height:auto; flex-shrink:0; }
+  .tip{ display:flex; gap:14px; align-items:flex-start; background:var(--tint); border-radius:18px; padding:14px 16px; margin-top:16px; border:2px dashed #D9C6EE; }
+  .tip p{ margin:0; font-size:14px; line-height:1.55; }
+  .tip b{ font-family:var(--font-display); color:var(--c-purple); }
+
+  /* BẢN ĐỒ */
+  .road{ display:flex; gap:16px; overflow-x:auto; padding:8px 4px 18px; scroll-snap-type:x proximity; }
+  .stop{ scroll-snap-align:start; flex:0 0 210px; background:var(--tint); border-radius:20px; padding:18px 16px 16px;
+    box-shadow:var(--shadow); border-top:8px solid var(--s); display:flex; flex-direction:column; gap:8px; }
+  .stop .num{ font-family:var(--font-display); font-weight:800; font-size:18px; color:#fff; min-width:40px; height:40px; padding:0 8px; align-self:flex-start;
+    border-radius:20px; display:flex; align-items:center; justify-content:center; background:var(--s); box-shadow:var(--shadow); }
+  .stop h4{ font-family:var(--font-display); font-size:18px; margin:2px 0; }
+  .stop ul{ margin:0; padding-left:18px; font-size:12.5px; color:var(--ink-soft); line-height:1.5; }
+  .stop .who{ font-family:var(--font-mono); font-size:11px; font-weight:700; color:var(--s); }
+
+  /* KHỐI BÀI */
+  .lesson-card{ background:#fff; border-radius:20px; padding:22px 20px; margin-bottom:22px; border:2px solid var(--l); box-shadow:var(--shadow); }
+  .lesson-number{ display:inline-block; font-family:var(--font-mono); font-size:11.5px; font-weight:700; color:#fff; background:var(--l); text-transform:uppercase; letter-spacing:1px; padding:3px 12px; border-radius:12px; margin-bottom:8px; }
+  .lesson-card h4{ font-family:var(--font-display); font-size:25px; margin:0 0 12px; padding-bottom:6px; border-bottom:2px solid var(--tint); display:flex; align-items:center; gap:8px; }
+  .lesson-card p, .lesson-card li{ font-size:14px; line-height:1.65; }
+  .lesson-card ul{ margin:6px 0; padding-left:20px; }
+  .sub{ margin:18px 0 8px; font-family:var(--font-display); font-weight:700; font-size:15.5px; color:var(--l); }
+  .def-box{ background:var(--tint); border-left:5px solid var(--l); padding:10px 14px; border-radius:0 12px 12px 0; margin:10px 0; }
+  .def-box p{ margin:0; }
+  .formula{ font-family:var(--font-mono); background:#fff; border:1px solid #E6D9F3; padding:1px 6px; border-radius:4px; font-weight:600; }
+  .example-strip{ display:flex; flex-wrap:wrap; gap:10px; margin-top:12px; }
+  .ex-chip{ display:flex; align-items:center; gap:8px; background:#fff; border:1.5px solid #E6D9F3; border-radius:14px; padding:8px 12px; font-size:12.5px; box-shadow:0 4px 10px rgba(31,92,134,.08); }
+  .ex-chip .ico{ font-size:20px; } .ex-chip b{ color:var(--l, var(--c-purple)); }
+
+  .situation{ background: linear-gradient(135deg, var(--tint), #EEF3FD); border-radius:16px; padding:14px 16px; border:2px dashed #D9C6EE; }
+  .situation p{ margin:0 0 6px; } .situation ol{ margin:4px 0 0; }
+  .results{ display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; margin-top:8px; }
+  @media (max-width:640px){ .results{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  .cup{ text-align:center; font-size:12px; line-height:1.4; }
+  .cup .glass{ height:62px; border-radius:6px 6px 16px 16px; margin:0 auto 6px; width:56px; background:var(--d); border:3px solid #E3E8EF; border-top:none; box-shadow: inset 0 -8px 0 rgba(0,0,0,.08); }
+  .advice{ background:#F2FAF4; border-left:5px solid var(--c-green); padding:10px 14px; border-radius:0 12px 12px 0; font-size:13.5px; }
+  .pending{ font-size:12px; color:var(--ink-soft); font-style:italic; margin:-4px 0 8px; }
+
+  /* LIÊN HỆ XANH */
+  .green-box{ margin-top:14px; background: linear-gradient(135deg, #EEF8F1, #F6FBEF); border:1.5px solid #CFE9D8; border-radius:16px; padding:12px 16px; }
+  .green-box .gt{ font-family:var(--font-display); font-weight:700; font-size:15.5px; color:#256B45; margin:0 0 4px; }
+  .green-box ul{ margin:4px 0 0; padding-left:20px; }
+  .green-box li{ font-size:13.5px; color:#2D5A40; }
+  .green-box .act{ display:inline-block; margin-top:6px; font-size:12.5px; font-weight:600; color:#fff; background:var(--c-green); padding:3px 10px; border-radius:10px; }
+
+  /* BÀI TOÁN XANH */
+  .problem{ margin-top:14px; background:#fff; border:2px solid var(--c-lime); border-radius:16px; padding:14px 16px; }
+  .problem .pt{ font-family:var(--font-display); font-weight:700; font-size:15.5px; color:#6E7A12; margin:0 0 6px; }
+  .problem ol{ margin:4px 0 8px; padding-left:20px; }
+  .problem details{ background:#FAFBEF; border-radius:12px; padding:8px 12px; }
+  .problem summary{ cursor:pointer; font-weight:600; font-size:13.5px; color:#6E7A12; }
+  .problem details p{ margin:6px 0 0; font-size:13.5px; }
+
+  /* THANG pH */
+  .ph-strip{ display:flex; border-radius:20px; overflow:hidden; box-shadow:var(--shadow); margin:12px 0 10px; }
+  .ph-strip button{ flex:1; aspect-ratio:1/1.15; border:none; cursor:pointer; font-family:var(--font-display); font-weight:700; font-size:14px; color:#fff;
+    text-shadow:0 1px 2px rgba(0,0,0,.35); display:flex; align-items:flex-end; justify-content:center; padding-bottom:5px;
+    outline:3px solid transparent; outline-offset:-3px; transition:transform .12s ease; }
+  .ph-strip button:hover{ transform:translateY(-5px) scale(1.03); }
+  .ph-strip button[aria-selected="true"]{ outline-color:#fff; transform:translateY(-7px); }
+  .ph-cap{ font-size:12px; color:var(--ink-soft); margin:0 0 10px; }
+  .ph-info{ background:#fff; border-radius:18px; padding:14px 16px; min-height:80px; display:flex; align-items:center; gap:14px; border:2px dashed #D9C6EE; }
+  .ph-info .tag{ font-family:var(--font-display); font-size:14px; font-weight:800; }
+  .ph-info .tag.acid{ color:var(--c-red); } .ph-info .tag.base{ color:var(--c-blue); } .ph-info .tag.neutral{ color:var(--c-purple); } .ph-info .tag.danger{ color:#9A1B2B; }
+  .ph-info .note{ font-size:13.5px; line-height:1.5; }
+
+  /* VIDEO */
+  .media-grid{ display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin-top:10px; }
+  .video-card{ background:var(--tint); border-radius:18px; padding:12px; flex:0 1 calc(50% - 8px); box-sizing:border-box; display:flex; flex-direction:column; }
+  .video-card .video-link{ margin-top:auto; padding-top:6px; align-self:flex-start; }
+  @media (max-width:640px){ .video-card{ flex-basis:100%; } }
+  .video-frame{ position:relative; width:100%; padding-top:56.25%; border-radius:12px; overflow:hidden; background:#000; display:block; background-size:cover; background-position:center; text-decoration:none; }
+  .video-frame .yt-play{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(to top, rgba(0,0,0,.45), rgba(0,0,0,.05) 55%); }
+  .video-frame .yt-play::after{ content:"▶"; font-size:18px; color:#fff; background:var(--c-purple); width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 14px rgba(0,0,0,.3); }
+  .media-caption{ font-size:12.5px; color:var(--ink-soft); margin-top:8px; line-height:1.5; }
+  .media-caption b{ color:var(--ink); }
+  .lang-tag{ display:inline-block; font-family:var(--font-mono); font-size:10.5px; font-weight:700; color:#fff; background:var(--c-blue); padding:1px 7px; border-radius:8px; margin-right:4px; vertical-align:1px; }
+  .video-link{ display:inline-block; margin-top:6px; font-size:11.5px; color:var(--c-purple); text-decoration:underline; }
+
+  footer{ text-align:center; margin-top:10px; }
+  .stamp{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display); font-weight:800; font-size:14px;
+    color:#fff; padding:11px 22px; border-radius:24px; background: linear-gradient(90deg, var(--c-red), var(--c-purple) 45%, var(--c-blue) 70%, var(--c-green)); box-shadow:var(--shadow); }
+  .credit{ font-family:var(--font-mono); font-size:11px; color:var(--ink-soft); margin-top:12px; line-height:1.7; }
+  @media (max-width:520px){ .card{ padding:24px 16px; } .lesson-card{ padding:18px 14px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-title">
+    <span class="badge">KHTN 8 · CHƯƠNG II · BÀI 8 – 12 · WEBSITE pH NHÀ EM</span>
+    <h1><span class="h1-emo">📘</span> Kiến thức bài học</h1>
+    <p>Lý thuyết trọng tâm từng bài, thang pH màu bắp cải tím, màu tham khảo của 5 chất mỗi tình huống, liên hệ môi trường và video thí nghiệm tham khảo.</p>
+    <span class="ai-note">🤖 Nội dung có AI hỗ trợ biên soạn · Giáo viên kiểm chứng theo SGK KHTN 8</span>
+  </div>
+
+  <!-- BẢN ĐỒ -->
+  <section class="card" id="ban-do">
+    <span class="eyebrow">🧭 Bản đồ kiến thức</span>
+    <h3>Acid → Base &amp; pH → Oxide → Muối → Phân bón</h3>
+    <p class="desc">Trượt ngang để xem nhanh 4 chặng do 4 nhóm phụ trách, và bài Phân bón hóa học học tiếp theo.</p>
+    <div class="road">
+      <div class="stop" style="--s:var(--c-red)"><div class="num">08</div><h4>🍋 Acid</h4><ul><li>Tan trong nước tạo ion H⁺</li><li>VD: HCl, CH₃COOH (giấm)</li><li>pH &lt; 7</li></ul><span class="who">NHÓM 1</span></div>
+      <div class="stop" style="--s:var(--c-purple)"><div class="num">09</div><h4>🧼 Base &amp; pH</h4><ul><li>Tan trong nước tạo ion OH⁻</li><li>VD: NaOH, Ca(OH)₂</li><li>Thang pH 0 – 14</li></ul><span class="who">NHÓM 2</span></div>
+      <div class="stop" style="--s:var(--c-teal)"><div class="num">10</div><h4>🌱 Oxide</h4><ul><li>Hợp chất 2 nguyên tố, có oxygen</li><li>Oxide acid (CO₂), oxide base (CaO)</li></ul><span class="who">NHÓM 3</span></div>
+      <div class="stop" style="--s:var(--c-green)"><div class="num">11</div><h4>🧂 Muối</h4><ul><li>Ion kim loại (hoặc NH₄⁺) + gốc acid</li><li>Có muối trung tính, có tính acid, có tính base</li></ul><span class="who">NHÓM 4</span></div>
+      <div class="stop" style="--s:var(--c-lime)"><div class="num">12</div><h4>🌾 Phân bón</h4><ul><li>Đạm, lân, kali (NPK)</li><li>Liên hệ: vôi và đất chua</li><li>Bón đúng liều</li></ul><span class="who">BÀI TIẾP THEO</span></div>
+    </div>
+    <div class="tip">
+      <svg class="mascot" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4C32 4 12 30 12 42a20 20 0 0040 0C52 30 32 4 32 4Z" fill="#7B4FB8"/><circle cx="25" cy="40" r="3.4" fill="#fff"/><circle cx="39" cy="40" r="3.4" fill="#fff"/><path d="M24 48c3 3 13 3 16 0" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>
+      <p><b>Bé pH mách nhỏ:</b> Nắm chắc Acid và Base trước, em sẽ hiểu Oxide và Muối dễ hơn. Mỗi khối bài dưới đây đều có tình huống thật, dãy màu thử bằng Bộ kit và một ô <b>Liên hệ xanh</b> nối kiến thức với môi trường.</p>
+    </div>
+  </section>
+
+  <!-- THANG pH -->
+  <section class="card" id="thang-ph">
+    <span class="eyebrow">🌈 Thử ngay</span>
+    <h3>Thang pH màu bắp cải tím</h3>
+    <p class="desc">Bấm vào từng ô để xem chất nào trong nhà em có pH đó. Màu ô là màu tham khảo của dịch bắp cải tím.</p>
+    <div class="ph-strip" id="phStrip"></div>
+    <p class="ph-cap">← acid (pH &lt; 7) · trung tính (pH = 7) · base (pH &gt; 7) →</p>
+    <div class="ph-info" id="phInfo"></div>
+  </section>
+
+  <!-- SỔ TAY -->
+  <section class="card" id="so-tay">
+    <span class="eyebrow">📘 Sổ tay kiến thức</span>
+    <h3>4 khối bài của 4 nhóm</h3>
+    <p class="desc">Mỗi khối gồm: định nghĩa → tính chất → ví dụ đời sống → tình huống của nhóm → màu tham khảo của 5 chất → liên hệ xanh → video → khuyến cáo.</p>
+
+    <!-- BÀI 8 -->
+    <div class="lesson-card" style="--l:var(--c-red)">
+      <span class="lesson-number">Bài 8 · Nhóm 1 phụ trách</span>
+      <h4>🍋 Acid</h4>
+      <div class="def-box"><p><b>Acid</b> là hợp chất trong phân tử có nguyên tử hydrogen liên kết với gốc acid. Khi tan trong nước, acid tạo ra ion <b>H⁺</b>.</p></div>
+      <ul>
+        <li><b>Tính chất hóa học:</b> làm quỳ tím chuyển đỏ; tác dụng với một số kim loại tạo muối và khí hydrogen; tác dụng với base, oxide base tạo muối và nước; tác dụng với muối carbonate tạo khí CO₂.</li>
+      </ul>
+      <div class="example-strip">
+        <span class="ex-chip"><span class="ico">🫗</span><b>HCl</b> — có trong dịch vị dạ dày, giúp tiêu hóa</span>
+        <span class="ex-chip"><span class="ico">🍶</span><b>CH₃COOH</b> — thành phần chính của giấm ăn</span>
+        <span class="ex-chip"><span class="ico">🍋</span><b>Citric acid</b> — vị chua của chanh, cam</span>
+      </div>
+      <p class="sub">🏠 Tình huống “Bảo vệ nụ cười”</p>
+      <div class="situation"><p>Em trai bạn Minh thích nước cam, nước ngọt có gas; nha sĩ nói men răng của em bị mòn. Men răng chứa muối carbonate, phosphate nên bị acid hòa tan khi pH dưới khoảng 5,5.</p>
+        <ol><li>Đồ uống nào màu đỏ đậm nhất (pH thấp nhất)?</li><li>Những loại nào có pH dưới 5,5?</li><li>Nên uống thế nào để bảo vệ răng?</li></ol></div>
+      <p class="sub">🧪 Màu tham khảo khi thử bằng kit</p>
+      <div class="results">
+        <div class="cup"><div class="glass" style="--d:#D7263D"></div>Nước chanh<br>pH ≈ 2</div>
+        <div class="cup"><div class="glass" style="--d:#D93450"></div>Giấm ăn<br>pH ≈ 2,5 – 3</div>
+        <div class="cup"><div class="glass" style="--d:#E04468"></div>Nước ngọt có gas<br>pH ≈ 3</div>
+        <div class="cup"><div class="glass" style="--d:#E8508C"></div>Nước cam<br>pH ≈ 3,5 – 4</div>
+        <div class="cup"><div class="glass" style="--d:#C24FA6"></div>Sữa chua uống<br>pH ≈ 4 – 4,5</div>
+      </div>
+      <div class="green-box">
+        <p class="gt">🌿 Liên hệ xanh: Mưa acid</p>
+        <ul>
+          <li>Nước mưa bình thường có pH khoảng 5,6 do hòa tan một ít CO₂.</li>
+          <li>Đốt than, xăng dầu thải ra SO₂, NO₂; các khí này tan trong nước mưa tạo acid, làm mưa chua hơn — gọi là <b>mưa acid</b>.</li>
+          <li>Mưa acid làm hại cây trồng, ăn mòn công trình, làm chua đất và nước.</li>
+        </ul>
+        <span class="act">Hành động xanh: tắt điện khi ra khỏi phòng, đi bộ hoặc xe đạp quãng ngắn</span>
+      </div>
+      <p class="sub">🎬 Video tham khảo</p>
+      <div class="media-grid">
+        <div class="video-card">
+          <a class="video-frame" href="https://www.youtube.com/watch?v=71fQGSj3yTE" target="_blank" rel="noopener" style="background-image:url('https://img.youtube.com/vi/71fQGSj3yTE/hqdefault.jpg');"><span class="yt-play"></span></a>
+          <div class="media-caption"><span class="lang-tag">EN</span><b>Zinc + hydrochloric acid (Zn + HCl)</b> — acid tác dụng với kim loại, sinh khí hydrogen (thử bằng tiếng “pop”)</div>
+          <a class="video-link" href="https://www.youtube.com/watch?v=71fQGSj3yTE" target="_blank" rel="noopener">Mở trên YouTube ↗</a>
+        </div>
+      </div>
+      <p class="sub">💡 Khuyến cáo tham khảo</p>
+      <p class="pending">Màu và pH ở trên là giá trị tham khảo. Khi triển khai, nhóm đối chiếu với kết quả thử thật và bổ sung khuyến cáo của mình.</p>
+      <div class="advice"><ul><li>Chanh, giấm cho màu đỏ đậm nhất, tức là acid mạnh nhất trong 5 chất: khi ăn đồ chua nên súc miệng bằng nước lọc ngay sau đó.</li><li>Nước ngọt có gas cho màu hồng đỏ: nên uống bằng ống hút để nước ít tiếp xúc với men răng, không ngậm hay nhấm nháp lâu.</li><li>Cam, sữa chua uống cho màu hồng nhạt hơn: vẫn có acid, nên ăn trong bữa chính thay vì ăn vặt nhiều lần trong ngày.</li><li>Chờ khoảng 30 phút sau khi ăn uống đồ chua mới đánh răng, vì lúc đó men răng đang mềm.</li></ul></div>
+    </div>
+
+    <!-- BÀI 9 -->
+    <div class="lesson-card" style="--l:var(--c-purple)">
+      <span class="lesson-number">Bài 9 · Nhóm 2 phụ trách</span>
+      <h4>🧼 Base &amp; Thang pH</h4>
+      <div class="def-box"><p><b>Base</b> là hợp chất trong phân tử có nguyên tử kim loại liên kết với nhóm hydroxide (–OH). Khi tan trong nước, base tạo ra ion <b>OH⁻</b>.</p></div>
+      <ul>
+        <li><b>Tính chất hóa học:</b> dung dịch base làm quỳ tím chuyển xanh, phenolphthalein không màu chuyển hồng; tác dụng với acid tạo muối và nước (phản ứng trung hòa); tác dụng với oxide acid.</li>
+        <li><b>Thang pH:</b> từ 0 đến 14. pH &lt; 7: acid; pH = 7: trung tính; pH &gt; 7: base. pH càng lớn, tính base càng mạnh.</li>
+      </ul>
+      <div class="example-strip">
+        <span class="ex-chip"><span class="ico">🧼</span><b>NaOH</b> — nguyên liệu sản xuất xà phòng, chất tẩy rửa</span>
+        <span class="ex-chip"><span class="ico">🏗️</span><b>Ca(OH)₂</b> — nước vôi trong, vôi tôi khử chua đất</span>
+        <span class="ex-chip"><span class="ico">💊</span><b>Mg(OH)₂</b> — có trong thuốc giảm đau dạ dày</span>
+      </div>
+      <p class="sub">🏠 Tình huống “Đôi tay của mẹ”</p>
+      <div class="situation"><p>Mẹ bạn Lan rửa chén, giặt đồ bằng tay nên da tay khô, nứt nẻ. Da khỏe có pH khoảng 4,5 – 5,5.</p>
+        <ol><li>Xếp 5 chất tẩy rửa từ base yếu đến base mạnh.</li><li>Chất nào có pH cao nhất, khác xa pH của da nhất?</li><li>Mẹ cần làm gì để bảo vệ da tay?</li></ol></div>
+      <p class="sub">🧪 Màu tham khảo khi thử bằng kit</p>
+      <div class="results">
+        <div class="cup"><div class="glass" style="--d:#7B4FB8"></div>Dầu gội, sữa tắm<br>pH ≈ 6 – 7</div>
+        <div class="cup"><div class="glass" style="--d:#6157C2"></div>Nước rửa chén<br>pH ≈ 7 – 8</div>
+        <div class="cup"><div class="glass" style="--d:#4B5FC9"></div>Kem đánh răng<br>pH ≈ 8 – 9</div>
+        <div class="cup"><div class="glass" style="--d:#2F9C9A"></div>Xà phòng bánh<br>pH ≈ 9 – 10</div>
+        <div class="cup"><div class="glass" style="--d:#3DAA5C"></div>Bột giặt<br>pH ≈ 10 – 11</div>
+      </div>
+      <div class="green-box">
+        <p class="gt">🌿 Liên hệ xanh: Nước thải chất tẩy rửa</p>
+        <ul>
+          <li>Bột giặt, nước rửa chén dùng quá liều không làm sạch hơn mà chỉ thêm hóa chất vào nước thải, đổ ra cống, kênh rạch.</li>
+          <li>Pha đúng liều in trên bao bì vừa tiết kiệm tiền, vừa bảo vệ da tay và nguồn nước.</li>
+        </ul>
+        <span class="act">Hành động xanh: đong bột giặt bằng nắp đo, không đổ “ước chừng”</span>
+      </div>
+      <p class="sub">🎬 Video tham khảo</p>
+      <div class="media-grid">
+        <div class="video-card">
+          <a class="video-frame" href="https://www.youtube.com/watch?v=IB66IPbYeAk" target="_blank" rel="noopener" style="background-image:url('https://img.youtube.com/vi/IB66IPbYeAk/hqdefault.jpg');"><span class="yt-play"></span></a>
+          <div class="media-caption"><span class="lang-tag">EN</span><b>DIY red cabbage litmus paper</b> — làm giấy chỉ thị từ bắp cải tím (phần mở rộng)</div>
+          <a class="video-link" href="https://www.youtube.com/watch?v=IB66IPbYeAk" target="_blank" rel="noopener">Mở trên YouTube ↗</a>
+        </div>
+        <div class="video-card">
+          <a class="video-frame" href="https://www.youtube.com/watch?v=4phd0XRMKHU" target="_blank" rel="noopener" style="background-image:url('https://img.youtube.com/vi/4phd0XRMKHU/hqdefault.jpg');"><span class="yt-play"></span></a>
+          <div class="media-caption"><span class="lang-tag">EN</span><b>Red cabbage juice acid–base indicator</b> — dịch bắp cải tím đổi màu theo pH</div>
+          <a class="video-link" href="https://www.youtube.com/watch?v=4phd0XRMKHU" target="_blank" rel="noopener">Mở trên YouTube ↗</a>
+        </div>
+        <div class="video-card">
+          <a class="video-frame" href="https://www.youtube.com/watch?v=nBRGT5spQxs" target="_blank" rel="noopener" style="background-image:url('https://img.youtube.com/vi/nBRGT5spQxs/hqdefault.jpg');"><span class="yt-play"></span></a>
+          <div class="media-caption"><span class="lang-tag">EN</span><b>pH paper lab</b> — dùng giấy pH xác định pH các chất trong gia đình</div>
+          <a class="video-link" href="https://www.youtube.com/watch?v=nBRGT5spQxs" target="_blank" rel="noopener">Mở trên YouTube ↗</a>
+        </div>
+        <div class="video-card">
+          <a class="video-frame" href="https://www.youtube.com/watch?v=2sv876AS3X0" target="_blank" rel="noopener" style="background-image:url('https://img.youtube.com/vi/2sv876AS3X0/hqdefault.jpg');"><span class="yt-play"></span></a>
+          <div class="media-caption"><span class="lang-tag">EN</span><b>Phenolphthalein indicator</b> — phản ứng trung hòa acid – base</div>
+          <a class="video-link" href="https://www.youtube.com/watch?v=2sv876AS3X0" target="_blank" rel="noopener">Mở trên YouTube ↗</a>
+        </div>
+      </div>
+      <p class="sub">💡 Khuyến cáo tham khảo</p>
+      <p class="pending">Màu và pH ở trên là giá trị tham khảo. Khi triển khai, nhóm đối chiếu với kết quả thử thật và bổ sung khuyến cáo của mình.</p>
+      <div class="advice"><ul><li>Bột giặt cho màu xanh lá, xà phòng cho màu xanh ngọc, là hai chất có tính base mạnh nhất trong 5 chất: đeo găng tay khi giặt tay hoặc ngâm đồ lâu.</li><li>Kem đánh răng cho màu xanh dương: base nhẹ, giúp trung hòa acid trong miệng sau khi ăn.</li><li>Dầu gội cho màu tím, nước rửa chén cho màu tím xanh, gần trung tính: dịu với da hơn, nhưng rửa xong vẫn nên tráng tay lại bằng nước sạch.</li><li>Sau khi rửa chén hoặc giặt đồ, thoa kem dưỡng để da tay không bị khô nứt; luôn đọc nhãn sản phẩm trước khi dùng.</li></ul></div>
+    </div>
+
+    <!-- BÀI 10 -->
+    <div class="lesson-card" style="--l:var(--c-teal)">
+      <span class="lesson-number">Bài 10 · Nhóm 3 phụ trách</span>
+      <h4>🌱 Oxide</h4>
+      <div class="def-box"><p><b>Oxide</b> là hợp chất của hai nguyên tố, trong đó có một nguyên tố là oxygen.</p></div>
+      <ul>
+        <li><b>Phân loại:</b> oxide base, oxide acid, oxide lưỡng tính, oxide trung tính.</li>
+        <li><b>Tính chất hóa học:</b> oxide base tác dụng với acid tạo muối và nước, một số tác dụng với nước tạo base (<span class="formula">CaO + H₂O → Ca(OH)₂</span>); oxide acid tác dụng với base tạo muối và nước, nhiều oxide acid tác dụng với nước tạo acid (CO₂ tan trong nước tạo acid yếu).</li>
+      </ul>
+      <div class="example-strip">
+        <span class="ex-chip"><span class="ico">🧱</span><b>CaO</b> — vôi sống, oxide base, dùng khử chua đất</span>
+        <span class="ex-chip"><span class="ico">🌫️</span><b>CO₂</b> — oxide acid, có trong hơi thở, nước có gas</span>
+        <span class="ex-chip"><span class="ico">⚗️</span><b>Al₂O₃</b> — oxide lưỡng tính, nguyên liệu luyện nhôm</span>
+      </div>
+      <p class="sub">🏠 Tình huống “Vườn rau của ông bà”</p>
+      <div class="situation"><p>Ông bà bạn An trồng rau ở Hóc Môn, định rắc vôi khử chua đất nhưng không biết rắc bao nhiêu là vừa.</p>
+        <ol><li>Nước vôi càng đậm thì màu đổi thế nào, pH tăng hay giảm?</li><li>Vì sao nước có gas và hơi thở (CO₂) làm màu chuyển về phía acid?</li><li>Vì sao vôi khử được chua nhưng phải bón đúng liều?</li></ol></div>
+      <p class="sub">🧪 Màu tham khảo khi thử bằng kit</p>
+      <div class="results">
+        <div class="cup"><div class="glass" style="--d:#E8508C"></div>Soda có gas<br>pH ≈ 4</div>
+        <div class="cup"><div class="glass" style="--d:#4B5FC9"></div>Nước vôi loãng 100 lần<br>pH ≈ 10</div>
+        <div class="cup"><div class="glass" style="--d:#3DAA5C"></div>Nước vôi loãng 10 lần<br>pH ≈ 11</div>
+        <div class="cup"><div class="glass" style="--d:#B8C934"></div>Nước vôi trong<br>pH ≈ 12</div>
+        <div class="cup"><div class="glass" style="--d:#7B4FB8"></div>Thổi hơi thở vào nước vôi<br>xanh → tím, vẩn đục</div>
+      </div>
+      <div class="green-box">
+        <p class="gt">🌿 Liên hệ xanh: Oxide và khí hậu</p>
+        <ul>
+          <li><b>CO₂</b> là oxide acid. Lượng CO₂ thải ra quá nhiều từ đốt nhiên liệu làm tăng hiệu ứng nhà kính, Trái Đất nóng lên.</li>
+          <li><b>SO₂, NO₂</b> là các oxide acid gây mưa acid (xem Bài 8).</li>
+          <li><b>CaO</b> khử chua đất, nhưng bón quá nhiều làm đất mất cân bằng — nên thử nước đất bằng kit trước khi bón.</li>
+        </ul>
+        <span class="act">Hành động xanh: thử nước đất vườn nhà em bằng kit bắp cải tím</span>
+      </div>
+      <p class="sub">🎬 Video tham khảo</p>
+      <div class="media-grid">
+        <div class="video-card">
+          <a class="video-frame" href="https://www.youtube.com/watch?v=KU50aDfisZM" target="_blank" rel="noopener" style="background-image:url('https://img.youtube.com/vi/KU50aDfisZM/hqdefault.jpg');"><span class="yt-play"></span></a>
+          <div class="media-caption"><span class="lang-tag">EN</span><b>Calcium oxide (quicklime) + water</b> — oxide base tác dụng với nước, tỏa nhiệt, tạo dung dịch base</div>
+          <a class="video-link" href="https://www.youtube.com/watch?v=KU50aDfisZM" target="_blank" rel="noopener">Mở trên YouTube ↗</a>
+        </div>
+      </div>
+      <p class="sub">💡 Khuyến cáo tham khảo</p>
+      <p class="pending">Màu và pH ở trên là giá trị tham khảo. Khi triển khai, nhóm đối chiếu với kết quả thử thật và bổ sung khuyến cáo của mình.</p>
+      <div class="advice"><ul><li>Soda có gas cho màu hồng: khí CO₂ là oxide acid, tan trong nước tạo môi trường acid.</li><li>Nước vôi trong cho màu vàng chanh, pha loãng 10 lần cho màu xanh lá, pha loãng 100 lần cho màu xanh dương: CaO là oxide base, lượng vôi càng ít thì tính base càng yếu.</li><li>Thổi hơi thở vào nước vôi làm nước vẩn đục và màu chuyển dần từ xanh về tím: CO₂ trong hơi thở đã trung hòa bớt tính base.</li><li>Thử nước đất vườn bằng kit trước khi bón: nếu dung dịch ngả hồng (đất chua) mới bón vôi, rắc vôi từng ít một, đeo găng và khẩu trang, không cầm vôi bằng tay trần.</li></ul></div>
+    </div>
+
+    <!-- BÀI 11 -->
+    <div class="lesson-card" style="--l:var(--c-green)">
+      <span class="lesson-number">Bài 11 · Nhóm 4 phụ trách</span>
+      <h4>🧂 Muối</h4>
+      <div class="def-box"><p><b>Muối</b> là hợp chất được tạo thành khi thay thế ion H⁺ của acid bằng ion kim loại hoặc ion ammonium (NH₄⁺).</p></div>
+      <ul>
+        <li><b>Tính chất hóa học:</b> muối tác dụng với kim loại, với acid, với base, với muối khác tạo chất mới. Muối carbonate tác dụng với acid sinh khí CO₂ (<span class="formula">NaHCO₃ + giấm → sủi bọt</span>).</li>
+        <li><b>Liên hệ thực tế:</b> dung dịch muối có thể trung tính (NaCl), có tính base (NaHCO₃, muối carbonate) hoặc có tính acid nhẹ (phèn chua).</li>
+      </ul>
+      <div class="example-strip">
+        <span class="ex-chip"><span class="ico">🧂</span><b>NaCl</b> — muối ăn hằng ngày</span>
+        <span class="ex-chip"><span class="ico">🧁</span><b>NaHCO₃</b> — baking soda, bột nở</span>
+        <span class="ex-chip"><span class="ico">🐚</span><b>CaCO₃</b> — vỏ trứng, đá vôi</span>
+      </div>
+      <p class="sub">🏠 Tình huống “Gian bếp của mẹ”</p>
+      <div class="situation"><p>Em bạn Hà bị kiến cắn, mẹ chấm nước baking soda; mẹ còn dùng phèn chua làm trong nước.</p>
+        <ol><li>Muối nào trung tính, muối nào có tính acid, muối nào có tính base?</li><li>Nhỏ giấm vào baking soda, em thấy hiện tượng gì?</li><li>Vì sao baking soda giúp đỡ đau khi bị kiến cắn (nọc kiến có acid)?</li></ol></div>
+      <p class="sub">🧪 Màu tham khảo khi thử bằng kit</p>
+      <div class="results">
+        <div class="cup"><div class="glass" style="--d:#E8508C"></div>Phèn chua<br>pH ≈ 3,5 – 4</div>
+        <div class="cup"><div class="glass" style="--d:#7B4FB8"></div>Nước muối ăn<br>pH ≈ 7</div>
+        <div class="cup"><div class="glass" style="--d:#4B5FC9"></div>Baking soda<br>pH ≈ 8,3</div>
+        <div class="cup"><div class="glass" style="--d:#3DAA5C"></div>Nước tro tàu<br>pH ≈ 11</div>
+        <div class="cup"><div class="glass" style="--d:#B04FB0"></div>Baking soda + giấm<br>sủi bọt, xanh → hồng</div>
+      </div>
+      <div class="green-box">
+        <p class="gt">🌿 Liên hệ xanh: Làm sạch bằng “hóa học nhà bếp”</p>
+        <ul>
+          <li>Baking soda (muối có tính base nhẹ) và giấm (acid yếu) có thể làm sạch bồn rửa, khử mùi, tẩy vết ố nhẹ.</li>
+          <li>Dùng chúng thay chất tẩy rửa mạnh cho các việc nhẹ giúp nước thải ít hóa chất độc hại hơn.</li>
+        </ul>
+        <span class="act">Hành động xanh: thử làm sạch bồn rửa bằng baking soda + giấm (có người lớn hướng dẫn)</span>
+      </div>
+      <p class="sub">🎬 Video tham khảo</p>
+      <div class="media-grid">
+        <div class="video-card">
+          <a class="video-frame" href="https://www.youtube.com/watch?v=XaMyfjYLhxU" target="_blank" rel="noopener" style="background-image:url('https://img.youtube.com/vi/XaMyfjYLhxU/hqdefault.jpg');"><span class="yt-play"></span></a>
+          <div class="media-caption"><span class="lang-tag">EN</span><b>Sodium sulfate + barium chloride</b> — muối tác dụng với muối, tạo kết tủa trắng BaSO₄</div>
+          <a class="video-link" href="https://www.youtube.com/watch?v=XaMyfjYLhxU" target="_blank" rel="noopener">Mở trên YouTube ↗</a>
+        </div>
+      </div>
+      <p class="sub">💡 Khuyến cáo tham khảo</p>
+      <p class="pending">Màu và pH ở trên là giá trị tham khảo. Khi triển khai, nhóm đối chiếu với kết quả thử thật và bổ sung khuyến cáo của mình.</p>
+      <div class="advice"><ul><li>Muối ăn cho màu tím giống nước lọc: muối trung hòa, dùng làm mẫu đối chứng.</li><li>Phèn chua cho màu hồng (môi trường acid): chỉ dùng một lượng nhỏ để làm trong nước, không dùng thay muối nêm.</li><li>Baking soda cho màu xanh dương, nước tro tàu cho màu xanh lá: dùng đúng liều khi làm bánh, chấm baking soda pha loãng lên vết kiến cắn để giảm ngứa.</li><li>Baking soda + giấm sủi bọt khí CO₂ và màu đổi từ xanh sang hồng khi giấm dư: phản ứng giữa acid và muối, có thể dùng để làm sạch bồn rửa. Cất các chất này xa tầm tay trẻ nhỏ.</li></ul></div>
+    </div>
+
+    <!-- BÀI 12 -->
+    <div class="lesson-card" style="--l:var(--c-lime)">
+      <span class="lesson-number">Bài 12 · Học tiếp theo</span>
+      <h4>🌾 Phân bón hóa học</h4>
+      <p>Phân bón cung cấp nguyên tố dinh dưỡng cho cây, chủ yếu là N, P, K. Bón quá nhiều có thể làm đất chua hơn và ô nhiễm nguồn nước, vì vậy nhiều vùng trồng rau phải bón vôi khử chua (liên hệ Nhóm 3).</p>
+      <div class="example-strip">
+        <span class="ex-chip"><span class="ico">🌿</span><b>Urea (N)</b> — giúp cây phát triển thân, lá</span>
+        <span class="ex-chip"><span class="ico">🌻</span><b>Super lân (P)</b> — kích thích ra rễ, ra hoa</span>
+        <span class="ex-chip"><span class="ico">🍅</span><b>Kali (K)</b> — tăng chất lượng quả, hạt</span>
+      </div>
+      <div class="problem">
+        <p class="pt">🧮 Bài toán xanh: Bón phân đúng liều</p>
+        <p>Phân urea có công thức (NH₂)₂CO. (H = 1, C = 12, N = 14, O = 16)</p>
+        <ol>
+          <li>Tính phần trăm khối lượng nitrogen trong urea.</li>
+          <li>Một ruộng rau cần 14 kg nitrogen. Cần bao nhiêu kg urea?</li>
+          <li>Nếu bón 45 kg urea, lượng urea thừa chứa bao nhiêu kg nitrogen có thể bị rửa trôi xuống kênh, ao?</li>
+        </ol>
+        <details>
+          <summary>Xem gợi ý và đáp án</summary>
+          <p>1. M = 2 × (14 + 2) + 12 + 16 = 60 g/mol; %N = 28 : 60 × 100% ≈ <b>46,7%</b>.</p>
+          <p>2. Khối lượng urea cần = 14 × 60 : 28 = <b>30 kg</b>.</p>
+          <p>3. Urea thừa = 45 − 30 = 15 kg, chứa 15 × 28 : 60 = <b>7 kg nitrogen</b> — lượng này theo nước mưa gây ô nhiễm nguồn nước.</p>
+        </details>
+      </div>
+      <div class="green-box">
+        <p class="gt">🌿 Liên hệ xanh</p>
+        <ul><li>Bón đúng loại, đúng liều, đúng lúc: cây hấp thụ đủ, đất không chua thêm, kênh rạch không bị ô nhiễm.</li></ul>
+        <span class="act">Hành động xanh: hỏi ông bà, bố mẹ đọc kĩ liều dùng trên bao phân trước khi bón</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="stamp">🥬 WEBSITE pH NHÀ EM · SÁNG KIẾN KHTN 8 · AI &amp; HÓA HỌC XANH</div>
+    <div class="credit">Tác giả sáng kiến: GV Lê Thị Việt Hà · Đối tượng: học sinh lớp 8 · Trường THCS Nguyễn An Khương · Năm học 2026–2027</div>
+  </footer>
+</div>
+
+<script>
+  // Màu tham khảo của dịch bắp cải tím theo pH 0 – 14
+  var phColors = ["#B5122E","#C41C35","#D7263D","#E04468","#E8508C","#C24FA6","#9A4FB4",
+                  "#7B4FB8","#5F58C4","#4B5FC9","#2F9C9A","#3DAA5C","#B8C934","#D8C93A","#E3C93E"];
+  var markers = {
+    0:{tag:"ACID RẤT MẠNH", cls:"danger", note:"Acid đặc trong phòng thí nghiệm — rất nguy hiểm, học sinh không dùng."},
+    1:{tag:"ACID MẠNH", cls:"acid", note:"Dịch vị dạ dày (pH ≈ 1,5 – 2)."},
+    2:{tag:"ACID MẠNH", cls:"acid", note:"Nước chanh, giấm ăn — Nhóm 1."},
+    3:{tag:"ACID", cls:"acid", note:"Nước ngọt có gas — Nhóm 1."},
+    4:{tag:"ACID YẾU", cls:"acid", note:"Nước cam, sữa chua uống (Nhóm 1); phèn chua (Nhóm 4); soda có gas (Nhóm 3). Mưa acid thường có pH khoảng 4 – 5."},
+    5:{tag:"ACID YẾU", cls:"acid", note:"Da người khỏe (pH ≈ 4,5 – 5,5); nước mưa bình thường (pH ≈ 5,6)."},
+    6:{tag:"ACID RẤT YẾU", cls:"acid", note:"Dầu gội, sữa tắm pha loãng — Nhóm 2."},
+    7:{tag:"TRUNG TÍNH", cls:"neutral", note:"Nước tinh khiết; nước muối ăn — Nhóm 4. Chất thải acid – base nên được trung hòa về đây trước khi đổ bỏ."},
+    8:{tag:"BASE YẾU", cls:"base", note:"Baking soda (Nhóm 4); nước rửa chén pha loãng (Nhóm 2)."},
+    9:{tag:"BASE YẾU", cls:"base", note:"Kem đánh răng hòa nước — Nhóm 2."},
+    10:{tag:"BASE", cls:"base", note:"Nước xà phòng bánh (Nhóm 2); nước vôi pha loãng 100 lần (Nhóm 3)."},
+    11:{tag:"BASE", cls:"base", note:"Bột giặt pha loãng (Nhóm 2); nước tro tàu (Nhóm 4); nước vôi pha loãng 10 lần (Nhóm 3)."},
+    12:{tag:"BASE MẠNH", cls:"base", note:"Nước vôi trong Ca(OH)₂ — Nhóm 3, đeo găng khi thử."},
+    13:{tag:"BASE RẤT MẠNH", cls:"danger", note:"Chất thông cống — KHÔNG thử ở nhà."},
+    14:{tag:"BASE RẤT MẠNH", cls:"danger", note:"NaOH đặc — rất nguy hiểm, ăn mòn da."}
+  };
+  var strip = document.getElementById("phStrip");
+  var info = document.getElementById("phInfo");
+  for (var i=0;i<=14;i++){
+    (function(v){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = v;
+      b.style.background = phColors[v];
+      b.setAttribute("aria-selected", v===7 ? "true" : "false");
+      b.setAttribute("aria-label", "pH " + v);
+      b.addEventListener("click", function(){ selectPH(v); });
+      strip.appendChild(b);
+    })(i);
+  }
+  function selectPH(v){
+    Array.prototype.forEach.call(strip.children, function(btn, idx){
+      btn.setAttribute("aria-selected", idx===v ? "true" : "false");
+    });
+    var m = markers[v];
+    info.innerHTML = '<div><span class="tag '+m.cls+'">pH = '+v+' · '+m.tag+'</span><br><span class="note">'+m.note+'</span></div>';
+  }
+  selectPH(7);
+</script>
+</body>
+</html>
