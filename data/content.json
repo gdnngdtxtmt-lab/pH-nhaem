@@ -1,0 +1,25 @@
+{
+  "cap_nhat": "2026-11-01T00:00:00.000Z",
+  "thong_bao": [],
+  "anh": [],
+  "bai_tap": [
+    {
+      "id": "bt-sites",
+      "tieu_de": "12 câu tự chấm – Chương II",
+      "mo_ta": "Bài tập tự chấm trên Google Forms ở trang Bài tập của website dự án. Làm xong nhận điểm và lời giải thích ngay.",
+      "url": "https://sites.google.com/view/haltvstem8/bài-tập",
+      "han": "",
+      "ngay": "2026-11-01"
+    }
+  ],
+  "tai_lieu": [
+    {
+      "id": "tl-solieu",
+      "tieu_de": "Số liệu minh chứng dự án pH Nhà Em",
+      "mo_ta": "Khảo sát trước – sau, tự đánh giá năng lực số và AI, kết quả kiểm tra theo Thông tư 22, nhật ký kiểm thử Bé pH, ý kiến học sinh.",
+      "url": "https://drive.google.com/file/d/1rnKTZhLJfbOgDsKinV4j4473AsEAl5mB/view?usp=sharing",
+      "loai": "pdf",
+      "ngay": "2026-10-28"
+    }
+  ]
+}

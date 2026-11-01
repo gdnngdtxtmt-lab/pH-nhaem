@@ -84,6 +84,10 @@
   .busy div{ background:#fff; border-radius:16px; padding:18px 24px; font-weight:600; box-shadow:var(--shadow); max-width:90vw; text-align:center; }
   .toast{ position:fixed; left:50%; bottom:22px; transform:translateX(-50%); z-index:95; background:var(--ink); color:#fff; padding:11px 18px; border-radius:14px; font-size:14px; box-shadow:var(--shadow); display:none; max-width:92vw; }
   .toast.on{ display:block; } .toast.ok{ background:var(--green); } .toast.err{ background:var(--red); }
+  .login{ max-width:420px; margin:48px auto; text-align:left; }
+  .login .lg-ic{ width:64px; height:64px; border-radius:18px; display:flex; align-items:center; justify-content:center; font-size:34px; background:var(--tint); margin-bottom:10px; }
+  .pw{ position:relative; } .pw input{ padding-right:46px; }
+  .pw button{ position:absolute; right:6px; top:50%; transform:translateY(-50%); border:0; background:none; font-size:18px; cursor:pointer; }
   [hidden]{ display:none !important; }
 </style>
 </head>
@@ -91,7 +95,7 @@
 <header>
   <div class="wrap">
     <h1>🛠️ Quản trị · pH Nhà Em</h1>
-    <span class="status" id="status">Chưa kết nối</span>
+    <span class="status" id="status">Chưa đăng nhập</span>
     <div class="sp">
       <a class="hbtn" href="./" target="_blank" rel="noopener">Xem trang chủ ↗</a>
       <button class="hbtn" id="btnLogout" hidden>Đăng xuất</button>
@@ -100,30 +104,20 @@
 </header>
 
 <main class="wrap">
-  <!-- KẾT NỐI GITHUB -->
-  <section class="card" id="connectCard">
-    <h2>🔑 Kết nối kho GitHub của website</h2>
-    <p class="muted">Trang quản trị ghi nội dung trực tiếp vào kho GitHub đang liên kết với Vercel. Sau mỗi lần lưu, Vercel tự cập nhật trang chủ sau khoảng 1 phút.</p>
-    <div class="row3">
-      <div><label>Tài khoản GitHub (owner) <span class="req">*</span></label><input type="text" id="cfOwner" placeholder="VD: levietha231" autocomplete="off"></div>
-      <div><label>Tên kho (repository) <span class="req">*</span></label><input type="text" id="cfRepo" placeholder="VD: ph-nha-em" autocomplete="off"></div>
-      <div><label>Nhánh</label><input type="text" id="cfBranch" value="main" autocomplete="off"></div>
-    </div>
-    <label>Mã truy cập GitHub (fine-grained token) <span class="req">*</span></label>
-    <input type="password" id="cfToken" placeholder="github_pat_..." autocomplete="off">
-    <label class="check"><input type="checkbox" id="cfRemember"> Ghi nhớ trên máy này (chỉ chọn khi dùng máy riêng của cô)</label>
-    <div class="actions"><button class="btn" id="btnConnect">Kết nối</button></div>
-    <details class="help">
-      <summary>Cách lấy mã truy cập (làm một lần)</summary>
-      <ol>
-        <li>Đăng nhập GitHub, mở <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a>.</li>
-        <li>Đặt tên (VD: <i>admin pH Nhà Em</i>), chọn thời hạn (VD: 1 năm).</li>
-        <li><b>Repository access</b> → <b>Only select repositories</b> → chọn đúng kho của website.</li>
-        <li><b>Permissions</b> → <b>Repository permissions</b> → <b>Contents</b>: chọn <b>Read and write</b>.</li>
-        <li>Bấm <b>Generate token</b>, sao chép mã bắt đầu bằng <code>github_pat_</code> và dán vào ô trên.</li>
-      </ol>
-    </details>
-    <div class="warn">🔒 Không gửi mã truy cập cho ai, không dán vào file trên GitHub. Nếu lộ mã, vào GitHub xóa mã đó và tạo mã mới.</div>
+  <!-- ĐĂNG NHẬP -->
+  <section class="card login" id="connectCard">
+    <div class="lg-ic">🥬</div>
+    <h2>Đăng nhập quản trị</h2>
+    <p class="muted">Dành cho giáo viên quản lý website pH Nhà Em: đăng thông báo, ảnh, bài tập, tài liệu lên trang chủ.</p>
+    <form id="loginForm" autocomplete="on">
+      <label for="lgUser">Tên đăng nhập</label>
+      <input type="text" id="lgUser" name="username" autocomplete="username" required>
+      <label for="lgPass">Mật khẩu</label>
+      <div class="pw"><input type="password" id="lgPass" name="password" autocomplete="current-password" required><button type="button" id="lgEye" aria-label="Hiện mật khẩu">👁️</button></div>
+      <label class="check"><input type="checkbox" id="cfRemember"> Ghi nhớ đăng nhập trên máy này (8 giờ)</label>
+      <div class="actions"><button class="btn" id="btnConnect" type="submit" style="width:100%">Đăng nhập</button></div>
+    </form>
+    <p class="muted" style="margin-top:14px;font-size:12.5px">Quên mật khẩu? Mật khẩu được đặt trong Vercel → Settings → Environment Variables (ADMIN_PASS).</p>
   </section>
 
   <!-- QUẢN LÝ NỘI DUNG -->
@@ -155,10 +149,9 @@
 <script>
 (function(){
   'use strict';
-  var DATA_PATH = 'data/content.json';
-  var MAX_FILE_MB = 25;
-  var KEY = 'phnhaem_admin_cfg';
-  var cfg = null, data = null, dataSha = null, tab = 'thong_bao', editId = null;
+  var MAX_FILE_MB = 3;
+  var KEY = 'phnhaem_admin_session';
+  var session = null, data = null, tab = 'thong_bao', editId = null;
   var localPreview = {};
 
   var $ = function(id){ return document.getElementById(id); };
@@ -178,56 +171,31 @@
   function b64decodeText(b64){ var bin = atob(String(b64).replace(/\s/g,'')), bytes = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i); return new TextDecoder().decode(bytes); }
   function fileToB64(blob){ return new Promise(function(res, rej){ var r = new FileReader(); r.onload = function(){ res(String(r.result).split(',')[1]); }; r.onerror = rej; r.readAsDataURL(blob); }); }
 
-  /* ---------- GitHub API ---------- */
-  function api(path, opts){
-    opts = opts || {};
-    var url = 'https://api.github.com/repos/' + encodeURIComponent(cfg.owner) + '/' + encodeURIComponent(cfg.repo) + path;
-    return fetch(url, { method: opts.method || 'GET', cache: 'no-store',
-      headers: { 'Authorization': 'Bearer ' + cfg.token, 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' },
-      body: opts.body ? JSON.stringify(opts.body) : undefined
+  /* ---------- Gọi API của website (Vercel) ---------- */
+  function call(path, method, body){
+    return fetch('/api/' + path, { method: method || 'GET', cache: 'no-store',
+      headers: Object.assign({ 'Content-Type': 'application/json' }, session ? { 'Authorization': 'Bearer ' + session.token } : {}),
+      body: body ? JSON.stringify(body) : undefined
     }).then(function(r){
-      if (r.status === 204) return {};
       return r.json().catch(function(){ return {}; }).then(function(j){
-        if (!r.ok){ var e = new Error(j.message || ('Lỗi ' + r.status)); e.status = r.status; throw e; }
+        if (!r.ok){
+          var e = new Error(j.error || (r.status === 404 ? 'Chưa có thư mục api trên website. Hãy tải thư mục api lên GitHub.' : r.status === 413 ? 'Tệp quá lớn (tối đa khoảng 3 MB).' : 'Lỗi ' + r.status));
+          e.status = r.status; throw e;
+        }
         return j;
       });
     });
   }
-  function contentsPath(p){ return '/contents/' + p.split('/').map(encodeURIComponent).join('/'); }
-  function getFile(p){ return api(contentsPath(p) + '?ref=' + encodeURIComponent(cfg.branch)); }
-  function putFile(p, b64, message, sha){ var body = { message: message, content: b64, branch: cfg.branch }; if (sha) body.sha = sha; return api(contentsPath(p), { method:'PUT', body: body }); }
-  function deleteFile(p, message){
-    return getFile(p).then(function(f){ return api(contentsPath(p), { method:'DELETE', body:{ message: message, sha: f.sha, branch: cfg.branch } }); })
-      .catch(function(e){ if (e.status !== 404) throw e; });
-  }
+  function deleteFile(p){ return call('delete-file', 'POST', { path: p }).catch(function(){}); }
   function explain(e){
-    if (e.status === 401) return 'Mã truy cập sai hoặc đã hết hạn.';
-    if (e.status === 403) return 'Mã truy cập chưa có quyền ghi (Contents: Read and write).';
-    if (e.status === 404) return 'Không tìm thấy kho/nhánh. Kiểm tra tên tài khoản, tên kho, nhánh và quyền của mã.';
-    if (e.status === 409 || e.status === 422) return 'Dữ liệu vừa thay đổi ở nơi khác. Bấm Kết nối lại rồi thử lại.';
-    if (e instanceof TypeError) return 'Không kết nối được GitHub. Kiểm tra mạng.';
+    if (e.status === 401 && session){ setTimeout(logout, 1500); }
+    if (e instanceof TypeError) return 'Không kết nối được máy chủ. Kiểm tra mạng.';
     return e.message || 'Có lỗi xảy ra.';
   }
 
   /* ---------- Dữ liệu ---------- */
-  function emptyData(){ return { cap_nhat:'', thong_bao:[], anh:[], bai_tap:[], tai_lieu:[] }; }
-  function loadData(){
-    return getFile(DATA_PATH).then(function(f){
-      dataSha = f.sha;
-      var d = JSON.parse(b64decodeText(f.content));
-      ['thong_bao','anh','bai_tap','tai_lieu'].forEach(function(k){ if (!Array.isArray(d[k])) d[k] = []; });
-      data = d;
-    }).catch(function(e){ if (e.status === 404){ data = emptyData(); dataSha = null; return; } throw e; });
-  }
-  function saveData(message){
-    data.cap_nhat = new Date().toISOString();
-    var b64 = b64encodeText(JSON.stringify(data, null, 2) + '\n');
-    return putFile(DATA_PATH, b64, message, dataSha).then(function(r){ dataSha = r.content && r.content.sha; })
-      .catch(function(e){
-        if (e.status !== 409 && e.status !== 422) throw e;
-        return getFile(DATA_PATH).then(function(f){ return putFile(DATA_PATH, b64, message, f.sha); }).then(function(r){ dataSha = r.content && r.content.sha; });
-      });
-  }
+  function loadData(){ return call('content').then(function(j){ data = j.data; }); }
+  function saveData(message){ return call('content', 'POST', { data: data, message: message }); }
 
   /* ---------- Ảnh: nén trước khi tải ---------- */
   function compressImage(file, maxSide, quality){
@@ -246,18 +214,19 @@
     });
   }
   function uploadOne(file, folder, label){
-    var mb = file.size / 1048576;
-    if (mb > MAX_FILE_MB) return Promise.reject(new Error('Tệp “' + file.name + '” nặng ' + mb.toFixed(1) + ' MB (tối đa ' + MAX_FILE_MB + ' MB). Hãy đưa lên Google Drive rồi dán đường dẫn.'));
-    var isImg = /^image\//.test(file.type);
+    var isImg = /^image\/(jpeg|png|webp)$/.test(file.type);
     var prep = isImg ? compressImage(file, 1600, 0.85) : Promise.resolve(file);
     return prep.then(function(blob){
+      var mb = blob.size / 1048576;
+      if (mb > MAX_FILE_MB) throw new Error('Tệp “' + file.name + '” nặng ' + mb.toFixed(1) + ' MB (tối đa ' + MAX_FILE_MB + ' MB). Hãy đưa lên Google Drive rồi dán đường dẫn.');
       var ext = isImg && blob !== file ? 'jpg' : (file.name.split('.').pop() || 'bin').toLowerCase();
-      var base = slug(file.name.replace(/\.[^.]+$/, ''));
-      var path = 'uploads/' + folder + '/' + new Date().getFullYear() + '/' + Date.now().toString(36) + Math.random().toString(36).slice(2,6) + '-' + base + '.' + ext;
+      var name = file.name.replace(/\.[^.]+$/, '') + '.' + ext;
       return fileToB64(blob).then(function(b64){
-        if (isImg) localPreview[path] = 'data:image/jpeg;base64,' + b64;
-        return putFile(path, b64, 'Admin: tải lên ' + label + ' – ' + file.name);
-      }).then(function(){ return { path: path, ext: ext }; });
+        return call('upload', 'POST', { folder: folder, name: name, content: b64 }).then(function(r){
+          if (isImg) localPreview[r.path] = 'data:image/jpeg;base64,' + b64;
+          return { path: r.path, ext: ext };
+        });
+      });
     });
   }
 
@@ -424,34 +393,45 @@
       .catch(function(err){ busy(false); toast(explain(err), 'err'); return loadData().then(renderList).catch(function(){}); });
   }
 
-  /* ---------- Kết nối ---------- */
-  function readCfg(){ try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch(e){ return null; } }
-  function writeCfg(c){ try { if (c) localStorage.setItem(KEY, JSON.stringify(c)); else localStorage.removeItem(KEY); } catch(e){} }
-  function connect(){
-    var c = { owner: $('cfOwner').value.trim(), repo: $('cfRepo').value.trim(), branch: $('cfBranch').value.trim() || 'main', token: $('cfToken').value.trim() };
-    if (!c.owner || !c.repo || !c.token) return toast('Cần nhập tài khoản, tên kho và mã truy cập.', 'err');
-    cfg = c; busy(true, 'Đang kết nối GitHub…');
-    api('').then(function(repo){
-      if (repo.permissions && !repo.permissions.push) { var e = new Error('no push'); e.status = 403; throw e; }
-      return loadData();
-    }).then(function(){
-      writeCfg($('cfRemember').checked ? c : null);
+  /* ---------- Đăng nhập ---------- */
+  function store(){ try { return $('cfRemember').checked ? localStorage : sessionStorage; } catch(e){ return null; } }
+  function readSession(){
+    var raw = null;
+    try { raw = sessionStorage.getItem(KEY) || localStorage.getItem(KEY); } catch(e){}
+    try { var s = JSON.parse(raw || 'null'); return s && s.exp > Date.now() ? s : null; } catch(e){ return null; }
+  }
+  function clearSession(){ try { sessionStorage.removeItem(KEY); localStorage.removeItem(KEY); } catch(e){} }
+  function enter(){
+    busy(true, 'Đang tải nội dung…');
+    return loadData().then(function(){
       busy(false);
-      $('status').textContent = '✓ ' + c.owner + '/' + c.repo + ' · ' + c.branch; $('status').className = 'status ok';
+      $('status').textContent = '✓ ' + session.user; $('status').className = 'status ok';
       $('connectCard').hidden = true; $('manager').hidden = false; $('btnLogout').hidden = false;
       renderForm(); renderList();
-      toast('Đã kết nối. ' + (dataSha ? 'Đã tải nội dung hiện có.' : 'Chưa có data/content.json – sẽ tạo khi lưu lần đầu.'), 'ok');
-    }).catch(function(err){ busy(false); cfg = null; toast(explain(err), 'err'); });
+    }).catch(function(err){ busy(false); toast(explain(err), 'err'); });
+  }
+  function login(e){
+    e.preventDefault();
+    var u = $('lgUser').value.trim(), p = $('lgPass').value;
+    if (!u || !p) return toast('Nhập tên đăng nhập và mật khẩu.', 'err');
+    busy(true, 'Đang đăng nhập…');
+    session = null;
+    call('login', 'POST', { username: u, password: p }).then(function(j){
+      session = { token: j.token, user: j.user, exp: j.exp };
+      clearSession(); var st = store(); try { st && st.setItem(KEY, JSON.stringify(session)); } catch(e){}
+      $('lgPass').value = '';
+      return enter().then(function(){ toast('Xin chào ' + j.user + '!', 'ok'); });
+    }).catch(function(err){ busy(false); session = null; toast(explain(err), 'err'); });
+  }
+  function logout(){
+    clearSession(); session = null; data = null;
+    $('manager').hidden = true; $('connectCard').hidden = false; $('btnLogout').hidden = true;
+    $('status').textContent = 'Chưa đăng nhập'; $('status').className = 'status';
   }
 
-  $('btnConnect').onclick = connect;
-  $('cfToken').addEventListener('keydown', function(e){ if (e.key === 'Enter') connect(); });
-  $('btnLogout').onclick = function(){
-    writeCfg(null); cfg = null; data = null; $('cfToken').value = '';
-    $('manager').hidden = true; $('connectCard').hidden = false; $('btnLogout').hidden = true;
-    $('status').textContent = 'Chưa kết nối'; $('status').className = 'status';
-    toast('Đã đăng xuất và xóa mã khỏi máy này.');
-  };
+  $('loginForm').addEventListener('submit', login);
+  $('lgEye').onclick = function(){ var p = $('lgPass'); p.type = p.type === 'password' ? 'text' : 'password'; };
+  $('btnLogout').onclick = function(){ logout(); toast('Đã đăng xuất.'); };
   Array.prototype.forEach.call(document.querySelectorAll('.tab'), function(b){
     b.onclick = function(){ document.querySelectorAll('.tab').forEach(function(x){ x.classList.remove('on'); }); b.classList.add('on'); tab = b.getAttribute('data-tab'); editId = null; renderForm(); renderList(); };
   });
@@ -462,8 +442,8 @@
     if (dl) onDelete(dl);
   });
 
-  var saved = readCfg();
-  if (saved){ $('cfOwner').value = saved.owner || ''; $('cfRepo').value = saved.repo || ''; $('cfBranch').value = saved.branch || 'main'; $('cfToken').value = saved.token || ''; $('cfRemember').checked = true; connect(); }
+  session = readSession();
+  if (session) enter();
 })();
 </script>
 </body>
