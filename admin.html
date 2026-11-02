@@ -118,7 +118,7 @@
       <input type="text" id="lgUser" name="username" autocomplete="username" required>
       <label for="lgPass">Mật khẩu</label>
       <div class="pw"><input type="password" id="lgPass" name="password" autocomplete="current-password" required><button type="button" class="eye" data-for="lgPass" aria-label="Hiện mật khẩu">👁️</button></div>
-      <label class="check"><input type="checkbox" id="cfRemember"> Ghi nhớ đăng nhập trên máy này</label>
+      <label class="check"><input type="checkbox" id="cfRemember" checked> Ghi nhớ trên máy này (lần sau bấm Đăng nhập là vào thẳng; bỏ tích nếu dùng máy chung)</label>
       <div class="actions"><button class="btn" id="btnConnect" type="submit" style="width:100%">Đăng nhập</button></div>
     </form>
     <p class="muted" style="margin-top:14px;font-size:12.5px" id="loginNote"></p>
@@ -550,7 +550,7 @@
       if (r.status >= 400) throw { msg: 'Ghi thất bại: ' + esc(r.j.message || r.status) };
       L.push('✅ Ghi thử vào kho thành công.');
       diag(L, true);
-      session = { user: u }; keep(false); $('suToken').value = '';
+      session = { user: u }; keep(true); $('suToken').value = '';
       return enter().then(function(){ toast('Đã thiết lập xong. Từ lần sau chỉ cần tên đăng nhập và mật khẩu.', 'ok'); });
     }).catch(function(err){
       busy(false); cfg = null;
@@ -567,7 +567,7 @@
     var old = cfg; cfg = c2;
     api('').then(function(){ return encryptConf(session.user, np, c2); })
       .then(function(enc){ return getFile(CONF_PATH).then(function(f){ return putFile(CONF_PATH, b64encodeText(JSON.stringify(enc, null, 2) + '\n'), 'Admin: đổi mật khẩu quản trị', f.sha); }); })
-      .then(function(){ keep(false); busy(false); toast('Đã đổi. Dùng mật khẩu mới từ lần đăng nhập sau (sau khoảng 1 phút).', 'ok'); })
+      .then(function(){ keep(true); busy(false); toast('Đã đổi. Dùng mật khẩu mới từ lần đăng nhập sau (sau khoảng 1 phút).', 'ok'); })
       .catch(function(err){ cfg = old; busy(false); toast(explain(err), 'err'); });
   }
   function logout(){
