@@ -88,6 +88,9 @@
   .login .lg-ic{ width:64px; height:64px; border-radius:18px; display:flex; align-items:center; justify-content:center; font-size:34px; background:var(--tint); margin-bottom:10px; }
   .pw{ position:relative; } .pw input{ padding-right:46px; }
   .pw button{ position:absolute; right:6px; top:50%; transform:translateY(-50%); border:0; background:none; font-size:18px; cursor:pointer; }
+  .diag{ margin-top:16px; border-radius:14px; padding:12px 16px; font-size:13.5px; line-height:1.6; }
+  .diag.ok{ background:#EAF6EE; border:2px solid #9BD3AE; } .diag.bad{ background:#FFF4F4; border:2px solid #F0B8C1; }
+  .diag ul{ margin:6px 0; padding-left:20px; } .diag p{ margin:6px 0 0; font-weight:600; }
   [hidden]{ display:none !important; }
 </style>
 </head>
@@ -150,6 +153,7 @@
       </details>
       <div class="actions"><button class="btn" type="submit">Lưu và đăng nhập</button></div>
     </form>
+    <div id="diag" hidden></div>
   </section>
 
   <!-- QUẢN LÝ NỘI DUNG -->
@@ -500,25 +504,59 @@
       setTimeout(function(){ busy(false); toast('Sai tên đăng nhập hoặc mật khẩu.', 'err'); }, 600);
     });
   }
+  function ghRaw(url, opts){
+    opts = opts || {};
+    return fetch('https://api.github.com' + url, { method: opts.method || 'GET', cache:'no-store',
+      headers: { 'Authorization': 'Bearer ' + cfg.token, 'Accept': 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' },
+      body: opts.body ? JSON.stringify(opts.body) : undefined
+    }).then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return { status: r.status, j: j, scopes: r.headers.get('x-oauth-scopes') }; }); });
+  }
+  function diag(lines, ok){
+    var box = $('diag');
+    box.hidden = false; box.className = 'diag ' + (ok ? 'ok' : 'bad');
+    box.innerHTML = '<b>Kết quả kiểm tra</b><ul>' + lines.map(function(l){ return '<li>' + l + '</li>'; }).join('') + '</ul>' +
+      (ok ? '' : '<p>Chụp màn hình khung này gửi người hỗ trợ (mã GitHub không hiện ở đây).</p>');
+  }
   function setup(e){
     e.preventDefault();
     var u = $('suUser').value.trim(), p = $('suPass').value;
-    var c = { owner: $('suOwner').value.trim(), repo: $('suRepo').value.trim(), branch: $('suBranch').value.trim() || 'main', token: $('suToken').value.trim() };
+    var c = { owner: $('suOwner').value.trim().replace(/^https?:\/\/github\.com\//i,'').split('/')[0], repo: $('suRepo').value.trim().replace(/\.git$/,'').split('/').pop(), branch: $('suBranch').value.trim() || 'main', token: $('suToken').value.trim() };
     if (!u || p.length < 8) return toast('Tên đăng nhập không được trống, mật khẩu ít nhất 8 ký tự.', 'err');
     if (!c.owner || !c.repo || !c.token) return toast('Cần nhập tài khoản GitHub, tên kho và mã truy cập.', 'err');
-    cfg = c; busy(true, 'Đang kiểm tra mã GitHub…');
-    api('').then(function(repo){
-      if (repo.permissions && !repo.permissions.push){ var er = new Error('x'); er.status = 403; throw er; }
-      busy(true, 'Đang mã hóa và lưu cấu hình…');
+    cfg = c; var L = [], kind = /^github_pat_/.test(c.token) ? 'fine-grained' : (/^ghp_/.test(c.token) ? 'classic' : 'không rõ loại');
+    busy(true, 'Đang kiểm tra mã GitHub…');
+    ghRaw('/user').then(function(r){
+      if (r.status === 401) throw { msg: 'Mã GitHub không hợp lệ hoặc đã hết hạn (' + kind + '). Kiểm tra đã dán đủ mã chưa.' };
+      L.push('Loại mã: <b>' + kind + '</b>' + (r.scopes != null && kind === 'classic' ? ' · quyền: <b>' + esc(r.scopes || '(trống)') + '</b>' : ''));
+      L.push('Mã thuộc tài khoản GitHub: <b>' + esc(r.j.login || '?') + '</b>');
+      if (r.j.login && r.j.login.toLowerCase() !== c.owner.toLowerCase()) L.push('⚠️ Khác với chủ kho đã nhập (<b>' + esc(c.owner) + '</b>). Mã phải tạo bằng tài khoản chủ kho, hoặc tài khoản được mời làm cộng tác viên có quyền ghi.');
+      return ghRaw('/repos/' + encodeURIComponent(c.owner) + '/' + encodeURIComponent(c.repo));
+    }).then(function(r){
+      if (r.status === 404) throw { msg: 'Mã không nhìn thấy kho <b>' + esc(c.owner + '/' + c.repo) + '</b>. Kiểm tra lại tên tài khoản và tên kho; với mã fine-grained, mục Repository access phải chọn đúng kho này.' };
+      if (r.status >= 400) throw { msg: 'Không đọc được kho: ' + esc(r.j.message || r.status) };
+      L.push('Tìm thấy kho: <b>' + esc(r.j.full_name) + '</b> (' + (r.j['private'] ? 'riêng tư' : 'công khai') + ', nhánh mặc định <b>' + esc(r.j.default_branch) + '</b>)');
+      if (r.j.default_branch && r.j.default_branch !== c.branch){ L.push('Đã tự đổi nhánh từ “' + esc(c.branch) + '” sang “' + esc(r.j.default_branch) + '”.'); c.branch = r.j.default_branch; $('suBranch').value = c.branch; }
+      busy(true, 'Đang thử ghi vào kho…');
       return encryptConf(u, p, c);
     }).then(function(enc){
       return getFile(CONF_PATH).then(function(f){ return f.sha; }, function(){ return null; }).then(function(sha){
-        return putFile(CONF_PATH, b64encodeText(JSON.stringify(enc, null, 2) + '\n'), 'Admin: thiết lập tài khoản quản trị (đã mã hóa)', sha);
+        var body = { message:'Admin: thiết lập tài khoản quản trị (đã mã hóa)', content: b64encodeText(JSON.stringify(enc, null, 2) + '\n'), branch: c.branch }; if (sha) body.sha = sha;
+        return ghRaw('/repos/' + encodeURIComponent(c.owner) + '/' + encodeURIComponent(c.repo) + '/contents/' + CONF_PATH, { method:'PUT', body: body });
       });
-    }).then(function(){
+    }).then(function(r){
+      if (r.status === 403 || r.status === 404) throw { msg: 'Mã đọc được kho nhưng <b>KHÔNG ghi được</b>. GitHub trả lời: “' + esc(r.j.message || r.status) + '”.<br>' +
+        (kind === 'classic' ? 'Mã classic phải tích ô <b>repo</b> khi tạo.' : 'Mã fine-grained: vào github.com/settings/personal-access-tokens → mã này → Edit → Repository access chọn đúng kho → Permissions: <b>Contents = Read and write</b> → Update. Hoặc tạo mã classic tích ô <b>repo</b>.') };
+      if (r.status === 422 && /branch/i.test(r.j.message || '')) throw { msg: 'Nhánh “' + esc(c.branch) + '” không tồn tại.' };
+      if (r.status >= 400) throw { msg: 'Ghi thất bại: ' + esc(r.j.message || r.status) };
+      L.push('✅ Ghi thử vào kho thành công.');
+      diag(L, true);
       session = { user: u }; keep(false); $('suToken').value = '';
-      return enter().then(function(){ toast('Đã thiết lập xong. Từ lần sau chỉ cần tên đăng nhập và mật khẩu (sau khoảng 1 phút).', 'ok'); });
-    }).catch(function(err){ busy(false); cfg = null; toast(explain(err), 'err'); });
+      return enter().then(function(){ toast('Đã thiết lập xong. Từ lần sau chỉ cần tên đăng nhập và mật khẩu.', 'ok'); });
+    }).catch(function(err){
+      busy(false); cfg = null;
+      if (err && err.msg){ L.push('❌ ' + err.msg); diag(L, false); toast('Chưa thiết lập được – xem khung kiểm tra.', 'err'); }
+      else { L.push('❌ ' + esc(explain(err))); diag(L, false); toast(explain(err), 'err'); }
+    });
   }
   function changePass(){
     var np = prompt('Mật khẩu mới (ít nhất 8 ký tự):'); if (np === null) return;

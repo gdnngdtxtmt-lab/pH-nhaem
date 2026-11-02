@@ -45,7 +45,11 @@ a{color:inherit;}
 .drawer ul{list-style:none; margin:0; padding:0;}
 .drawer a{display:block; padding:13px 14px; font-weight:600; text-decoration:none; border-radius:12px; color:var(--ink);}
 .drawer a[aria-current="page"]{background:var(--tint); color:var(--c-purple-dark);}
-@media (max-width:900px){ .menu{display:none;} .burger{display:block;} .logo-t{font-size:18px;} }
+.login-btn{flex:0 0 auto; display:inline-flex; align-items:center; gap:6px; font-family:var(--fd); font-weight:700; font-size:14px; color:#fff; text-decoration:none;
+  padding:8px 15px; border-radius:20px; background:linear-gradient(90deg,var(--c-purple),var(--c-blue)); box-shadow:0 4px 10px rgba(85,52,138,.25); white-space:nowrap;}
+.login-btn:hover{filter:brightness(1.08);}
+@media (max-width:900px){ .menu{display:none;} .burger{display:block; margin-left:0;} .login-btn{margin-left:auto; padding:8px 12px;} .logo-t{font-size:18px;} }
+@media (max-width:420px){ .login-btn .lb-t{display:none;} .login-btn{padding:8px 11px;} .logo-t{font-size:16px;} }
 
 /* ===== Banner tiêu đề trang ===== */
 .banner{position:relative; overflow:hidden; color:#fff; text-align:center;
