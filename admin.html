@@ -7,136 +7,255 @@
 <title>Quản trị · pH Nhà Em</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#16202C; --ink-soft:#4A5B6E; --card:#fff; --tint:#F7F2FC; --line:#E3D6F0; --bg:#F6F3EE;
-    --purple:#7B4FB8; --purple-d:#55348A; --blue:#4B5FC9; --green:#2E8B57; --red:#C62F45; --amber:#B7791F;
-    --radius:20px; --shadow:0 10px 24px rgba(31,40,80,.10);
-    --fd:'Baloo 2',sans-serif; --fb:'Be Vietnam Pro',sans-serif; --fm:'Roboto Mono',monospace;
+    --ink:#1F1A2E; --ink-2:#5A5470; --ink-3:#8A84A0; --canvas:#F3F1F7; --panel:#FFFFFF; --line:#E2DCEB; --line-2:#EDE8F3;
+    --plum:#2A2140; --plum-2:#3A2E57; --cab:#5B3A92; --cab-soft:#EEE8F7;
+    --pub:#23855A; --pub-d:#1A6A47; --draft:#A86A12; --danger:#C0392B;
+    --h-tb:#D7263D; --h-anh:#9B4DB8; --h-bt:#3F5BC4; --h-tl:#2E9E6A;
+    --r-lg:16px; --r:10px;
+    --fb:'Be Vietnam Pro',system-ui,sans-serif;
   }
   *{box-sizing:border-box;}
-  body{ margin:0; font-family:var(--fb); color:var(--ink); background:var(--bg); font-size:14.5px; }
-  a{ color:var(--purple); }
-  .wrap{ max-width:1180px; margin:0 auto; padding:0 16px; }
-  header{ background:linear-gradient(90deg,var(--purple-d),var(--purple) 55%,var(--blue)); color:#fff; }
-  header .wrap{ display:flex; align-items:center; gap:12px; min-height:62px; flex-wrap:wrap; padding-top:8px; padding-bottom:8px; }
-  header h1{ font-family:var(--fd); font-size:22px; margin:0; }
-  .status{ font-family:var(--fm); font-size:12px; background:rgba(255,255,255,.18); border-radius:12px; padding:4px 10px; }
-  .status.ok{ background:#2E8B57; }
-  header .sp{ margin-left:auto; display:flex; gap:8px; flex-wrap:wrap; }
-  header a.hbtn, header button.hbtn{ font-family:var(--fd); font-weight:700; font-size:14px; color:var(--purple-d); background:#fff; border:0; border-radius:12px; padding:7px 14px; text-decoration:none; cursor:pointer; }
+  html,body{height:100%;}
+  body{margin:0; font-family:var(--fb); font-size:14.5px; line-height:1.5; color:var(--ink); background:var(--canvas); -webkit-font-smoothing:antialiased;}
+  a{color:var(--cab);}
+  button{font-family:inherit;}
+  :focus-visible{outline:3px solid #B9A5E0; outline-offset:2px;}
+  [hidden]{display:none !important;}
 
-  .card{ background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:22px; margin:20px 0; border:1px solid var(--line); }
-  .card h2{ font-family:var(--fd); font-size:21px; margin:0 0 6px; }
-  .muted{ color:var(--ink-soft); font-size:13.5px; line-height:1.6; }
-  label{ display:block; font-weight:600; font-size:13.5px; margin:12px 0 5px; }
-  label .req{ color:var(--red); }
+  /* ===== Khung: thanh bên + vùng chính ===== */
+  .shell{min-height:100%; display:grid; grid-template-columns:1fr;}
+  body.in .shell{grid-template-columns:256px minmax(0,1fr);}
+  .side{display:none;}
+  body.in .side{display:flex; flex-direction:column; position:sticky; top:0; height:100vh; background:var(--plum); color:#EDE8F7; padding:22px 16px 18px 26px; overflow:auto;}
+  body.in .side::before{content:""; position:absolute; left:0; top:0; bottom:0; width:6px;
+    background:linear-gradient(180deg,#D7263D 0%,#E8508C 18%,#9B4DB8 36%,#5B3A92 50%,#3F5BC4 64%,#2F9C9A 78%,#2E9E6A 88%,#B8C934 100%);}
+  .brand{display:flex; align-items:center; gap:12px; margin-bottom:26px;}
+  .brand .mark{width:40px; height:40px; border-radius:12px; display:grid; place-items:center; font-size:22px; background:var(--plum-2);}
+  .brand b{display:block; font-size:17px; font-weight:700; color:#fff; line-height:1.2;}
+  .brand small{font-size:12.5px; color:#B7ADD0;}
+  .tabs{display:flex; flex-direction:column; gap:4px;}
+  .tab{--h:#fff; display:flex; align-items:center; gap:12px; width:100%; text-align:left; border:0; background:none; color:#D9D1EA; font-size:15px; font-weight:600;
+    padding:10px 12px; border-radius:10px; cursor:pointer;}
+  .tab .hue{width:12px; height:12px; border-radius:50%; background:var(--h); box-shadow:0 0 0 3px rgba(255,255,255,.08); flex:0 0 auto;}
+  .tab .lbl{flex:1 1 auto;}
+  .tab .n{font-size:12.5px; font-weight:600; color:#B7ADD0; min-width:22px; text-align:right;}
+  .tab:hover{background:rgba(255,255,255,.06); color:#fff;}
+  .tab.on{background:#fff; color:var(--ink);}
+  .tab.on .n{color:var(--ink-2);}
+  .tab.on .hue{box-shadow:0 0 0 3px color-mix(in srgb,var(--h) 22%,transparent);}
+  .side-foot{margin-top:auto; padding-top:18px; border-top:1px solid rgba(255,255,255,.1); display:flex; flex-direction:column; gap:6px;}
+  .side-foot .who{display:flex; align-items:center; gap:10px; margin-bottom:6px;}
+  .side-foot .av{width:34px; height:34px; border-radius:50%; background:#EDE8F7; color:var(--plum); display:grid; place-items:center; font-weight:700;}
+  .status{font-size:14px; font-weight:600; color:#fff;}
+  .side-link{display:block; text-decoration:none; color:#D9D1EA; font-size:14px; padding:7px 10px; border-radius:8px; border:0; background:none; text-align:left; cursor:pointer;}
+  .side-link:hover{background:rgba(255,255,255,.06); color:#fff;}
+
+  .main{min-width:0; padding:28px 32px 40px;}
+  @media (max-width:900px){
+    body.in .shell{grid-template-columns:1fr;}
+    body.in .side{position:sticky; top:0; z-index:40; height:auto; padding:12px 14px 10px; flex-direction:column;}
+    body.in .side::before{width:100%; height:4px; bottom:auto;}
+    .brand{margin:4px 0 10px;} .brand .mark{width:32px; height:32px; font-size:18px;}
+    .tabs{flex-direction:row; overflow-x:auto; gap:6px; scrollbar-width:none;} .tabs::-webkit-scrollbar{display:none;}
+    .tab{width:auto; white-space:nowrap; padding:8px 12px; font-size:14px;}
+    .side-foot{flex-direction:row; flex-wrap:wrap; align-items:center; border-top:0; padding-top:8px; margin-top:4px;}
+    .side-foot .who{margin:0 auto 0 0;}
+    .main{padding:20px 14px 34px;}
+  }
+
+  /* ===== Đầu mục ===== */
+  .sec-head{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:20px;}
+  .sec-head h1{margin:0; font-size:28px; line-height:1.15; font-weight:700; letter-spacing:-.01em; display:flex; align-items:center; gap:12px;}
+  .sec-head h1 .hue{width:14px; height:14px; border-radius:50%; background:var(--h);}
+  .sec-head p{margin:6px 0 0; color:var(--ink-2); max-width:62ch;}
+  .stats{display:flex; gap:10px;}
+  .stat{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:8px 14px; min-width:96px;}
+  .stat b{display:block; font-size:20px; line-height:1.1;}
+  .stat span{font-size:12.5px; color:var(--ink-2);}
+  .stat.dr b{color:var(--draft);}
+
+  /* ===== Hai cột ===== */
+  .work{display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:20px; align-items:start;}
+  @media (max-width:1100px){ .work{grid-template-columns:1fr;} }
+  .pane{background:var(--panel); border:1px solid var(--line); border-radius:var(--r-lg);}
+  .pane-h{display:flex; align-items:center; gap:10px; padding:16px 20px; border-bottom:1px solid var(--line-2);}
+  .pane-h h2{margin:0; font-size:16.5px; font-weight:700;}
+  .mode{margin-left:4px; font-size:12.5px; font-weight:600; color:var(--pub); background:#E6F4EC; border-radius:999px; padding:2px 10px;}
+  .mode.edit{color:var(--draft); background:#FBF0DD;}
+  .pane-b{padding:4px 20px 20px;}
+  .listpane{position:sticky; top:20px;}
+
+  /* ===== Form ===== */
+  label{display:block; font-weight:600; font-size:13.5px; margin:16px 0 6px; color:var(--ink);}
+  label .req{color:var(--danger); font-weight:700;}
+  label .opt{color:var(--ink-3); font-weight:400;}
   input[type=text], input[type=password], input[type=url], input[type=date], textarea, select{
-    width:100%; font:inherit; color:var(--ink); background:#fff; border:2px solid var(--line); border-radius:12px; padding:9px 12px; }
-  textarea{ resize:vertical; min-height:110px; line-height:1.55; }
-  input:focus, textarea:focus, select:focus{ outline:none; border-color:var(--purple); }
-  input[type=file]{ width:100%; font:inherit; padding:10px; border:2px dashed var(--line); border-radius:12px; background:var(--tint); }
-  .row{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
-  .row3{ display:grid; grid-template-columns:2fr 2fr 1fr; gap:12px; }
-  @media (max-width:640px){ .row, .row3{ grid-template-columns:1fr; } }
-  .check{ display:flex; align-items:center; gap:8px; font-weight:600; margin-top:12px; }
-  .check input{ width:18px; height:18px; }
-  .btn{ font-family:var(--fd); font-weight:700; font-size:15px; cursor:pointer; border:0; border-radius:13px; padding:10px 18px; color:#fff; background:var(--purple); box-shadow:0 4px 0 var(--purple-d); }
-  .btn:active{ transform:translateY(3px); box-shadow:none; }
-  .btn:disabled{ opacity:.55; cursor:not-allowed; }
-  .btn.sec{ background:#fff; color:var(--purple-d); border:2px solid var(--purple); box-shadow:none; }
-  .btn.red{ background:var(--red); box-shadow:0 4px 0 #8E1F30; }
-  .actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
-  .note{ background:#EEF3FD; border-left:5px solid var(--blue); border-radius:0 12px 12px 0; padding:10px 14px; font-size:13.3px; line-height:1.55; margin-top:12px; }
-  .warn{ background:#FFF4F4; border-left:5px solid var(--red); border-radius:0 12px 12px 0; padding:10px 14px; font-size:13.3px; line-height:1.55; margin-top:12px; color:#8E1F30; }
-  details.help{ margin-top:12px; background:var(--tint); border-radius:12px; padding:10px 14px; }
-  details.help summary{ cursor:pointer; font-weight:700; }
-  details.help ol{ margin:8px 0 0; padding-left:20px; line-height:1.7; }
+    width:100%; font:inherit; color:var(--ink); background:#fff; border:1px solid #D6CFE2; border-radius:var(--r); padding:10px 12px; transition:border-color .15s, box-shadow .15s;}
+  input::placeholder, textarea::placeholder{color:#A9A3BC;}
+  input:focus, textarea:focus, select:focus{outline:none; border-color:var(--cab); box-shadow:0 0 0 3px var(--cab-soft);}
+  textarea{resize:vertical; min-height:120px; line-height:1.6;}
+  input[type=file]{width:100%; font:inherit; font-size:13.5px; color:var(--ink-2); padding:14px; border:1.5px dashed #CFC6DE; border-radius:var(--r); background:#FBFAFD; cursor:pointer;}
+  input[type=file]::file-selector-button{font:inherit; font-weight:600; margin-right:12px; border:1px solid #D6CFE2; background:#fff; color:var(--ink); border-radius:8px; padding:7px 14px; cursor:pointer;}
+  .row{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px;}
+  .row label{margin-top:16px;}
+  @media (max-width:640px){ .row{grid-template-columns:1fr;} }
+  .check{display:flex; align-items:center; gap:10px; font-weight:500; margin-top:16px;}
+  .check input{width:18px; height:18px; accent-color:var(--cab);}
+  .muted{color:var(--ink-2); font-size:13.5px; line-height:1.6;}
+  .src-switch{display:inline-flex; background:#F1EEF6; border-radius:10px; padding:3px; gap:2px; margin:2px 0 10px;}
+  .src-switch label{margin:0; display:flex; align-items:center; gap:0; font-weight:600; font-size:13.5px; color:var(--ink-2); padding:7px 14px; border-radius:8px; cursor:pointer;}
+  .src-switch input{position:absolute; opacity:0; width:1px; height:1px;}
+  .src-switch label:has(input:checked){background:#fff; color:var(--ink); box-shadow:0 1px 3px rgba(31,26,46,.12);}
+  .src-switch label:has(input:focus-visible){outline:3px solid #B9A5E0;}
+  .preview{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;}
+  .preview img{width:88px; height:66px; object-fit:cover; border-radius:8px; border:1px solid var(--line);}
+  .warn{margin-top:14px; background:#FDF3F2; border-radius:var(--r); padding:10px 14px; font-size:13.3px; line-height:1.55; color:#8A2A20;}
+  .note{background:#F1EEF6; border-radius:var(--r); padding:10px 14px; font-size:13px; color:var(--ink-2); margin-top:16px;}
 
-  .tabs{ display:flex; gap:6px; flex-wrap:wrap; margin:20px 0 0; }
-  .tab{ font-family:var(--fd); font-weight:700; font-size:15.5px; cursor:pointer; border:2px solid var(--line); background:#fff; color:var(--ink-soft); border-radius:14px 14px 0 0; padding:9px 16px; border-bottom:0; }
-  .tab.on{ background:var(--purple); border-color:var(--purple); color:#fff; }
-  .tab .n{ font-family:var(--fm); font-size:11px; background:rgba(0,0,0,.12); border-radius:8px; padding:1px 6px; margin-left:4px; }
-  .panel{ display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:20px; background:#fff; border:2px solid var(--purple); border-radius:0 var(--radius) var(--radius) var(--radius); padding:20px; box-shadow:var(--shadow); }
-  @media (max-width:900px){ .panel{ grid-template-columns:1fr; } }
-  .panel h3{ font-family:var(--fd); font-size:18px; margin:0 0 4px; }
-  .mode{ font-family:var(--fm); font-size:11.5px; color:#fff; background:var(--green); border-radius:8px; padding:2px 8px; margin-left:6px; vertical-align:2px; }
-  .mode.edit{ background:var(--amber); }
-  .items{ display:flex; flex-direction:column; gap:10px; max-height:720px; overflow:auto; padding-right:4px; }
-  .it{ display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:12px; align-items:center; border:1.5px solid var(--line); border-radius:14px; padding:10px 12px; background:var(--tint); }
-  .it.pin{ border-color:#F0B8C1; background:#FFF6F7; }
-  .it .th{ width:64px; height:48px; border-radius:10px; object-fit:cover; background:#ddd; display:block; }
-  .it .ic{ width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22px; background:#fff; }
-  .it b{ display:block; font-size:14.5px; line-height:1.35; overflow-wrap:anywhere; }
-  .it small{ display:block; font-family:var(--fm); font-size:11.5px; color:var(--ink-soft); margin-top:2px; overflow-wrap:anywhere; }
-  .it .bt{ display:flex; gap:6px; }
-  .it .bt button{ font-family:var(--fd); font-weight:700; font-size:13px; cursor:pointer; border-radius:10px; padding:5px 10px; background:#fff; border:1.5px solid var(--purple); color:var(--purple-d); }
-  .it .bt button.del{ border-color:var(--red); color:var(--red); }
-  .empty{ text-align:center; color:var(--ink-soft); background:var(--tint); border:2px dashed var(--line); border-radius:14px; padding:20px; }
-  .preview{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; }
-  .preview img{ width:84px; height:64px; object-fit:cover; border-radius:10px; border:1px solid var(--line); }
-  .src-switch{ display:flex; gap:16px; margin-top:6px; }
-  .src-switch label{ display:flex; align-items:center; gap:6px; margin:0; font-weight:600; }
+  /* Thanh nút cuối form */
+  .actbar{position:sticky; bottom:0; display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:22px -20px -20px; padding:14px 20px; background:rgba(255,255,255,.96); border-top:1px solid var(--line-2); border-radius:0 0 var(--r-lg) var(--r-lg); backdrop-filter:blur(6px);}
+  .actbar .grow{flex:1 1 auto;}
+  .btn{font-weight:600; font-size:14.5px; cursor:pointer; border:1px solid transparent; border-radius:10px; padding:10px 18px; color:#fff; background:var(--cab); transition:background .15s, box-shadow .15s;}
+  .btn:hover{background:#4C2F7D;}
+  .btn:disabled{opacity:.55; cursor:not-allowed;}
+  .btn.sec{background:#fff; color:var(--ink); border-color:#D6CFE2;}
+  .btn.sec:hover{background:#F7F5FA;}
+  .btn.soft{background:var(--cab-soft); color:var(--cab);}
+  .btn.soft:hover{background:#E3DAF2;}
+  .btn.pub{background:var(--pub);}
+  .btn.pub:hover{background:var(--pub-d);}
+  .btn.link{background:none; border:0; color:var(--ink-2); padding:10px 6px; text-decoration:underline; text-underline-offset:3px;}
+  .btn.link:hover{color:var(--ink); background:none;}
+  .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:20px;}
 
-  .busy{ position:fixed; inset:0; background:rgba(20,15,35,.45); display:none; align-items:center; justify-content:center; z-index:90; }
-  .busy.on{ display:flex; }
-  .busy div{ background:#fff; border-radius:16px; padding:18px 24px; font-weight:600; box-shadow:var(--shadow); max-width:90vw; text-align:center; }
-  .toast{ position:fixed; left:50%; bottom:22px; transform:translateX(-50%); z-index:95; background:var(--ink); color:#fff; padding:11px 18px; border-radius:14px; font-size:14px; box-shadow:var(--shadow); display:none; max-width:92vw; }
-  .toast.on{ display:block; } .toast.ok{ background:var(--green); } .toast.err{ background:var(--red); }
-  .login{ max-width:420px; margin:48px auto; text-align:left; }
-  .login .lg-ic{ width:64px; height:64px; border-radius:18px; display:flex; align-items:center; justify-content:center; font-size:34px; background:var(--tint); margin-bottom:10px; }
-  .pw{ position:relative; } .pw input{ padding-right:46px; }
-  .pw button{ position:absolute; right:6px; top:50%; transform:translateY(-50%); border:0; background:none; font-size:18px; cursor:pointer; }
-  .diag{ margin-top:16px; border-radius:14px; padding:12px 16px; font-size:13.5px; line-height:1.6; }
-  .diag.ok{ background:#EAF6EE; border:2px solid #9BD3AE; } .diag.bad{ background:#FFF4F4; border:2px solid #F0B8C1; }
-  .diag ul{ margin:6px 0; padding-left:20px; } .diag p{ margin:6px 0 0; font-weight:600; }
-  .btn.pub{ background:linear-gradient(90deg,#2E8B57,#3DAA5C); box-shadow:0 4px 0 #1F6B41; }
-  .pv-mask{ position:fixed; inset:0; z-index:80; background:rgba(20,15,35,.6); display:flex; align-items:center; justify-content:center; padding:14px; }
-  .pv-box{ width:min(1200px,100%); height:min(92vh,980px); background:#fff; border-radius:18px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 20px 50px rgba(0,0,0,.35); }
-  .pv-head{ padding:10px 16px; background:#FFF8DB; border-bottom:1px solid #F0DC8A; display:flex; gap:12px; flex-wrap:wrap; align-items:baseline; }
-  .pv-head b{ font-family:var(--fd); font-size:17px; } .pv-head span{ font-size:13px; color:var(--ink-soft); }
-  .pv-box iframe{ flex:1 1 auto; width:100%; border:0; background:#FFFBF0; }
-  .pv-foot{ display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap; padding:10px 14px; border-top:1px solid var(--line); background:#fff; }
-  .it.draft{ border-style:dashed; background:#FFFDF2; }
-  .dtag{ font-family:var(--fm); font-size:10.5px; color:#fff; background:#B7791F; border-radius:7px; padding:1px 6px; margin-right:6px; vertical-align:1px; }
-  .it .bt button.pubq{ border-color:#2E8B57; color:#2E8B57; }
-  [hidden]{ display:none !important; }
+  /* ===== Danh sách ===== */
+  .filters{display:flex; gap:6px; padding:12px 20px 0; flex-wrap:wrap;}
+  .chip{border:1px solid var(--line); background:#fff; color:var(--ink-2); font-size:13px; font-weight:600; padding:5px 12px; border-radius:999px; cursor:pointer;}
+  .chip.on{background:var(--ink); color:#fff; border-color:var(--ink);}
+  .chip i{font-style:normal; opacity:.7; margin-left:4px;}
+  .items{display:flex; flex-direction:column; padding:10px 12px 14px; max-height:calc(100vh - 210px); overflow:auto;}
+  .it{position:relative; display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:12px; align-items:center; padding:12px 10px 12px 16px; border-radius:12px;}
+  .it::before{content:""; position:absolute; left:4px; top:12px; bottom:12px; width:3px; border-radius:3px; background:var(--h);}
+  .it + .it{border-top:1px solid var(--line-2);}
+  .it:hover{background:#FAF9FC;}
+  .it .th{width:58px; height:44px; border-radius:8px; object-fit:cover; background:#ECE8F2; display:block;}
+  .it .ic{width:40px; height:40px; border-radius:10px; display:grid; place-items:center; font-size:19px; background:#F3F0F8;}
+  .it b{display:block; font-size:14.5px; font-weight:600; line-height:1.35; overflow-wrap:anywhere;}
+  .it small{display:block; font-size:12.5px; color:var(--ink-3); margin-top:2px; overflow-wrap:anywhere;}
+  .it.pin b::after{content:"Ghim"; font-size:11.5px; font-weight:600; color:var(--h-tb); background:#FCE9EC; border-radius:999px; padding:1px 8px; margin-left:8px; vertical-align:1px;}
+  .it.draft::before{background:repeating-linear-gradient(180deg,var(--draft) 0 4px,transparent 4px 7px);}
+  .dtag{font-size:11.5px; font-weight:600; color:var(--draft); background:#FBF0DD; border-radius:999px; padding:1px 8px; margin-right:8px; vertical-align:1px;}
+  .it .bt{display:flex; gap:2px; opacity:.85;}
+  .it:hover .bt{opacity:1;}
+  .it .bt button{font-size:13px; font-weight:600; cursor:pointer; border:0; background:none; color:var(--cab); padding:6px 8px; border-radius:8px;}
+  .it .bt button:hover{background:var(--cab-soft);}
+  .it .bt button.del{color:var(--danger);} .it .bt button.del:hover{background:#FDECEA;}
+  .it .bt button.pubq{color:var(--pub);} .it .bt button.pubq:hover{background:#E6F4EC;}
+  .empty{text-align:center; color:var(--ink-2); padding:34px 16px; font-size:14px;}
+  .empty b{display:block; color:var(--ink); font-size:15px; margin-bottom:4px;}
+
+  /* ===== Đăng nhập / thiết lập ===== */
+  .gate{max-width:440px; margin:8vh auto 40px; background:var(--panel); border:1px solid var(--line); border-radius:20px; padding:30px 28px 26px; position:relative; overflow:hidden;}
+  .gate::before{content:""; position:absolute; left:0; right:0; top:0; height:6px; background:linear-gradient(90deg,#D7263D,#E8508C 18%,#9B4DB8 36%,#5B3A92 50%,#3F5BC4 64%,#2F9C9A 78%,#2E9E6A 88%,#B8C934);}
+  .gate.wide{max-width:640px;}
+  .gate .mark{width:46px; height:46px; border-radius:14px; display:grid; place-items:center; font-size:24px; background:var(--cab-soft); margin-bottom:14px;}
+  .gate h2{margin:0 0 6px; font-size:23px; font-weight:700;}
+  .pw{position:relative;} .pw input{padding-right:46px;}
+  .pw button{position:absolute; right:6px; top:50%; transform:translateY(-50%); border:0; background:none; font-size:17px; cursor:pointer; padding:6px; border-radius:6px;}
+  details.help{margin-top:16px; background:#F7F5FA; border-radius:var(--r); padding:10px 14px;}
+  details.help summary{cursor:pointer; font-weight:600;}
+  details.help ol{margin:8px 0 0; padding-left:20px; line-height:1.75; font-size:13.5px;}
+  .diag{margin-top:16px; border-radius:var(--r); padding:12px 16px; font-size:13.5px; line-height:1.6;}
+  .diag.ok{background:#E9F5EE;} .diag.bad{background:#FDF0EE;}
+  .diag ul{margin:6px 0; padding-left:20px;} .diag p{margin:6px 0 0; font-weight:600;}
+
+  /* ===== Lớp phủ ===== */
+  .busy{position:fixed; inset:0; background:rgba(31,26,46,.35); display:none; align-items:center; justify-content:center; z-index:90;}
+  .busy.on{display:flex;}
+  .busy div{background:#fff; border-radius:14px; padding:16px 22px; font-weight:600; max-width:90vw; text-align:center; box-shadow:0 12px 30px rgba(31,26,46,.2);}
+  .toast{position:fixed; left:50%; bottom:22px; transform:translateX(-50%); z-index:95; background:var(--ink); color:#fff; padding:11px 18px; border-radius:12px; font-size:14px; display:none; max-width:92vw; box-shadow:0 12px 30px rgba(31,26,46,.25);}
+  .toast.on{display:block;} .toast.ok{background:var(--pub);} .toast.err{background:var(--danger);}
+  .pv-mask{position:fixed; inset:0; z-index:80; background:rgba(31,26,46,.6); display:flex; align-items:center; justify-content:center; padding:14px;}
+  .pv-box{width:min(1240px,100%); height:min(92vh,1000px); background:#fff; border-radius:18px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 24px 60px rgba(0,0,0,.35);}
+  .pv-head{padding:12px 18px; border-bottom:1px solid var(--line); display:flex; gap:12px; flex-wrap:wrap; align-items:baseline;}
+  .pv-head b{font-size:16px;} .pv-head span{font-size:13px; color:var(--ink-2);}
+  .pv-box iframe{flex:1 1 auto; width:100%; border:0; background:#FFFBF0;}
+  .pv-foot{display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap; padding:12px 16px; border-top:1px solid var(--line); background:#fff;}
+  .pv-foot .grow{flex:1 1 auto;}
+  /* ===== Hồ sơ ===== */
+  .side-sep{height:1px; background:rgba(255,255,255,.1); margin:14px 4px;}
+  .av{overflow:hidden;} .av img{width:100%; height:100%; object-fit:cover; display:block;}
+  .pf{display:grid; grid-template-columns:220px minmax(0,1fr); gap:28px; padding:22px 24px 24px;}
+  .pf-pic{display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center;}
+  .pf-ring{width:168px; height:168px; border-radius:50%; padding:5px; background:conic-gradient(from 200deg,#D7263D,#E8508C,#9B4DB8,#5B3A92,#3F5BC4,#2F9C9A,#2E9E6A,#B8C934,#D7263D);}
+  .pf-ring > div{width:100%; height:100%; border-radius:50%; background:#F3F0F8; border:4px solid #fff; display:grid; place-items:center; overflow:hidden; font-size:56px; font-weight:700; color:var(--cab);}
+  .pf-ring img{width:100%; height:100%; object-fit:cover; display:block;}
+  .pf-pic .btn{width:100%;}
+  .pf-pic input[type=file]{display:none;}
+  .pf-pic small{color:var(--ink-3); font-size:12.5px; line-height:1.5;}
+  .pf-fields > label:first-child{margin-top:0;}
+  .foot-pv{margin-top:20px; border:1px dashed #CFC6DE; border-radius:12px; padding:18px; text-align:center; background:#FBFAFD;}
+  .foot-pv .cap{font-size:12.5px; color:var(--ink-3); margin-bottom:10px;}
+  .fp{display:flex; flex-direction:column; align-items:center; gap:4px; font-size:13px; color:var(--ink-2);}
+  .fp .fav{width:56px; height:56px; border-radius:50%; object-fit:cover; border:3px solid #fff; box-shadow:0 0 0 2px #CDB8EA;}
+  .fp b{font-size:15.5px; color:#4A2C7A;}
+  @media (max-width:760px){ .pf{grid-template-columns:1fr; padding:18px;} }
+  @media (max-width:640px){
+    body.in .side{position:static;}
+    .src-switch{display:flex; width:100%;} .src-switch label{flex:1 1 0; justify-content:center; text-align:center; line-height:1.3;}
+    .actbar{position:static; display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+    .actbar .grow{display:none;} .actbar .btn.link{grid-column:1/-1; justify-self:start; padding:4px 0;}
+    .actbar .btn.pub{grid-column:1/-1; padding:12px;}
+    .stats .stat{flex:1 1 0;}
+    .items{max-height:none;}
+  }
+  @media (prefers-reduced-motion: reduce){ *{transition:none !important;} }
 </style>
 </head>
 <body>
-<header>
-  <div class="wrap">
-    <h1>🛠️ Quản trị · pH Nhà Em</h1>
-    <span class="status" id="status">Chưa đăng nhập</span>
-    <div class="sp">
-      <a class="hbtn" href="./" target="_blank" rel="noopener">Xem trang chủ ↗</a>
-      <button class="hbtn" id="btnPass" hidden>Đổi mật khẩu</button>
-      <button class="hbtn" id="btnLogout" hidden>Đăng xuất</button>
-    </div>
+<div class="shell">
+<aside class="side" aria-label="Mục quản trị">
+  <div class="brand"><span class="mark">🥬</span><div><b>pH Nhà Em</b><small>Quản trị website</small></div></div>
+  <nav class="tabs" role="tablist">
+    <button class="tab on" data-tab="thong_bao" style="--h:var(--h-tb)"><i class="hue"></i><span class="lbl">Thông báo</span><span class="n" id="n_thong_bao">0</span></button>
+    <button class="tab" data-tab="anh" style="--h:var(--h-anh)"><i class="hue"></i><span class="lbl">Ảnh</span><span class="n" id="n_anh">0</span></button>
+    <button class="tab" data-tab="bai_tap" style="--h:var(--h-bt)"><i class="hue"></i><span class="lbl">Bài tập</span><span class="n" id="n_bai_tap">0</span></button>
+    <button class="tab" data-tab="tai_lieu" style="--h:var(--h-tl)"><i class="hue"></i><span class="lbl">Tài liệu</span><span class="n" id="n_tai_lieu">0</span></button>
+  </nav>
+  <div class="side-sep"></div>
+  <nav class="tabs"><button class="tab" id="tabProfile" style="--h:#B8C934"><i class="hue"></i><span class="lbl">Hồ sơ giáo viên</span></button></nav>
+  <div class="side-foot">
+    <div class="who"><span class="av">A</span><span class="status" id="status">Chưa đăng nhập</span></div>
+    <a class="side-link" href="/" target="_blank" rel="noopener">Xem website ↗</a>
+    <button class="side-link" id="btnPass" hidden>Đổi mật khẩu</button>
+    <button class="side-link" id="btnLogout" hidden>Đăng xuất</button>
   </div>
-</header>
+</aside>
 
-<main class="wrap">
+<main class="main">
   <!-- ĐĂNG NHẬP -->
-  <section class="card login" id="connectCard" hidden>
-    <div class="lg-ic">🥬</div>
+  <section class="gate" id="connectCard" hidden>
+    <div class="mark">🥬</div>
     <h2>Đăng nhập quản trị</h2>
-    <p class="muted">Dành cho giáo viên quản lý website pH Nhà Em: đăng thông báo, ảnh, bài tập, tài liệu lên trang chủ.</p>
+    <p class="muted">Đăng thông báo, ảnh, bài tập và tài liệu lên website pH Nhà Em.</p>
     <form id="loginForm" autocomplete="on">
       <label for="lgUser">Tên đăng nhập</label>
       <input type="text" id="lgUser" name="username" autocomplete="username" required>
       <label for="lgPass">Mật khẩu</label>
       <div class="pw"><input type="password" id="lgPass" name="password" autocomplete="current-password" required><button type="button" class="eye" data-for="lgPass" aria-label="Hiện mật khẩu">👁️</button></div>
-      <label class="check"><input type="checkbox" id="cfRemember" checked> Ghi nhớ trên máy này (lần sau bấm Đăng nhập là vào thẳng; bỏ tích nếu dùng máy chung)</label>
-      <div class="actions"><button class="btn" id="btnConnect" type="submit" style="width:100%">Đăng nhập</button></div>
+      <label class="check"><input type="checkbox" id="cfRemember" checked> Ghi nhớ trên máy này</label>
+      <div class="actions"><button class="btn" id="btnConnect" type="submit" style="width:100%;padding:12px">Đăng nhập</button></div>
     </form>
     <p class="muted" style="margin-top:14px;font-size:12.5px" id="loginNote"></p>
   </section>
 
   <!-- THIẾT LẬP LẦN ĐẦU -->
-  <section class="card" id="setupCard" hidden style="max-width:720px;margin:32px auto">
-    <h2>⚙️ Thiết lập lần đầu (chỉ làm một lần)</h2>
+  <section class="gate wide" id="setupCard" hidden>
+    <div class="mark">⚙️</div>
+    <h2>Thiết lập lần đầu</h2>
     <p class="muted">Đặt tên đăng nhập, mật khẩu và dán mã GitHub <b>một lần</b>. Mã được <b>mã hóa bằng mật khẩu</b> rồi lưu vào kho <b>gdnngdtxtmt-lab/pH-nhaem</b>. Từ lần sau chỉ cần <b>tên đăng nhập + mật khẩu</b>, trên bất kỳ máy nào.</p>
     <form id="setupForm" autocomplete="off">
       <div class="row">
@@ -160,37 +279,74 @@
     <div id="diag" hidden></div>
   </section>
 
+  <!-- HỒ SƠ -->
+  <div id="profile" hidden>
+    <div class="sec-head"><div><h1><i class="hue" style="--h:#B8C934"></i><span>Hồ sơ giáo viên</span></h1><p>Tên, thông tin và ảnh đại diện hiện ở chân trang của mọi trang trên website.</p></div></div>
+    <section class="pane" style="max-width:980px">
+      <form id="pfForm" autocomplete="off">
+        <div class="pf">
+          <div class="pf-pic">
+            <div class="pf-ring"><div id="pfAv"></div></div>
+            <label class="btn sec" for="pfFile" style="margin:0;text-align:center">Chọn ảnh đại diện</label>
+            <input type="file" id="pfFile" accept="image/jpeg,image/png,image/webp">
+            <button class="btn link" type="button" id="pfRemove" hidden>Gỡ ảnh</button>
+            <small>Ảnh được cắt vuông và thu nhỏ tự động.</small>
+          </div>
+          <div class="pf-fields">
+            <label for="pfTen">Họ tên hiển thị <span class="req">*</span></label><input type="text" id="pfTen" required maxlength="80">
+            <div class="row">
+              <div><label for="pfChuc">Chức danh</label><input type="text" id="pfChuc" maxlength="80" placeholder="Giáo viên Khoa học tự nhiên"></div>
+              <div><label for="pfTruong">Trường</label><input type="text" id="pfTruong" maxlength="100"></div>
+            </div>
+            <div class="row">
+              <div><label for="pfLop">Lớp phụ trách</label><input type="text" id="pfLop" maxlength="40"></div>
+              <div><label for="pfNam">Năm học</label><input type="text" id="pfNam" maxlength="20" placeholder="2026–2027"></div>
+            </div>
+            <label for="pfEmail">Email liên hệ <span class="opt">(không bắt buộc, sẽ hiện công khai)</span></label><input type="text" id="pfEmail" maxlength="100" inputmode="email">
+            <label for="pfGt">Lời giới thiệu ngắn <span class="opt">(không bắt buộc)</span></label><textarea id="pfGt" maxlength="300" style="min-height:80px"></textarea>
+            <div class="foot-pv"><div class="cap">Chân trang website sẽ hiện như sau</div><div class="fp" id="pfPreview"></div></div>
+          </div>
+        </div>
+        <div class="actbar" style="margin:0"><span class="grow"></span><button class="btn pub" type="submit">Lưu hồ sơ</button></div>
+      </form>
+    </section>
+  </div>
+
   <!-- QUẢN LÝ NỘI DUNG -->
   <div id="manager" hidden>
-    <div class="tabs" role="tablist">
-      <button class="tab on" data-tab="thong_bao">📢 Thông báo <span class="n" id="n_thong_bao">0</span></button>
-      <button class="tab" data-tab="anh">📸 Ảnh <span class="n" id="n_anh">0</span></button>
-      <button class="tab" data-tab="bai_tap">✍️ Bài tập <span class="n" id="n_bai_tap">0</span></button>
-      <button class="tab" data-tab="tai_lieu">📚 Tài liệu <span class="n" id="n_tai_lieu">0</span></button>
+    <div class="sec-head">
+      <div><h1><i class="hue" id="secHue"></i><span id="secTitle">Thông báo</span></h1><p id="secDesc"></p></div>
+      <div class="stats"><div class="stat"><b id="stPub">0</b><span>Đã xuất bản</span></div><div class="stat dr"><b id="stDraft">0</b><span>Bản nháp</span></div></div>
     </div>
-    <div class="panel">
-      <div>
-        <h3 id="formTitle">Thêm mới<span class="mode" id="modeTag">MỚI</span></h3>
-        <form id="form" autocomplete="off"></form>
-      </div>
-      <div>
-        <h3>Đã đăng</h3>
-        <p class="muted" style="margin:0 0 10px">Mới nhất ở trên. Bấm “Sửa” để chỉnh, “Xóa” để gỡ khỏi trang chủ.</p>
+    <div class="work">
+      <section class="pane">
+        <div class="pane-h"><h2 id="formTitle">Thêm mới<span class="mode" id="modeTag">Mới</span></h2></div>
+        <div class="pane-b"><form id="form" autocomplete="off"></form></div>
+      </section>
+      <section class="pane listpane">
+        <div class="pane-h"><h2>Đã đăng</h2></div>
+        <div class="filters" id="filters">
+          <button class="chip on" data-f="all">Tất cả<i id="fAll">0</i></button>
+          <button class="chip" data-f="pub">Đã xuất bản<i id="fPub">0</i></button>
+          <button class="chip" data-f="draft">Nháp<i id="fDraft">0</i></button>
+        </div>
         <div class="items" id="items"></div>
-      </div>
+      </section>
     </div>
-    <div class="note">⏱️ Sau khi lưu, trang chủ cập nhật sau khoảng 1 phút (thời gian Vercel triển khai lại). Ảnh vừa tải lên có thể chưa hiện ngay trong danh sách bên phải.</div>
+    <p class="note">Website cập nhật khoảng 1 phút sau khi xuất bản. Ảnh vừa tải lên có thể chưa hiện ngay trong danh sách.</p>
   </div>
 </main>
+</div>
 
 <div class="pv-mask" id="pvMask" hidden>
   <div class="pv-box">
-    <div class="pv-head"><b>👁️ Xem trước trên trang chủ</b><span>Bài mới được viền vàng. Bản này chưa lưu, chưa ai nhìn thấy.</span></div>
+    <div class="pv-head"><b>Xem trước trên trang chủ</b><span>Bài mới có viền vàng. Bản này chưa lưu, chưa ai nhìn thấy.</span></div>
     <iframe id="pvFrame" title="Xem trước trang chủ"></iframe>
     <div class="pv-foot">
-      <button class="btn sec" type="button" id="pvBack">✏️ Quay lại sửa</button>
-      <button class="btn sec" type="button" id="pvDraft">📝 Lưu nháp</button>
-      <button class="btn pub" type="button" id="pvPub">🚀 Đồng ý xuất bản</button>
+      <button class="btn link" type="button" id="pvBack">Quay lại sửa</button>
+      <span class="grow"></span>
+      <button class="btn sec" type="button" id="pvDraft">Lưu nháp</button>
+      <button class="btn pub" type="button" id="pvPub">Xuất bản</button>
     </div>
   </div>
 </div>
@@ -368,19 +524,18 @@
       [['','Tự nhận biết'],['pdf','PDF'],['docx','Word'],['pptx','PowerPoint'],['xlsx','Excel'],['video','Video'],['link','Trang web']].map(function(o){ return '<option value="' + o[0] + '"' + ((it.loai || '') === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') +
       '</select></div><div><label>Ngày đăng</label><input type="date" name="ngay" value="' + esc(d) + '"></div></div>' + btns();
   }
-  function btns(){ return '<div class="actions">' +
-    '<button class="btn" type="submit" data-mode="preview">👁️ Xem trước</button>' +
-    '<button class="btn sec" type="button" data-mode="draft">📝 Lưu nháp</button>' +
-    '<button class="btn pub" type="button" data-mode="publish">🚀 Xuất bản</button>' +
-    '<button class="btn sec" type="button" id="btnCancel">Làm mới form</button></div>' +
-    '<p class="muted" style="margin:8px 0 0;font-size:12.5px">Xem trước: xem bài nằm trên trang chủ thế nào (chưa lưu). Lưu nháp: lưu lại nhưng chưa hiện trên website. Xuất bản: hiện trên website.</p>'; }
+  function btns(){ return '<div class="actbar">' +
+    '<button class="btn link" type="button" id="btnCancel">Làm mới</button><span class="grow"></span>' +
+    '<button class="btn sec" type="button" data-mode="draft" title="Lưu lại, chưa hiện trên website">Lưu nháp</button>' +
+    '<button class="btn soft" type="submit" data-mode="preview" title="Xem bài nằm trên trang chủ thế nào">Xem trước</button>' +
+    '<button class="btn pub" type="button" data-mode="publish" title="Hiện bài trên website">Xuất bản</button></div>'; }
 
   function renderForm(){
     var it = editId ? (data[tab] || []).find(function(x){ return x.id === editId; }) : null;
     if (editId && !it) editId = null;
     $('form').innerHTML = formHTML(tab, it);
     $('formTitle').firstChild.textContent = (editId ? 'Sửa ' : 'Thêm ') + LABEL[tab];
-    $('modeTag').textContent = editId ? 'ĐANG SỬA' : 'MỚI'; $('modeTag').className = 'mode' + (editId ? ' edit' : '');
+    $('modeTag').textContent = editId ? 'Đang sửa' : 'Mới'; $('modeTag').className = 'mode' + (editId ? ' edit' : '');
     $('btnCancel').onclick = function(){ editId = null; renderForm(); };
     var radios = $('form').querySelectorAll('input[name=nguon]');
     Array.prototype.forEach.call(radios, function(r){ r.onchange = function(){ var f = $('form').nguon.value === 'file'; $('srcFile').hidden = !f; $('srcLink').hidden = f; }; });
@@ -402,14 +557,101 @@
   }
   function renderList(){
     ['thong_bao','anh','bai_tap','tai_lieu'].forEach(function(k){ $('n_' + k).textContent = data[k].length; });
-    var list = data[tab].slice().sort(function(a,b){ return (tab === 'thong_bao' ? (b.ghim?1:0) - (a.ghim?1:0) : 0) || String(b.ngay || '').localeCompare(String(a.ngay || '')); });
-    if (!list.length){ $('items').innerHTML = '<div class="empty">Chưa có ' + LABEL[tab] + ' nào.</div>'; return; }
+    paintHead();
+    var list = data[tab].filter(function(x){ return listFilter === 'all' || (listFilter === 'draft' ? x.nhap : !x.nhap); }).sort(function(a,b){ return (tab === 'thong_bao' ? (b.ghim?1:0) - (a.ghim?1:0) : 0) || String(b.ngay || '').localeCompare(String(a.ngay || '')); });
+    if (!list.length){ $('items').innerHTML = '<div class="empty"><b>' + (listFilter === 'draft' ? 'Không có bản nháp' : 'Chưa có ' + LABEL[tab]) + '</b>Điền form bên cạnh rồi bấm Xem trước để bắt đầu.</div>'; return; }
     $('items').innerHTML = list.map(function(it){
       var s = itemSummary(tab, it);
       var lead = s.img ? '<img class="th" src="' + esc(s.img) + '" alt="" onerror="this.style.visibility=\'hidden\'">' : '<div class="ic">' + s.ic + '</div>';
-      return '<div class="it' + (it.ghim ? ' pin' : '') + (it.nhap ? ' draft' : '') + '">' + lead + '<div><b>' + (it.nhap ? '<span class="dtag">NHÁP</span>' : '') + esc(s.title || '(không tiêu đề)') + '</b><small>' + esc(s.sub) + (it.nhap ? ' · chưa hiện trên website' : '') + '</small></div>' +
+      return '<div class="it' + (it.ghim ? ' pin' : '') + (it.nhap ? ' draft' : '') + '">' + lead + '<div><b>' + (it.nhap ? '<span class="dtag">Nháp</span>' : '') + esc(s.title || '(không tiêu đề)') + '</b><small>' + esc(s.sub) + (it.nhap ? ' · chưa hiện trên website' : '') + '</small></div>' +
         '<div class="bt">' + (it.nhap ? '<button class="pubq" data-pub="' + esc(it.id) + '">Xuất bản</button>' : '') + '<button data-edit="' + esc(it.id) + '">Sửa</button><button class="del" data-del="' + esc(it.id) + '">Xóa</button></div></div>';
     }).join('');
+  }
+
+  /* ---------- Hồ sơ giáo viên ---------- */
+  var HS_MAC_DINH = { ten:'Lê Thị Việt Hà', chuc_danh:'Giáo viên Khoa học tự nhiên', truong:'Trường THCS Nguyễn An Khương', lop:'8A4', nam_hoc:'2026–2027', email:'', gioi_thieu:'', anh:'' };
+  var pfNew = null, pfRemove = false;
+  function hoSo(){ var h = {}, d = (data && data.ho_so) || {}; Object.keys(HS_MAC_DINH).forEach(function(k){ h[k] = d[k] != null ? d[k] : HS_MAC_DINH[k]; }); return h; }
+  function imgSrc(p){ return p ? (localPreview[p] || p) : ''; }
+  function initials(n){ var w = String(n || 'A').trim().split(/\s+/); return w[w.length - 1].charAt(0).toUpperCase(); }
+  function paintAvatar(){
+    var h = hoSo(), src = pfNew ? pfNew.url : (pfRemove ? '' : imgSrc(h.anh));
+    $('pfAv').innerHTML = src ? '<img src="' + esc(src) + '" alt="Ảnh đại diện">' : esc(initials($('pfTen').value || h.ten));
+    $('pfRemove').hidden = !src;
+    var real = imgSrc(h.anh), av = document.querySelector('.av');
+    av.innerHTML = real ? '<img src="' + esc(real) + '" alt="">' : esc(initials(h.ten));
+    paintFootPreview(src);
+  }
+  function paintFootPreview(src){
+    var v = function(id){ return $(id).value.trim(); };
+    var line = [v('pfLop') && 'Lớp ' + v('pfLop'), v('pfTen') && 'Giáo viên: ' + v('pfTen'), v('pfTruong'), v('pfNam') && 'Năm học ' + v('pfNam')].filter(Boolean).join(' · ');
+    $('pfPreview').innerHTML = (src ? '<img class="fav" src="' + esc(src) + '" alt="">' : '') + '<b>🥬 DỰ ÁN STEM KHTN8 · pH NHÀ EM</b><span>' + esc(line) + '</span>' +
+      (v('pfChuc') ? '<span>' + esc(v('pfChuc')) + (v('pfEmail') ? ' · ' + esc(v('pfEmail')) : '') + '</span>' : (v('pfEmail') ? '<span>' + esc(v('pfEmail')) + '</span>' : '')) +
+      (v('pfGt') ? '<span style="max-width:52ch">' + esc(v('pfGt')) + '</span>' : '');
+  }
+  function fillProfile(){
+    var h = hoSo(); pfNew = null; pfRemove = false; $('pfFile').value = '';
+    $('pfTen').value = h.ten; $('pfChuc').value = h.chuc_danh; $('pfTruong').value = h.truong; $('pfLop').value = h.lop; $('pfNam').value = h.nam_hoc; $('pfEmail').value = h.email; $('pfGt').value = h.gioi_thieu;
+    paintAvatar();
+  }
+  function showView(v){
+    $('profile').hidden = v !== 'profile'; $('manager').hidden = v === 'profile';
+    $('tabProfile').classList.toggle('on', v === 'profile');
+    Array.prototype.forEach.call(document.querySelectorAll('.tab[data-tab]'), function(x){ x.classList.toggle('on', v !== 'profile' && x.getAttribute('data-tab') === tab); });
+    if (v === 'profile') fillProfile();
+  }
+  function squareAvatar(file){
+    return new Promise(function(res, rej){
+      var img = new Image(), url = URL.createObjectURL(file);
+      img.onload = function(){
+        var w = img.naturalWidth, h = img.naturalHeight, m = Math.min(w, h), S = Math.min(480, m);
+        var c = document.createElement('canvas'); c.width = c.height = S; var x = c.getContext('2d');
+        x.fillStyle = '#fff'; x.fillRect(0,0,S,S); x.drawImage(img, (w - m) / 2, (h - m) / 2, m, m, 0, 0, S, S);
+        URL.revokeObjectURL(url); c.toBlob(function(b){ b ? res(b) : rej(new Error('Không đọc được ảnh.')); }, 'image/jpeg', 0.88);
+      };
+      img.onerror = function(){ URL.revokeObjectURL(url); rej(new Error('Tệp này không phải ảnh JPG, PNG hoặc WEBP.')); };
+      img.src = url;
+    });
+  }
+  function onPickAvatar(){
+    var f = $('pfFile').files[0]; if (!f) return;
+    squareAvatar(f).then(function(b){ return fileToB64(b).then(function(b64){ pfNew = { blob: b, url: 'data:image/jpeg;base64,' + b64, b64: b64 }; pfRemove = false; paintAvatar(); }); })
+      .catch(function(e){ toast(e.message, 'err'); });
+  }
+  function saveProfile(e){
+    e.preventDefault();
+    var h = hoSo(), old = h.anh, ten = $('pfTen').value.trim();
+    if (!ten){ toast('Hãy nhập họ tên hiển thị.', 'err'); return; }
+    var next = { ten: ten, chuc_danh: $('pfChuc').value.trim(), truong: $('pfTruong').value.trim(), lop: $('pfLop').value.trim(), nam_hoc: $('pfNam').value.trim(),
+      email: $('pfEmail').value.trim(), gioi_thieu: $('pfGt').value.trim(), anh: pfRemove ? '' : old };
+    busy(true, pfNew ? 'Đang tải ảnh đại diện…' : 'Đang lưu hồ sơ…');
+    var step = Promise.resolve();
+    if (pfNew){
+      var path = 'uploads/anh-dai-dien/' + Date.now().toString(36) + '-' + slug(ten) + '.jpg';
+      step = putFile(path, pfNew.b64, 'Admin: cập nhật ảnh đại diện').then(function(){ localPreview[path] = pfNew.url; next.anh = path; });
+    }
+    step.then(function(){ busy(true, 'Đang lưu hồ sơ…'); data.ho_so = next; return saveData('Admin: cập nhật hồ sơ giáo viên'); })
+      .then(function(){
+        if (old && old !== next.anh && /^uploads\/anh-dai-dien\//.test(old)) deleteFile(old, 'Admin: xóa ảnh đại diện cũ').catch(function(){});
+        busy(false); $('status').textContent = next.ten; fillProfile(); toast('Đã lưu hồ sơ. Website cập nhật sau khoảng 1 phút.', 'ok');
+      })
+      .catch(function(err){ busy(false); toast(explain(err), 'err'); });
+  }
+
+  /* ---------- Đầu mục, bộ lọc ---------- */
+  var META = {
+    thong_bao:{ t:'Thông báo', h:'var(--h-tb)', d:'Hiện ở Bảng tin trên trang chủ. Thông báo ghim luôn nằm trên cùng.' },
+    anh:{ t:'Ảnh', h:'var(--h-anh)', d:'Hiện ở trang chủ và trang Trưng bày sản phẩm. Ảnh được tự thu nhỏ trước khi tải lên.' },
+    bai_tap:{ t:'Bài tập', h:'var(--h-bt)', d:'Hiện ở trang chủ và trang Bài tập, kèm hạn nộp.' },
+    tai_lieu:{ t:'Tài liệu', h:'var(--h-tl)', d:'Hiện ở trang chủ và trang Tài liệu tham khảo.' }
+  };
+  var listFilter = 'all';
+  function paintHead(){
+    var m = META[tab]; $('secTitle').textContent = m.t; $('secDesc').textContent = m.d;
+    $('manager').style.setProperty('--h', m.h);
+    var all = data ? data[tab] : [], dr = all.filter(function(x){ return x.nhap; }).length;
+    $('stPub').textContent = all.length - dr; $('stDraft').textContent = dr;
+    $('fAll').textContent = all.length; $('fPub').textContent = all.length - dr; $('fDraft').textContent = dr;
   }
 
   /* ---------- Xem trước ---------- */
@@ -542,8 +784,8 @@
     busy(true, 'Đang tải nội dung…');
     return loadData().then(function(){
       busy(false);
-      $('status').textContent = '✓ ' + session.user; $('status').className = 'status ok';
-      $('connectCard').hidden = true; $('setupCard').hidden = true; $('manager').hidden = false; $('btnLogout').hidden = false; $('btnPass').hidden = false;
+      $('status').textContent = hoSo().ten || session.user; fillProfile();
+      $('connectCard').hidden = true; $('setupCard').hidden = true; $('manager').hidden = false; document.body.classList.add('in'); $('btnLogout').hidden = false; $('btnPass').hidden = false;
       renderForm(); renderList();
     }).catch(function(err){ busy(false); toast(explain(err), 'err'); });
   }
@@ -631,7 +873,7 @@
   }
   function logout(){
     clearSession(); session = null; cfg = null; data = null;
-    $('manager').hidden = true; $('connectCard').hidden = false; $('btnLogout').hidden = true; $('btnPass').hidden = true;
+    $('manager').hidden = true; $('profile').hidden = true; document.body.classList.remove('in'); $('connectCard').hidden = false; $('btnLogout').hidden = true; $('btnPass').hidden = true;
     $('status').textContent = 'Chưa đăng nhập'; $('status').className = 'status';
   }
 
@@ -640,12 +882,19 @@
   Array.prototype.forEach.call(document.querySelectorAll('.eye'), function(b){ b.onclick = function(){ var p = $(b.getAttribute('data-for')); p.type = p.type === 'password' ? 'text' : 'password'; }; });
   $('btnLogout').onclick = function(){ logout(); toast('Đã đăng xuất.'); };
   $('btnPass').onclick = changePass;
-  Array.prototype.forEach.call(document.querySelectorAll('.tab'), function(b){
-    b.onclick = function(){ document.querySelectorAll('.tab').forEach(function(x){ x.classList.remove('on'); }); b.classList.add('on'); tab = b.getAttribute('data-tab'); editId = null; renderForm(); renderList(); };
+  $('tabProfile').onclick = function(){ showView('profile'); };
+  $('pfFile').onchange = onPickAvatar;
+  $('pfRemove').onclick = function(){ pfNew = null; pfRemove = true; $('pfFile').value = ''; paintAvatar(); };
+  $('pfForm').addEventListener('submit', saveProfile);
+  ['pfTen','pfChuc','pfTruong','pfLop','pfNam','pfEmail','pfGt'].forEach(function(id){ $(id).addEventListener('input', function(){ paintFootPreview(pfNew ? pfNew.url : (pfRemove ? '' : imgSrc(hoSo().anh))); }); });
+  Array.prototype.forEach.call(document.querySelectorAll('.tab[data-tab]'), function(b){
+    b.onclick = function(){ tab = b.getAttribute('data-tab'); showView('content'); editId = null; renderForm(); renderList(); };
   });
   $('form').addEventListener('submit', function(e){ onSubmit(e, 'preview'); });
   $('form').addEventListener('click', function(e){ var m = e.target.getAttribute && e.target.getAttribute('data-mode'); if (m && m !== 'preview'){ e.preventDefault(); onSubmit(null, m); } });
   $('pvBack').onclick = closePreview;
+  $('filters').addEventListener('click', function(e){ var c = e.target.closest('.chip'); if (!c) return; listFilter = c.getAttribute('data-f');
+    Array.prototype.forEach.call(document.querySelectorAll('.chip'), function(x){ x.classList.toggle('on', x === c); }); renderList(); });
   $('pvDraft').onclick = function(){ onSubmit(null, 'draft'); };
   $('pvPub').onclick = function(){ onSubmit(null, 'publish'); };
   $('items').addEventListener('click', function(e){

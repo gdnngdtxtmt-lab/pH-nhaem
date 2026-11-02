@@ -141,6 +141,20 @@
     bar.textContent = PV ? '👁️ BẢN XEM TRƯỚC – chưa xuất bản. Bài mới được viền vàng.' : '👁️ Không có dữ liệu xem trước.';
     document.body.insertBefore(bar, document.body.firstChild);
   }
+  /* Hồ sơ giáo viên (admin → Hồ sơ): chân trang + dòng lớp/năm học trên banner */
+  function hoSo(h){
+    var fi = document.querySelector('.foot-in'), lop = h.lop ? 'Lớp ' + h.lop : '', nam = h.nam_hoc ? 'Năm học ' + h.nam_hoc : '';
+    if (fi){
+      var src = safeUrl(h.anh), line = [lop, h.ten && 'Giáo viên: ' + h.ten, h.truong, nam].filter(Boolean).join(' · ');
+      var sub = [h.chuc_danh, h.email].filter(Boolean).map(esc).join(' · ');
+      var upd = $('updated');
+      fi.innerHTML = (src ? '<img class="foot-av" src="' + esc(src) + '" alt="Ảnh đại diện giáo viên">' : '') + '<b>🥬 DỰ ÁN STEM KHTN8 · pH NHÀ EM</b>' +
+        (line ? '<span>' + esc(line) + '</span>' : '') + (sub ? '<span>' + sub + '</span>' : '') + (h.gioi_thieu ? '<span class="foot-gt">' + esc(h.gioi_thieu) + '</span>' : '');
+      if (upd) fi.appendChild(upd);
+    }
+    var bk = document.querySelector('.banner-k');
+    if (bk && (lop || nam)) bk.textContent = ['Khoa học tự nhiên 8', lop, nam].filter(Boolean).join(' · ');
+  }
   (PREVIEW && PV ? Promise.resolve(PV.data) : fetch('/data/content.json?t=' + Date.now(), { cache:'no-store' }).then(function(r){ if (!r.ok) throw 0; return r.json(); }))
     .then(function(d){
       ['thong_bao','anh','bai_tap','tai_lieu'].forEach(function(k){ d[k] = (d[k] || []).filter(function(x){ return !x.nhap; }); });
@@ -152,6 +166,7 @@
         box.innerHTML = arr.length ? R[key](arr) : '<div class="empty">' + EMPTY[key] + '</div>';
       });
       if (PREVIEW){ var first = document.querySelector('.hl'); if (first) setTimeout(function(){ first.scrollIntoView({ block:'center' }); }, 300); }
+      if (d.ho_so) hoSo(d.ho_so);
       if (d.cap_nhat && $('updated')){ var t = new Date(d.cap_nhat); if (!isNaN(t)) $('updated').textContent = 'Cập nhật lần cuối: ' + t.toLocaleString('vi-VN'); }
     })
     .catch(function(){ Array.prototype.forEach.call(boxes, function(b){ b.innerHTML = '<div class="empty">Chưa tải được nội dung. Vui lòng tải lại trang.</div>'; }); });
