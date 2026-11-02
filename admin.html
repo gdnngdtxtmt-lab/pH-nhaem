@@ -127,26 +127,20 @@
   <!-- THIẾT LẬP LẦN ĐẦU -->
   <section class="card" id="setupCard" hidden style="max-width:720px;margin:32px auto">
     <h2>⚙️ Thiết lập lần đầu (chỉ làm một lần)</h2>
-    <p class="muted">Website chưa có tài khoản quản trị. Điền các ô dưới đây. Mã GitHub sẽ được <b>mã hóa bằng mật khẩu</b> rồi lưu vào kho; từ lần sau chỉ cần tên đăng nhập và mật khẩu, trên bất kỳ máy nào.</p>
+    <p class="muted">Đặt tên đăng nhập, mật khẩu và dán mã GitHub <b>một lần</b>. Mã được <b>mã hóa bằng mật khẩu</b> rồi lưu vào kho <b>gdnngdtxtmt-lab/pH-nhaem</b>. Từ lần sau chỉ cần <b>tên đăng nhập + mật khẩu</b>, trên bất kỳ máy nào.</p>
     <form id="setupForm" autocomplete="off">
       <div class="row">
         <div><label>Tên đăng nhập <span class="req">*</span></label><input type="text" id="suUser" value="admin" required></div>
         <div><label>Mật khẩu <span class="req">*</span> (ít nhất 8 ký tự)</label><div class="pw"><input type="password" id="suPass" value="phnhaem123@" required minlength="8"><button type="button" class="eye" data-for="suPass" aria-label="Hiện mật khẩu">👁️</button></div></div>
       </div>
-      <div class="row3">
-        <div><label>Tài khoản GitHub <span class="req">*</span></label><input type="text" id="suOwner" placeholder="VD: levietha231" required></div>
-        <div><label>Tên kho <span class="req">*</span></label><input type="text" id="suRepo" placeholder="VD: ph-nhaem" required></div>
-        <div><label>Nhánh</label><input type="text" id="suBranch" value="main"></div>
-      </div>
-      <p class="muted" style="margin:6px 0 0;font-size:12.5px">Xem trên thanh địa chỉ của kho: github.com/<b>tài-khoản</b>/<b>tên-kho</b></p>
-      <label>Mã truy cập GitHub (bắt đầu bằng github_pat_) <span class="req">*</span></label>
+      <label>Mã GitHub (chỉ dán một lần duy nhất) <span class="req">*</span></label>
       <input type="password" id="suToken" placeholder="github_pat_..." required>
       <details class="help">
         <summary>Cách lấy mã truy cập</summary>
         <ol>
           <li>Mở <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">github.com/settings/personal-access-tokens/new</a>.</li>
           <li>Đặt tên (VD: <i>admin pH Nhà Em</i>), chọn thời hạn (VD: 1 năm).</li>
-          <li><b>Repository access</b> → <b>Only select repositories</b> → chọn đúng kho website.</li>
+          <li><b>Repository access</b> → <b>Only select repositories</b> → chọn kho <b>pH-nhaem</b>.</li>
           <li><b>Permissions</b> → <b>Repository permissions</b> → <b>Contents</b> → <b>Read and write</b>.</li>
           <li>Bấm <b>Generate token</b>, sao chép mã và dán vào ô trên.</li>
         </ol>
@@ -188,6 +182,7 @@
   var MAX_FILE_MB = 25;
   var KEY = 'phnhaem_admin_session';
   var CONF_PATH = 'data/admin-config.json', DATA_PATH = 'data/content.json';
+  var GH_OWNER = 'gdnngdtxtmt-lab', GH_REPO = 'pH-nhaem', GH_BRANCH = 'main';   // kho chứa website
   var cfg = null, session = null, data = null, dataSha = null, tab = 'thong_bao', editId = null;
   var localPreview = {};
 
@@ -520,22 +515,22 @@
   function setup(e){
     e.preventDefault();
     var u = $('suUser').value.trim(), p = $('suPass').value;
-    var c = { owner: $('suOwner').value.trim().replace(/^https?:\/\/github\.com\//i,'').split('/')[0], repo: $('suRepo').value.trim().replace(/\.git$/,'').split('/').pop(), branch: $('suBranch').value.trim() || 'main', token: $('suToken').value.trim() };
+    var c = { owner: GH_OWNER, repo: GH_REPO, branch: GH_BRANCH, token: $('suToken').value.trim() };
     if (!u || p.length < 8) return toast('Tên đăng nhập không được trống, mật khẩu ít nhất 8 ký tự.', 'err');
-    if (!c.owner || !c.repo || !c.token) return toast('Cần nhập tài khoản GitHub, tên kho và mã truy cập.', 'err');
+    if (!c.token) return toast('Hãy dán mã GitHub.', 'err');
     cfg = c; var L = [], kind = /^github_pat_/.test(c.token) ? 'fine-grained' : (/^ghp_/.test(c.token) ? 'classic' : 'không rõ loại');
     busy(true, 'Đang kiểm tra mã GitHub…');
     ghRaw('/user').then(function(r){
       if (r.status === 401) throw { msg: 'Mã GitHub không hợp lệ hoặc đã hết hạn (' + kind + '). Kiểm tra đã dán đủ mã chưa.' };
       L.push('Loại mã: <b>' + kind + '</b>' + (r.scopes != null && kind === 'classic' ? ' · quyền: <b>' + esc(r.scopes || '(trống)') + '</b>' : ''));
       L.push('Mã thuộc tài khoản GitHub: <b>' + esc(r.j.login || '?') + '</b>');
-      if (r.j.login && r.j.login.toLowerCase() !== c.owner.toLowerCase()) L.push('⚠️ Khác với chủ kho đã nhập (<b>' + esc(c.owner) + '</b>). Mã phải tạo bằng tài khoản chủ kho, hoặc tài khoản được mời làm cộng tác viên có quyền ghi.');
+      if (r.j.login && r.j.login.toLowerCase() !== c.owner.toLowerCase()) L.push('⚠️ Khác với chủ kho (<b>' + esc(c.owner) + '</b>). Hãy tạo mã khi đang đăng nhập GitHub bằng tài khoản ' + esc(c.owner) + '.');
       return ghRaw('/repos/' + encodeURIComponent(c.owner) + '/' + encodeURIComponent(c.repo));
     }).then(function(r){
-      if (r.status === 404) throw { msg: 'Mã không nhìn thấy kho <b>' + esc(c.owner + '/' + c.repo) + '</b>. Kiểm tra lại tên tài khoản và tên kho; với mã fine-grained, mục Repository access phải chọn đúng kho này.' };
+      if (r.status === 404) throw { msg: 'Mã không nhìn thấy kho <b>' + esc(c.owner + '/' + c.repo) + '</b>. Sửa mã: Repository access → Only select repositories → chọn kho pH-nhaem; Contents → Read and write.' };
       if (r.status >= 400) throw { msg: 'Không đọc được kho: ' + esc(r.j.message || r.status) };
       L.push('Tìm thấy kho: <b>' + esc(r.j.full_name) + '</b> (' + (r.j['private'] ? 'riêng tư' : 'công khai') + ', nhánh mặc định <b>' + esc(r.j.default_branch) + '</b>)');
-      if (r.j.default_branch && r.j.default_branch !== c.branch){ L.push('Đã tự đổi nhánh từ “' + esc(c.branch) + '” sang “' + esc(r.j.default_branch) + '”.'); c.branch = r.j.default_branch; $('suBranch').value = c.branch; }
+      if (r.j.default_branch && r.j.default_branch !== c.branch){ c.branch = r.j.default_branch; }
       busy(true, 'Đang thử ghi vào kho…');
       return encryptConf(u, p, c);
     }).then(function(enc){
