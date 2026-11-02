@@ -91,6 +91,16 @@
   .diag{ margin-top:16px; border-radius:14px; padding:12px 16px; font-size:13.5px; line-height:1.6; }
   .diag.ok{ background:#EAF6EE; border:2px solid #9BD3AE; } .diag.bad{ background:#FFF4F4; border:2px solid #F0B8C1; }
   .diag ul{ margin:6px 0; padding-left:20px; } .diag p{ margin:6px 0 0; font-weight:600; }
+  .btn.pub{ background:linear-gradient(90deg,#2E8B57,#3DAA5C); box-shadow:0 4px 0 #1F6B41; }
+  .pv-mask{ position:fixed; inset:0; z-index:80; background:rgba(20,15,35,.6); display:flex; align-items:center; justify-content:center; padding:14px; }
+  .pv-box{ width:min(1200px,100%); height:min(92vh,980px); background:#fff; border-radius:18px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 20px 50px rgba(0,0,0,.35); }
+  .pv-head{ padding:10px 16px; background:#FFF8DB; border-bottom:1px solid #F0DC8A; display:flex; gap:12px; flex-wrap:wrap; align-items:baseline; }
+  .pv-head b{ font-family:var(--fd); font-size:17px; } .pv-head span{ font-size:13px; color:var(--ink-soft); }
+  .pv-box iframe{ flex:1 1 auto; width:100%; border:0; background:#FFFBF0; }
+  .pv-foot{ display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap; padding:10px 14px; border-top:1px solid var(--line); background:#fff; }
+  .it.draft{ border-style:dashed; background:#FFFDF2; }
+  .dtag{ font-family:var(--fm); font-size:10.5px; color:#fff; background:#B7791F; border-radius:7px; padding:1px 6px; margin-right:6px; vertical-align:1px; }
+  .it .bt button.pubq{ border-color:#2E8B57; color:#2E8B57; }
   [hidden]{ display:none !important; }
 </style>
 </head>
@@ -173,6 +183,17 @@
   </div>
 </main>
 
+<div class="pv-mask" id="pvMask" hidden>
+  <div class="pv-box">
+    <div class="pv-head"><b>👁️ Xem trước trên trang chủ</b><span>Bài mới được viền vàng. Bản này chưa lưu, chưa ai nhìn thấy.</span></div>
+    <iframe id="pvFrame" title="Xem trước trang chủ"></iframe>
+    <div class="pv-foot">
+      <button class="btn sec" type="button" id="pvBack">✏️ Quay lại sửa</button>
+      <button class="btn sec" type="button" id="pvDraft">📝 Lưu nháp</button>
+      <button class="btn pub" type="button" id="pvPub">🚀 Đồng ý xuất bản</button>
+    </div>
+  </div>
+</div>
 <div class="busy" id="busy"><div id="busyTxt">Đang xử lý…</div></div>
 <div class="toast" id="toast"></div>
 
@@ -347,7 +368,12 @@
       [['','Tự nhận biết'],['pdf','PDF'],['docx','Word'],['pptx','PowerPoint'],['xlsx','Excel'],['video','Video'],['link','Trang web']].map(function(o){ return '<option value="' + o[0] + '"' + ((it.loai || '') === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') +
       '</select></div><div><label>Ngày đăng</label><input type="date" name="ngay" value="' + esc(d) + '"></div></div>' + btns();
   }
-  function btns(){ return '<div class="actions"><button class="btn" type="submit">💾 Lưu lên trang chủ</button><button class="btn sec" type="button" id="btnCancel">Làm mới form</button></div>'; }
+  function btns(){ return '<div class="actions">' +
+    '<button class="btn" type="submit" data-mode="preview">👁️ Xem trước</button>' +
+    '<button class="btn sec" type="button" data-mode="draft">📝 Lưu nháp</button>' +
+    '<button class="btn pub" type="button" data-mode="publish">🚀 Xuất bản</button>' +
+    '<button class="btn sec" type="button" id="btnCancel">Làm mới form</button></div>' +
+    '<p class="muted" style="margin:8px 0 0;font-size:12.5px">Xem trước: xem bài nằm trên trang chủ thế nào (chưa lưu). Lưu nháp: lưu lại nhưng chưa hiện trên website. Xuất bản: hiện trên website.</p>'; }
 
   function renderForm(){
     var it = editId ? (data[tab] || []).find(function(x){ return x.id === editId; }) : null;
@@ -381,15 +407,37 @@
     $('items').innerHTML = list.map(function(it){
       var s = itemSummary(tab, it);
       var lead = s.img ? '<img class="th" src="' + esc(s.img) + '" alt="" onerror="this.style.visibility=\'hidden\'">' : '<div class="ic">' + s.ic + '</div>';
-      return '<div class="it' + (it.ghim ? ' pin' : '') + '">' + lead + '<div><b>' + esc(s.title || '(không tiêu đề)') + '</b><small>' + esc(s.sub) + '</small></div>' +
-        '<div class="bt"><button data-edit="' + esc(it.id) + '">Sửa</button><button class="del" data-del="' + esc(it.id) + '">Xóa</button></div></div>';
+      return '<div class="it' + (it.ghim ? ' pin' : '') + (it.nhap ? ' draft' : '') + '">' + lead + '<div><b>' + (it.nhap ? '<span class="dtag">NHÁP</span>' : '') + esc(s.title || '(không tiêu đề)') + '</b><small>' + esc(s.sub) + (it.nhap ? ' · chưa hiện trên website' : '') + '</small></div>' +
+        '<div class="bt">' + (it.nhap ? '<button class="pubq" data-pub="' + esc(it.id) + '">Xuất bản</button>' : '') + '<button data-edit="' + esc(it.id) + '">Sửa</button><button class="del" data-del="' + esc(it.id) + '">Xóa</button></div></div>';
     }).join('');
+  }
+
+  /* ---------- Xem trước ---------- */
+  function previewFile(file){
+    var isImg = /^image\/(jpeg|png|webp|gif)$/.test(file.type);
+    if (!isImg) return Promise.resolve({ path: '#tep-se-tai-len', ext: (file.name.split('.').pop() || '').toLowerCase() });
+    return compressImage(file, 1000, 0.8).then(function(blob){ return fileToB64(blob); }).then(function(b64){ return { path: 'data:image/jpeg;base64,' + b64, ext: 'jpg' }; });
+  }
+  function openPreview(){
+    $('pvFrame').src = '/?xem-truoc=1&t=' + Date.now();
+    $('pvMask').hidden = false; document.body.style.overflow = 'hidden';
+  }
+  function closePreview(){ $('pvMask').hidden = true; $('pvFrame').src = 'about:blank'; document.body.style.overflow = ''; }
+  function quickPublish(id){
+    var it = data[tab].find(function(x){ return x.id === id; }); if (!it) return;
+    delete it.nhap; busy(true, 'Đang xuất bản…');
+    saveData('Admin: xuất bản ' + LABEL[tab] + ' – ' + (it.tieu_de || ''))
+      .then(function(){ busy(false); renderList(); toast('Đã xuất bản. Website cập nhật sau khoảng 1 phút.', 'ok'); })
+      .catch(function(err){ it.nhap = true; busy(false); toast(explain(err), 'err'); });
   }
 
   /* ---------- Lưu ---------- */
   function val(f, n){ var el = f.elements[n]; return el ? String(el.value || '').trim() : ''; }
-  function onSubmit(e){
-    e.preventDefault();
+  function onSubmit(e, mode){
+    if (e) e.preventDefault();
+    mode = mode || 'preview';
+    var PREVIEW = mode === 'preview';
+    var up = PREVIEW ? previewFile : uploadOne;
     var f = $('form'), list = data[tab], old = editId ? list.find(function(x){ return x.id === editId; }) : null;
     var base = { ngay: val(f,'ngay') || today() };
     var jobs = Promise.resolve(), newItems = [];
@@ -406,13 +454,13 @@
       var title = val(f,'tieu_de'), moTa = val(f,'mo_ta');
       if (old){
         var it = Object.assign({}, old, base, { tieu_de: title, mo_ta: moTa });
-        if (files[0]) jobs = uploadOne(files[0], 'anh', 'ảnh').then(function(r){ it._oldSrc = old.src; it.src = r.path; });
+        if (files[0]) jobs = up(files[0], 'anh', 'ảnh').then(function(r){ it._oldSrc = old.src; it.src = r.path; });
         newItems.push(it);
       } else {
         files.forEach(function(file, i){
           var it = Object.assign({ id: uid('anh') }, base, {
             tieu_de: title ? (files.length > 1 ? title + ' (' + (i + 1) + ')' : title) : file.name.replace(/\.[^.]+$/, ''), mo_ta: moTa });
-          jobs = jobs.then(function(){ busy(true, 'Đang tải ảnh ' + (i + 1) + '/' + files.length + '…'); return uploadOne(file, 'anh', 'ảnh'); }).then(function(r){ it.src = r.path; });
+          jobs = jobs.then(function(){ busy(true, 'Đang tải ảnh ' + (i + 1) + '/' + files.length + '…'); return up(file, 'anh', 'ảnh'); }).then(function(r){ it.src = r.path; });
           newItems.push(it);
         });
       }
@@ -430,11 +478,27 @@
       } else {
         var fl = (f.elements.file.files || [])[0];
         if (!fl && !(old && /^uploads\//.test(old.url || ''))) return toast('Hãy chọn tệp để tải lên.', 'err');
-        if (fl) jobs = uploadOne(fl, FOLDER[tab], LABEL[tab]).then(function(r){ if (old && /^uploads\//.test(old.url || '')) it2._oldSrc = old.url; it2.url = r.path; if (tab === 'tai_lieu' && !it2.loai) it2.loai = r.ext; });
+        if (fl) jobs = up(fl, FOLDER[tab], LABEL[tab]).then(function(r){ if (old && /^uploads\//.test(old.url || '')) it2._oldSrc = old.url; it2.url = r.path; if (tab === 'tai_lieu' && !it2.loai) it2.loai = r.ext; });
       }
       newItems.push(it2);
     }
 
+    if (PREVIEW){
+      busy(true, 'Đang chuẩn bị bản xem trước…');
+      return jobs.then(function(){
+        var copy = JSON.parse(JSON.stringify(data));
+        newItems.forEach(function(it){
+          var x = Object.assign({}, it); delete x._oldSrc; delete x.nhap;
+          var arr = copy[tab], k = arr.findIndex(function(y){ return y.id === x.id; });
+          if (k > -1) arr[k] = x; else arr.push(x);
+        });
+        try { localStorage.setItem('phnhaem_preview', JSON.stringify({ data: copy, hl: newItems.map(function(x){ return x.id; }), tab: tab })); }
+        catch(er){ throw new Error('Ảnh quá nhiều để xem trước cùng lúc. Hãy chọn ít ảnh hơn.'); }
+        busy(false); openPreview();
+      }).catch(function(err){ busy(false); toast(explain(err), 'err'); });
+    }
+    newItems.forEach(function(it){ if (mode === 'draft') it.nhap = true; else delete it.nhap; });
+    closePreview();
     busy(true, 'Đang lưu…');
     var oldFiles = [];
     jobs.then(function(){
@@ -444,12 +508,12 @@
         if (i > -1) list[i] = it; else list.push(it);
       });
       busy(true, 'Đang cập nhật trang chủ…');
-      return saveData('Admin: ' + (old ? 'sửa' : 'thêm') + ' ' + LABEL[tab] + ' – ' + (newItems[0].tieu_de || ''));
+      return saveData('Admin: ' + (mode === 'draft' ? 'lưu nháp' : (old ? 'sửa' : 'xuất bản')) + ' ' + LABEL[tab] + ' – ' + (newItems[0].tieu_de || ''));
     }).then(function(){
       return oldFiles.reduce(function(p, path){ return p.then(function(){ return deleteFile(path, 'Admin: xóa tệp cũ ' + path); }); }, Promise.resolve());
     }).then(function(){
       busy(false); editId = null; renderForm(); renderList();
-      toast('Đã lưu ' + newItems.length + ' ' + LABEL[tab] + '. Trang chủ cập nhật sau khoảng 1 phút.', 'ok');
+      toast(mode === 'draft' ? 'Đã lưu nháp ' + newItems.length + ' ' + LABEL[tab] + ' (chưa hiện trên website).' : 'Đã xuất bản ' + newItems.length + ' ' + LABEL[tab] + '. Website cập nhật sau khoảng 1 phút.', 'ok');
     }).catch(function(err){
       busy(false); toast(explain(err), 'err');
       return loadData().then(renderList).catch(function(){});
@@ -579,9 +643,14 @@
   Array.prototype.forEach.call(document.querySelectorAll('.tab'), function(b){
     b.onclick = function(){ document.querySelectorAll('.tab').forEach(function(x){ x.classList.remove('on'); }); b.classList.add('on'); tab = b.getAttribute('data-tab'); editId = null; renderForm(); renderList(); };
   });
-  $('form').addEventListener('submit', onSubmit);
+  $('form').addEventListener('submit', function(e){ onSubmit(e, 'preview'); });
+  $('form').addEventListener('click', function(e){ var m = e.target.getAttribute && e.target.getAttribute('data-mode'); if (m && m !== 'preview'){ e.preventDefault(); onSubmit(null, m); } });
+  $('pvBack').onclick = closePreview;
+  $('pvDraft').onclick = function(){ onSubmit(null, 'draft'); };
+  $('pvPub').onclick = function(){ onSubmit(null, 'publish'); };
   $('items').addEventListener('click', function(e){
-    var ed = e.target.getAttribute('data-edit'), dl = e.target.getAttribute('data-del');
+    var ed = e.target.getAttribute('data-edit'), dl = e.target.getAttribute('data-del'), pb = e.target.getAttribute('data-pub');
+    if (pb) quickPublish(pb);
     if (ed){ editId = ed; renderForm(); window.scrollTo({ top: $('manager').offsetTop - 10, behavior:'smooth' }); }
     if (dl) onDelete(dl);
   });

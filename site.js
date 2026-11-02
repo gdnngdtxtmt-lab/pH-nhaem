@@ -72,7 +72,10 @@
   var boxes = document.querySelectorAll('[data-list]');
   if (!boxes.length && !$('updated')) return;
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-  function safeUrl(u){ u = String(u || '').trim(); if (/^uploads\//.test(u)) return '/' + u; return /^(https?:\/\/|\/uploads\/)/i.test(u) ? u : ''; }
+  var PREVIEW = /[?&]xem-truoc=1/.test(location.search), PV = null, HL = {};
+  if (PREVIEW){ try { PV = JSON.parse(localStorage.getItem('phnhaem_preview') || 'null'); } catch(e){} (PV && PV.hl || []).forEach(function(id){ HL[id] = 1; }); }
+  function safeUrl(u){ u = String(u || '').trim(); if (/^uploads\//.test(u)) return '/' + u; if (PREVIEW && /^data:image\//.test(u)) return u; if (PREVIEW && /^#/.test(u)) return u; return /^(https?:\/\/|\/uploads\/)/i.test(u) ? u : ''; }
+  function hl(it){ return HL[it.id] ? ' hl' : ''; }
   function byDate(a, b){ return String(b.ngay || '').localeCompare(String(a.ngay || '')); }
   function fmt(d){ if (!d) return ''; var p = String(d).slice(0,10).split('-'); return p.length === 3 ? p[2] + '/' + p[1] + '/' + p[0] : d; }
   var ICON = { pdf:'📕', doc:'📘', docx:'📘', ppt:'📙', pptx:'📙', xls:'📗', xlsx:'📗', video:'🎬', mp4:'🎬', link:'🔗', form:'📝', zip:'🗜️' };
@@ -89,7 +92,7 @@
       arr.sort(function(a,b){ return (b.ghim?1:0) - (a.ghim?1:0) || byDate(a,b); });
       return '<div class="news">' + arr.map(function(t){
         var p = String(t.ngay || '').slice(0,10).split('-'), l = safeUrl(t.url);
-        return '<article class="news-item' + (t.ghim ? ' pin' : '') + '"><div class="news-date"><b>' + esc(p[2] || '') + '</b>' + esc((p[1] || '') + '/' + (p[0] || '')) + '</div>' +
+        return '<article class="news-item' + (t.ghim ? ' pin' : '') + hl(t) + '"><div class="news-date"><b>' + esc(p[2] || '') + '</b>' + esc((p[1] || '') + '/' + (p[0] || '')) + '</div>' +
           '<div><h4>' + esc(t.tieu_de) + (t.ghim ? '<span class="tag">GHIM</span>' : '') + '</h4><p>' + esc(t.noi_dung) + '</p>' +
           (l ? '<a class="lnk" href="' + esc(l) + '" target="_blank" rel="noopener">Xem chi tiết →</a>' : '') + '</div></article>';
       }).join('') + '</div>';
@@ -99,7 +102,7 @@
       return '<div class="list">' + arr.map(function(b){
         var l = safeUrl(b.url), k = kind(b);
         var due = b.han ? '<span class="chip ' + (b.han < today ? 'over' : 'due') + '">' + (b.han < today ? 'Đã hết hạn ' : 'Hạn nộp ') + esc(fmt(b.han)) + '</span>' : '';
-        return '<div class="item"><div class="ic">' + (k === 'form' ? '📝' : (ICON[k] || '✍️')) + '</div><div class="bd"><h4>' + esc(b.tieu_de) + '</h4>' +
+        return '<div class="item' + hl(b) + '"><div class="ic">' + (k === 'form' ? '📝' : (ICON[k] || '✍️')) + '</div><div class="bd"><h4>' + esc(b.tieu_de) + '</h4>' +
           (b.mo_ta ? '<p>' + esc(b.mo_ta) + '</p>' : '') + '<div class="meta">' + due + (b.ngay ? '<span class="chip">Đăng ' + esc(fmt(b.ngay)) + '</span>' : '') +
           (l ? '<a class="open" href="' + esc(l) + '" target="_blank" rel="noopener">Làm bài →</a>' : '') + '</div></div></div>';
       }).join('') + '</div>';
@@ -108,7 +111,7 @@
       arr.sort(byDate);
       return '<div class="list">' + arr.map(function(t){
         var l = safeUrl(t.url), k = kind(t);
-        return '<div class="item"><div class="ic">' + (ICON[k] || '📄') + '</div><div class="bd"><h4>' + esc(t.tieu_de) + '</h4>' +
+        return '<div class="item' + hl(t) + '"><div class="ic">' + (ICON[k] || '📄') + '</div><div class="bd"><h4>' + esc(t.tieu_de) + '</h4>' +
           (t.mo_ta ? '<p>' + esc(t.mo_ta) + '</p>' : '') + '<div class="meta"><span class="chip">' + esc(k.toUpperCase()) + '</span>' +
           (t.ngay ? '<span class="chip">' + esc(fmt(t.ngay)) + '</span>' : '') +
           (l ? '<a class="open" href="' + esc(l) + '" target="_blank" rel="noopener">Mở tài liệu →</a>' : '') + '</div></div></div>';
@@ -118,7 +121,7 @@
       arr = arr.filter(function(a){ return safeUrl(a.src); }).sort(byDate);
       var base = photos.length; photos = photos.concat(arr);
       return '<div class="gallery">' + arr.map(function(a, i){
-        return '<button class="ph" data-i="' + (base + i) + '" aria-label="Xem ảnh: ' + esc(a.tieu_de) + '"><img loading="lazy" src="' + esc(safeUrl(a.src)) + '" alt="' + esc(a.tieu_de) + '"><span>' + esc(a.tieu_de) + '</span></button>';
+        return '<button class="ph' + hl(a) + '" data-i="' + (base + i) + '" aria-label="Xem ảnh: ' + esc(a.tieu_de) + '"><img loading="lazy" src="' + esc(safeUrl(a.src)) + '" alt="' + esc(a.tieu_de) + '"><span>' + esc(a.tieu_de) + '</span></button>';
       }).join('') + '</div>';
     }
   };
@@ -133,15 +136,22 @@
   lb.addEventListener('click', function(e){ if (e.target === lb) lb.hidden = true; });
   document.addEventListener('keydown', function(e){ if (lb.hidden) return; if (e.key === 'Escape') lb.hidden = true; if (e.key === 'ArrowLeft') $('lbPrev').click(); if (e.key === 'ArrowRight') $('lbNext').click(); });
 
-  fetch('/data/content.json?t=' + Date.now(), { cache:'no-store' })
-    .then(function(r){ if (!r.ok) throw 0; return r.json(); })
+  if (PREVIEW){
+    var bar = document.createElement('div'); bar.className = 'pv-bar';
+    bar.textContent = PV ? '👁️ BẢN XEM TRƯỚC – chưa xuất bản. Bài mới được viền vàng.' : '👁️ Không có dữ liệu xem trước.';
+    document.body.insertBefore(bar, document.body.firstChild);
+  }
+  (PREVIEW && PV ? Promise.resolve(PV.data) : fetch('/data/content.json?t=' + Date.now(), { cache:'no-store' }).then(function(r){ if (!r.ok) throw 0; return r.json(); }))
     .then(function(d){
+      ['thong_bao','anh','bai_tap','tai_lieu'].forEach(function(k){ d[k] = (d[k] || []).filter(function(x){ return !x.nhap; }); });
       Array.prototype.forEach.call(boxes, function(box){
         var key = box.getAttribute('data-list'), lim = +box.getAttribute('data-limit') || 0;
         var arr = (d[key] || []).slice();
-        if (lim){ if (key === 'thong_bao') arr.sort(function(a,b){ return (b.ghim?1:0) - (a.ghim?1:0) || byDate(a,b); }); else arr.sort(byDate); arr = arr.slice(0, lim); }
+        if (lim){ if (key === 'thong_bao') arr.sort(function(a,b){ return (b.ghim?1:0) - (a.ghim?1:0) || byDate(a,b); }); else arr.sort(byDate);
+          var keepHl = arr.filter(function(x){ return HL[x.id]; }); arr = arr.slice(0, lim); keepHl.forEach(function(x){ if (arr.indexOf(x) < 0) arr.unshift(x); }); }
         box.innerHTML = arr.length ? R[key](arr) : '<div class="empty">' + EMPTY[key] + '</div>';
       });
+      if (PREVIEW){ var first = document.querySelector('.hl'); if (first) setTimeout(function(){ first.scrollIntoView({ block:'center' }); }, 300); }
       if (d.cap_nhat && $('updated')){ var t = new Date(d.cap_nhat); if (!isNaN(t)) $('updated').textContent = 'Cập nhật lần cuối: ' + t.toLocaleString('vi-VN'); }
     })
     .catch(function(){ Array.prototype.forEach.call(boxes, function(b){ b.innerHTML = '<div class="empty">Chưa tải được nội dung. Vui lòng tải lại trang.</div>'; }); });
