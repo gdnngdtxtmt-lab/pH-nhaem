@@ -303,9 +303,23 @@
     '<div class="ast-b" id="astB"></div>' +
     '<footer class="ast-f">Tìm theo từ khóa trong nội dung website, không phải AI. Cần hỏi bài? <a href="/ho-tro-hoc-sinh">Hỏi Bé pH</a></footer>';
   document.body.appendChild(btn); document.body.appendChild(box);
+  /* Bong bóng gợi ý: luôn hiện ở Trang chủ (đến khi bấm hoặc tắt trong lượt xem), các trang khác hiện tới khi đã dùng nút một lần */
+  var TIP_S = 'phnhaem_tip_off', TIP_L = 'phnhaem_ast_used', tip = null;
+  function sget(st, k){ try { return st.getItem(k); } catch(e){ return null; } }
+  function sset(st, k){ try { st.setItem(k, '1'); } catch(e){} }
+  function hideTip(forever){ if (tip){ tip.remove(); tip = null; } btn.classList.remove('nudge'); sset(sessionStorage, TIP_S); if (forever) sset(localStorage, TIP_L); }
+  var showTip = !sget(sessionStorage, TIP_S) && (page === 'index' || !sget(localStorage, TIP_L));
+  if (showTip) setTimeout(function(){
+    if (!box.hidden) return;
+    tip = document.createElement('div'); tip.className = 'ast-tip'; tip.setAttribute('role', 'note');
+    tip.innerHTML = '<button type="button" class="ast-tip-x" aria-label="Tắt gợi ý">✕</button><b>💡 Bạn cần tìm gì?</b>Bấm nút <b>Tra cứu</b> để tìm nhanh bài học, quy tắc an toàn, lịch làm việc… trên cả website.';
+    tip.querySelector('.ast-tip-x').onclick = function(e){ e.stopPropagation(); hideTip(false); };
+    tip.addEventListener('click', function(){ hideTip(true); open(); });
+    document.body.appendChild(tip); btn.classList.add('nudge');
+  }, 1200);
   var body = box.querySelector('#astB'), q = box.querySelector('#astQ');
 
-  function open(){ box.hidden = false; btn.setAttribute('aria-expanded', 'true'); btn.classList.add('on'); load().then(function(){ q.value.trim() ? search(q.value) : home(); }); setTimeout(function(){ q.focus(); }, 50); }
+  function open(){ hideTip(true); box.hidden = false; btn.setAttribute('aria-expanded', 'true'); btn.classList.add('on'); load().then(function(){ q.value.trim() ? search(q.value) : home(); }); setTimeout(function(){ q.focus(); }, 50); }
   function close(){ box.hidden = true; btn.setAttribute('aria-expanded', 'false'); btn.classList.remove('on'); }
   btn.onclick = function(){ box.hidden ? open() : close(); };
   box.querySelector('.ast-x').onclick = close;
