@@ -185,6 +185,22 @@
   .pv-box iframe{flex:1 1 auto; width:100%; border:0; background:#FFFBF0;}
   .pv-foot{display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap; padding:12px 16px; border-top:1px solid var(--line); background:#fff;}
   .pv-foot .grow{flex:1 1 auto;}
+  /* ===== Xem trước: vị trí ===== */
+  .pv-head{align-items:center; justify-content:space-between;}
+  .pv-where{display:flex; flex-direction:column; gap:1px; min-width:0;}
+  .pv-where .k{font-size:12.5px; color:var(--ink-3);}
+  .pv-where b{font-size:15.5px;}
+  .pv-where small{font-size:13px; color:var(--ink-2);}
+  .pv-tools{display:flex; gap:10px; flex-wrap:wrap;}
+  .seg{display:inline-flex; background:#F1EEF6; border-radius:10px; padding:3px; gap:2px;}
+  .seg button{border:0; background:none; font:inherit; font-size:13px; font-weight:600; color:var(--ink-2); padding:6px 12px; border-radius:8px; cursor:pointer;}
+  .seg button.on{background:#fff; color:var(--ink); box-shadow:0 1px 3px rgba(31,26,46,.12);}
+  .pv-stage{flex:1 1 auto; display:flex; justify-content:center; background:#ECE8F2; min-height:0;}
+  .pv-stage iframe{flex:1 1 auto; max-width:100%; height:100%; border:0; background:#FFFBF0; transition:max-width .2s;}
+  .pv-stage.phone iframe{max-width:390px; box-shadow:0 0 0 1px var(--line), 0 10px 30px rgba(31,26,46,.15);}
+  .pagepick{display:flex; flex-wrap:wrap; gap:6px; margin-top:2px;}
+  .hint{font-size:12.5px; color:var(--ink-3); margin-top:4px;}
+
   /* ===== Hồ sơ ===== */
   .side-sep{height:1px; background:rgba(255,255,255,.1); margin:14px 4px;}
   .av{overflow:hidden;} .av img{width:100%; height:100%; object-fit:cover; display:block;}
@@ -220,7 +236,8 @@
 <aside class="side" aria-label="Mục quản trị">
   <div class="brand"><span class="mark">🥬</span><div><b>pH Nhà Em</b><small>Quản trị website</small></div></div>
   <nav class="tabs" role="tablist">
-    <button class="tab on" data-tab="thong_bao" style="--h:var(--h-tb)"><i class="hue"></i><span class="lbl">Thông báo</span><span class="n" id="n_thong_bao">0</span></button>
+    <button class="tab on" data-tab="bai_viet" style="--h:#E07A1F"><i class="hue"></i><span class="lbl">Bài viết trang</span><span class="n" id="n_bai_viet">0</span></button>
+    <button class="tab" data-tab="thong_bao" style="--h:var(--h-tb)"><i class="hue"></i><span class="lbl">Thông báo</span><span class="n" id="n_thong_bao">0</span></button>
     <button class="tab" data-tab="anh" style="--h:var(--h-anh)"><i class="hue"></i><span class="lbl">Ảnh</span><span class="n" id="n_anh">0</span></button>
     <button class="tab" data-tab="bai_tap" style="--h:var(--h-bt)"><i class="hue"></i><span class="lbl">Bài tập</span><span class="n" id="n_bai_tap">0</span></button>
     <button class="tab" data-tab="tai_lieu" style="--h:var(--h-tl)"><i class="hue"></i><span class="lbl">Tài liệu</span><span class="n" id="n_tai_lieu">0</span></button>
@@ -315,7 +332,7 @@
   <!-- QUẢN LÝ NỘI DUNG -->
   <div id="manager" hidden>
     <div class="sec-head">
-      <div><h1><i class="hue" id="secHue"></i><span id="secTitle">Thông báo</span></h1><p id="secDesc"></p></div>
+      <div><h1><i class="hue" id="secHue"></i><span id="secTitle">Bài viết trang</span></h1><p id="secDesc"></p></div>
       <div class="stats"><div class="stat"><b id="stPub">0</b><span>Đã xuất bản</span></div><div class="stat dr"><b id="stDraft">0</b><span>Bản nháp</span></div></div>
     </div>
     <div class="work">
@@ -340,8 +357,11 @@
 
 <div class="pv-mask" id="pvMask" hidden>
   <div class="pv-box">
-    <div class="pv-head"><b>Xem trước trên trang chủ</b><span>Bài mới có viền vàng. Bản này chưa lưu, chưa ai nhìn thấy.</span></div>
-    <iframe id="pvFrame" title="Xem trước trang chủ"></iframe>
+    <div class="pv-head">
+      <div class="pv-where"><span class="k">Bài sẽ hiện ở</span><b id="pvWhere">Trang chủ</b><small id="pvSpot"></small></div>
+      <div class="pv-tools"><div class="seg" id="pvPages"></div><div class="seg" id="pvDev"><button type="button" data-d="pc" class="on">Máy tính</button><button type="button" data-d="phone">Điện thoại</button></div></div>
+    </div>
+    <div class="pv-stage" id="pvStage"><iframe id="pvFrame" title="Xem trước bài trên website"></iframe></div>
     <div class="pv-foot">
       <button class="btn link" type="button" id="pvBack">Quay lại sửa</button>
       <span class="grow"></span>
@@ -360,7 +380,7 @@
   var KEY = 'phnhaem_admin_session';
   var CONF_PATH = 'data/admin-config.json', DATA_PATH = 'data/content.json';
   var GH_OWNER = 'gdnngdtxtmt-lab', GH_REPO = 'pH-nhaem', GH_BRANCH = 'main';   // kho chứa website
-  var cfg = null, session = null, data = null, dataSha = null, tab = 'thong_bao', editId = null;
+  var cfg = null, session = null, data = null, dataSha = null, tab = 'bai_viet', editId = null;
   var localPreview = {};
 
   var $ = function(id){ return document.getElementById(id); };
@@ -437,9 +457,9 @@
   function loadData(){
     return getFile(DATA_PATH).then(function(f){
       dataSha = f.sha; var d = JSON.parse(b64decodeText(f.content));
-      ['thong_bao','anh','bai_tap','tai_lieu'].forEach(function(k){ if (!Array.isArray(d[k])) d[k] = []; });
+      TYPES.forEach(function(k){ if (!Array.isArray(d[k])) d[k] = []; });
       data = d;
-    }).catch(function(e){ if (e.status === 404){ data = { cap_nhat:'', thong_bao:[], anh:[], bai_tap:[], tai_lieu:[] }; dataSha = null; return; } throw e; });
+    }).catch(function(e){ if (e.status === 404){ data = { cap_nhat:'', bai_viet:[], thong_bao:[], anh:[], bai_tap:[], tai_lieu:[] }; dataSha = null; return; } throw e; });
   }
   function saveData(message){
     data.cap_nhat = new Date().toISOString();
@@ -483,13 +503,50 @@
   }
 
   /* ---------- Cấu hình form theo từng mục ---------- */
-  var FOLDER = { anh:'anh', bai_tap:'bai-tap', tai_lieu:'tai-lieu' };
-  var LABEL = { thong_bao:'thông báo', anh:'ảnh', bai_tap:'bài tập', tai_lieu:'tài liệu' };
+  var FOLDER = { anh:'anh', bai_tap:'bai-tap', tai_lieu:'tai-lieu', bai_viet:'bai-viet' };
+  var LABEL = { thong_bao:'thông báo', anh:'ảnh', bai_tap:'bài tập', tai_lieu:'tài liệu', bai_viet:'bài viết' };
+  var TYPES = ['bai_viet','thong_bao','anh','bai_tap','tai_lieu'];
+  var SITE_PAGES = [['index','Trang chủ'],['mo-dau','Mở đầu'],['kien-thuc-bai-hoc','Kiến thức bài học'],['mo-rong-kien-thuc','Mở rộng kiến thức'],
+    ['ho-tro-hoc-sinh','Hỗ trợ học sinh'],['tien-do-lam-viec','Tiến độ làm việc'],['trung-bay-san-pham','Trưng bày sản phẩm'],['quy-tac-an-toan','Quy tắc an toàn'],
+    ['bai-tap','Bài tập'],['danh-gia','Đánh giá'],['goc-giao-vien','Góc giáo viên'],['minh-chung','Minh chứng'],['tai-lieu-tham-khao','Tài liệu tham khảo'],['y-kien-cha-me-hoc-sinh','Ý kiến cha mẹ học sinh']];
+  function pageName(slug){ var p = SITE_PAGES.find(function(x){ return x[0] === slug; }); return p ? p[1] : slug; }
+  function pageUrl(slug){ return slug === 'index' || !slug ? '/' : '/' + slug; }
+  var POS = { dau:'Đầu trang – ngay dưới tiêu đề lớn, trên nội dung chính', cuoi:'Cuối trang – ngay dưới nội dung chính' };
+  /* Nơi mỗi loại bài hiện trên website (dùng cho Xem trước) */
+  function places(t, it){
+    if (t === 'bai_viet') return [{ u: pageUrl(it.trang), t: pageName(it.trang), w: POS[it.vi_tri || 'cuoi'] }];
+    return ({
+      thong_bao:[{ u:'/', t:'Trang chủ', w:'Mục “Bảng tin lớp”, ô Thông báo (bài ghim nằm trên cùng)' }],
+      anh:[{ u:'/', t:'Trang chủ', w:'Mục “Bảng tin lớp”, ô Ảnh hoạt động mới' }, { u:'/trung-bay-san-pham', t:'Trưng bày sản phẩm', w:'Mục “Ảnh hoạt động của lớp”, dưới nội dung chính' }],
+      bai_tap:[{ u:'/', t:'Trang chủ', w:'Mục “Bảng tin lớp”, ô Bài tập mới' }, { u:'/bai-tap', t:'Bài tập', w:'Mục “Bài tập giáo viên giao”, dưới nội dung chính' }],
+      tai_lieu:[{ u:'/', t:'Trang chủ', w:'Mục “Bảng tin lớp”, ô Tài liệu mới' }, { u:'/tai-lieu-tham-khao', t:'Tài liệu tham khảo', w:'Mục “Tài liệu của dự án”' }]
+    })[t];
+  }
   var ICON = { pdf:'📕', doc:'📘', docx:'📘', ppt:'📙', pptx:'📙', xls:'📗', xlsx:'📗', mp4:'🎬', zip:'🗜️', link:'🔗', form:'📝' };
 
   function formHTML(t, it){
     it = it || {};
     var d = it.ngay || today();
+    if (t === 'bai_viet'){
+      var pos = it.vi_tri || 'cuoi';
+      return '' +
+      '<div class="row"><div><label>Đăng vào trang <span class="req">*</span></label><select name="trang">' +
+        SITE_PAGES.map(function(p){ return '<option value="' + p[0] + '"' + ((it.trang || 'tien-do-lam-viec') === p[0] ? ' selected' : '') + '>' + esc(p[1]) + '</option>'; }).join('') + '</select></div>' +
+      '<div><label>Ngày đăng</label><input type="date" name="ngay" value="' + esc(d) + '"></div></div>' +
+      '<label>Vị trí trên trang <span class="req">*</span></label><div class="src-switch">' +
+        '<label><input type="radio" name="vi_tri" value="dau"' + (pos === 'dau' ? ' checked' : '') + '> Đầu trang</label>' +
+        '<label><input type="radio" name="vi_tri" value="cuoi"' + (pos === 'cuoi' ? ' checked' : '') + '> Cuối trang</label></div>' +
+      '<div class="hint" id="posHint">' + esc(POS[pos]) + '</div>' +
+      '<label>Tiêu đề <span class="req">*</span></label><input type="text" name="tieu_de" required maxlength="140" value="' + esc(it.tieu_de) + '">' +
+      '<label>Nội dung <span class="req">*</span> <span class="opt">(để một dòng trống giữa hai đoạn)</span></label><textarea name="noi_dung" required maxlength="6000" style="min-height:170px">' + esc(it.noi_dung) + '</textarea>' +
+      '<label>Ảnh minh họa <span class="opt">(không bắt buộc)</span></label><input type="file" name="file" accept="image/*"><div class="preview" id="prev">' +
+        (it.anh ? '<img src="' + esc(localPreview[it.anh] || it.anh) + '" alt="">' : '') + '</div>' +
+      (it.anh ? '<label class="check"><input type="checkbox" name="go_anh"> Gỡ ảnh hiện tại</label>' : '') +
+      '<div class="row"><div><label>Đường dẫn cho nút <span class="opt">(không bắt buộc)</span></label><input type="url" name="url" placeholder="https://..." value="' + esc(it.url) + '"></div>' +
+      '<div><label>Chữ trên nút</label><input type="text" name="nhan_nut" maxlength="40" placeholder="Xem thêm" value="' + esc(it.nhan_nut) + '"></div></div>' +
+      '<label class="check"><input type="checkbox" name="ghim"' + (it.ghim ? ' checked' : '') + '> Ghim lên trên các bài khác cùng vị trí</label>' +
+      '<div class="warn">📷 Không đăng ảnh rõ mặt, họ tên đầy đủ của học sinh.</div>' + btns();
+    }
     if (t === 'thong_bao') return '' +
       '<label>Tiêu đề <span class="req">*</span></label><input type="text" name="tieu_de" required maxlength="140" value="' + esc(it.tieu_de) + '">' +
       '<label>Nội dung <span class="req">*</span></label><textarea name="noi_dung" required maxlength="3000">' + esc(it.noi_dung) + '</textarea>' +
@@ -539,6 +596,10 @@
     $('btnCancel').onclick = function(){ editId = null; renderForm(); };
     var radios = $('form').querySelectorAll('input[name=nguon]');
     Array.prototype.forEach.call(radios, function(r){ r.onchange = function(){ var f = $('form').nguon.value === 'file'; $('srcFile').hidden = !f; $('srcLink').hidden = f; }; });
+    if (tab === 'bai_viet'){
+      Array.prototype.forEach.call($('form').querySelectorAll('input[name=vi_tri]'), function(r){ r.onchange = function(){ $('posHint').textContent = POS[r.value]; }; });
+      $('form').file.onchange = function(){ $('prev').innerHTML = ''; var f = this.files[0]; if (f){ var im = document.createElement('img'); im.src = URL.createObjectURL(f); $('prev').appendChild(im); } };
+    }
     if (tab === 'anh'){
       $('form').file.onchange = function(){
         $('prev').innerHTML = '';
@@ -549,6 +610,7 @@
 
   function itemSummary(t, it){
     if (t === 'thong_bao') return { ic:'📢', title: it.tieu_de, sub: fmtDate(it.ngay) + (it.ghim ? ' · GHIM' : '') };
+    if (t === 'bai_viet') return { img: it.anh ? (localPreview[it.anh] || it.anh) : '', ic:'📰', title: it.tieu_de, sub: pageName(it.trang) + ' · ' + (it.vi_tri === 'dau' ? 'đầu trang' : 'cuối trang') + ' · ' + fmtDate(it.ngay) };
     if (t === 'anh') return { img: localPreview[it.src] || it.src, title: it.tieu_de, sub: fmtDate(it.ngay) };
     var k = it.loai || ((String(it.url).split('?')[0].match(/\.([a-z0-9]{2,4})$/i) || [])[1] || 'link').toLowerCase();
     if (/forms\.gle|docs\.google\.com\/forms/.test(it.url || '')) k = 'form';
@@ -556,7 +618,7 @@
     return { ic: ICON[k] || (t === 'bai_tap' ? '✍️' : '📄'), title: it.tieu_de, sub: sub };
   }
   function renderList(){
-    ['thong_bao','anh','bai_tap','tai_lieu'].forEach(function(k){ $('n_' + k).textContent = data[k].length; });
+    TYPES.forEach(function(k){ $('n_' + k).textContent = data[k].length; });
     paintHead();
     var list = data[tab].filter(function(x){ return listFilter === 'all' || (listFilter === 'draft' ? x.nhap : !x.nhap); }).sort(function(a,b){ return (tab === 'thong_bao' ? (b.ghim?1:0) - (a.ghim?1:0) : 0) || String(b.ngay || '').localeCompare(String(a.ngay || '')); });
     if (!list.length){ $('items').innerHTML = '<div class="empty"><b>' + (listFilter === 'draft' ? 'Không có bản nháp' : 'Chưa có ' + LABEL[tab]) + '</b>Điền form bên cạnh rồi bấm Xem trước để bắt đầu.</div>'; return; }
@@ -640,6 +702,7 @@
 
   /* ---------- Đầu mục, bộ lọc ---------- */
   var META = {
+    bai_viet:{ t:'Bài viết trang', h:'#E07A1F', d:'Đăng bài vào bất kì trang nào của website, ở đầu trang hoặc cuối trang. Bấm Xem trước để thấy bài nằm ở đâu.' },
     thong_bao:{ t:'Thông báo', h:'var(--h-tb)', d:'Hiện ở Bảng tin trên trang chủ. Thông báo ghim luôn nằm trên cùng.' },
     anh:{ t:'Ảnh', h:'var(--h-anh)', d:'Hiện ở trang chủ và trang Trưng bày sản phẩm. Ảnh được tự thu nhỏ trước khi tải lên.' },
     bai_tap:{ t:'Bài tập', h:'var(--h-bt)', d:'Hiện ở trang chủ và trang Bài tập, kèm hạn nộp.' },
@@ -660,8 +723,18 @@
     if (!isImg) return Promise.resolve({ path: '#tep-se-tai-len', ext: (file.name.split('.').pop() || '').toLowerCase() });
     return compressImage(file, 1000, 0.8).then(function(blob){ return fileToB64(blob); }).then(function(b64){ return { path: 'data:image/jpeg;base64,' + b64, ext: 'jpg' }; });
   }
-  function openPreview(){
-    $('pvFrame').src = '/?xem-truoc=1&t=' + Date.now();
+  var pvList = [];
+  function pvShow(i){
+    var p = pvList[i]; if (!p) return;
+    $('pvWhere').textContent = 'Trang ' + p.t; $('pvSpot').textContent = p.w;
+    Array.prototype.forEach.call($('pvPages').children, function(b, k){ b.classList.toggle('on', k === i); });
+    $('pvFrame').src = p.u + '?xem-truoc=1&t=' + Date.now();
+  }
+  function openPreview(list){
+    pvList = list && list.length ? list : [{ u:'/', t:'Trang chủ', w:'' }];
+    $('pvPages').innerHTML = pvList.length > 1 ? pvList.map(function(p, i){ return '<button type="button" data-i="' + i + '">' + esc(p.t) + '</button>'; }).join('') : '';
+    $('pvPages').hidden = pvList.length < 2;
+    pvShow(0);
     $('pvMask').hidden = false; document.body.style.overflow = 'hidden';
   }
   function closePreview(){ $('pvMask').hidden = true; $('pvFrame').src = 'about:blank'; document.body.style.overflow = ''; }
@@ -684,7 +757,17 @@
     var base = { ngay: val(f,'ngay') || today() };
     var jobs = Promise.resolve(), newItems = [];
 
-    if (tab === 'thong_bao'){
+    if (tab === 'bai_viet'){
+      if (!val(f,'tieu_de') || !val(f,'noi_dung')) return toast('Cần nhập tiêu đề và nội dung.', 'err');
+      var bu = val(f,'url'); if (bu && !/^https?:\/\//i.test(bu)) return toast('Đường dẫn phải bắt đầu bằng https://', 'err');
+      var bv = Object.assign({}, old || { id: uid('bv') }, base, { trang: val(f,'trang'), vi_tri: f.vi_tri.value || 'cuoi', tieu_de: val(f,'tieu_de'),
+        noi_dung: f.elements.noi_dung.value.trim(), url: bu, nhan_nut: val(f,'nhan_nut'), ghim: f.elements.ghim.checked });
+      var bf = (f.elements.file.files || [])[0];
+      if (f.elements.go_anh && f.elements.go_anh.checked && old && old.anh){ bv._oldSrc = old.anh; bv.anh = ''; }
+      if (bf) jobs = up(bf, 'bai-viet', 'ảnh bài viết').then(function(r){ if (old && old.anh) bv._oldSrc = old.anh; bv.anh = r.path; });
+      newItems.push(bv);
+    }
+    else if (tab === 'thong_bao'){
       if (!val(f,'tieu_de') || !val(f,'noi_dung')) return toast('Cần nhập tiêu đề và nội dung.', 'err');
       var u = val(f,'url'); if (u && !/^https?:\/\//i.test(u)) return toast('Đường dẫn phải bắt đầu bằng https://', 'err');
       newItems.push(Object.assign({}, old || { id: uid('tb') }, base, { tieu_de: val(f,'tieu_de'), noi_dung: val(f,'noi_dung'), url: u, ghim: f.elements.ghim.checked }));
@@ -736,7 +819,7 @@
         });
         try { localStorage.setItem('phnhaem_preview', JSON.stringify({ data: copy, hl: newItems.map(function(x){ return x.id; }), tab: tab })); }
         catch(er){ throw new Error('Ảnh quá nhiều để xem trước cùng lúc. Hãy chọn ít ảnh hơn.'); }
-        busy(false); openPreview();
+        busy(false); openPreview(places(tab, newItems[0]));
       }).catch(function(err){ busy(false); toast(explain(err), 'err'); });
     }
     newItems.forEach(function(it){ if (mode === 'draft') it.nhap = true; else delete it.nhap; });
@@ -745,7 +828,7 @@
     var oldFiles = [];
     jobs.then(function(){
       newItems.forEach(function(it){
-        if (it._oldSrc){ oldFiles.push(it._oldSrc); delete it._oldSrc; }
+        if (it._oldSrc){ if (/^uploads\//.test(it._oldSrc)) oldFiles.push(it._oldSrc); delete it._oldSrc; }
         var i = list.findIndex(function(x){ return x.id === it.id; });
         if (i > -1) list[i] = it; else list.push(it);
       });
@@ -764,8 +847,8 @@
 
   function onDelete(id){
     var list = data[tab], it = list.find(function(x){ return x.id === id; });
-    if (!it || !confirm('Xóa “' + (it.tieu_de || '') + '” khỏi trang chủ?')) return;
-    var file = tab === 'anh' ? it.src : it.url;
+    if (!it || !confirm('Xóa “' + (it.tieu_de || '') + '” khỏi website?')) return;
+    var file = tab === 'anh' ? it.src : (tab === 'bai_viet' ? it.anh : it.url);
     busy(true, 'Đang xóa…');
     data[tab] = list.filter(function(x){ return x.id !== id; });
     saveData('Admin: xóa ' + LABEL[tab] + ' – ' + (it.tieu_de || ''))
@@ -893,6 +976,9 @@
   $('form').addEventListener('submit', function(e){ onSubmit(e, 'preview'); });
   $('form').addEventListener('click', function(e){ var m = e.target.getAttribute && e.target.getAttribute('data-mode'); if (m && m !== 'preview'){ e.preventDefault(); onSubmit(null, m); } });
   $('pvBack').onclick = closePreview;
+  $('pvPages').addEventListener('click', function(e){ var b = e.target.closest('button'); if (b) pvShow(+b.getAttribute('data-i')); });
+  $('pvDev').addEventListener('click', function(e){ var b = e.target.closest('button'); if (!b) return;
+    Array.prototype.forEach.call($('pvDev').children, function(x){ x.classList.toggle('on', x === b); }); $('pvStage').classList.toggle('phone', b.getAttribute('data-d') === 'phone'); });
   $('filters').addEventListener('click', function(e){ var c = e.target.closest('.chip'); if (!c) return; listFilter = c.getAttribute('data-f');
     Array.prototype.forEach.call(document.querySelectorAll('.chip'), function(x){ x.classList.toggle('on', x === c); }); renderList(); });
   $('pvDraft').onclick = function(){ onSubmit(null, 'draft'); };

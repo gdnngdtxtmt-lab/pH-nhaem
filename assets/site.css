@@ -135,3 +135,28 @@ body[data-page="index"] .banner-in{padding:70px 20px 64px;}
 .foot-in b{font-family:var(--fd); font-size:16px; color:var(--c-purple-dark);}
 .upd{font-family:var(--fm); font-size:11.5px;}
 @media (prefers-reduced-motion: reduce){ *{transition:none !important; animation:none !important;} html{scroll-behavior:auto;} }
+
+/* Xem trước */
+.pv-bar{position:sticky; top:0; z-index:70; background:#FFE58A; color:#5A4300; text-align:center; font-weight:700; font-size:14px; padding:8px 12px; box-shadow:0 2px 6px rgba(0,0,0,.12);}
+body:has(.pv-bar) .topbar{top:37px;}
+.hl{outline:4px solid #F2C230 !important; outline-offset:3px; box-shadow:0 0 0 8px rgba(242,194,48,.25) !important;}
+
+/* Hồ sơ giáo viên ở chân trang */
+.foot-av{width:64px; height:64px; border-radius:50%; object-fit:cover; border:3px solid #fff; box-shadow:0 0 0 2px #CDB8EA; margin-bottom:4px;}
+.foot-gt{max-width:60ch; font-style:italic;}
+
+/* Bài viết theo trang */
+.posts{max-width:1060px; margin:10px auto 26px; display:flex; flex-direction:column; gap:18px;}
+.posts-dau{margin-top:0;}
+.post{background:#fff; border-radius:24px; box-shadow:var(--shadow); border:1px solid #EFE2F5; padding:24px 26px; display:grid; grid-template-columns:minmax(0,1fr); gap:22px; position:relative; overflow:hidden;}
+.post::before{content:""; position:absolute; left:0; top:0; bottom:0; width:6px; background:linear-gradient(180deg,#D7263D,#E8508C,#7B4FB8,#4B5FC9,#2F9C9A,#3DAA5C,#B8C934);}
+.post.has-img{grid-template-columns:minmax(0,320px) minmax(0,1fr); align-items:start;}
+.post-img{all:unset; cursor:zoom-in; display:block; border-radius:16px; overflow:hidden; background:#F3EEF8;}
+.post-img img{display:block; width:100%; height:auto; max-height:300px; object-fit:cover;}
+.post-meta{display:flex; gap:8px; align-items:center; font-size:13px; color:var(--ink-soft); margin-bottom:2px;}
+.post h3{font-family:var(--fd); font-weight:800; font-size:clamp(20px,2.6vw,25px); line-height:1.25; margin:0 0 8px;}
+.post p{margin:0 0 10px; font-size:15px; line-height:1.7; color:var(--ink);}
+.post-btn{display:inline-block; margin-top:4px; background:#5B3A92; color:#fff; text-decoration:none; font-weight:600; font-size:14.5px; border-radius:999px; padding:9px 18px;}
+.post-btn:hover{background:#4A2C7A;}
+@media (max-width:700px){ .post, .post.has-img{grid-template-columns:1fr; padding:20px 18px;} }
+.pv-here{position:absolute; z-index:65; background:#F2C230; color:#3D2E00; font-weight:700; font-size:14px; padding:6px 12px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,.18); pointer-events:none; white-space:nowrap;}

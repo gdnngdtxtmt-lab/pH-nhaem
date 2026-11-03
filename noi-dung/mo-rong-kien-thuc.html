@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mở rộng kiến thức | pH Nhà Em</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16202C; --ink-soft:#3F5266; --card:#FFFFFF; --line:#EFE2F5;
+    --c-red:#D7263D; --c-pink:#E8508C; --c-mauve:#B04FB0; --c-purple:#7B4FB8;
+    --c-blue:#4B5FC9; --c-teal:#2F9C9A; --c-green:#3DAA5C; --c-lime:#B8C934;
+    --radius:26px; --shadow:0 14px 28px rgba(31,92,134,.14);
+    --fd:'Baloo 2',sans-serif; --fb:'Be Vietnam Pro',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{font-family:var(--fb); color:var(--ink); background:#FFFBF0; padding:22px 12px 60px; line-height:1.65;}
+  .wrap{max-width:1040px; margin:0 auto;}
+  a{color:var(--c-purple); font-weight:600;}
+  .sub-hero{text-align:center; padding:12px 16px 8px;}
+  .sub-hero h1{font-family:var(--fd); font-weight:800; line-height:1.08; font-size:clamp(30px,5vw,50px); margin:0 0 6px;
+    background:linear-gradient(92deg,var(--c-red),var(--c-pink) 22%,var(--c-purple) 45%,var(--c-blue) 62%,var(--c-green) 82%,var(--c-lime));
+    -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .sub-hero p{max-width:680px; margin:0 auto 12px; font-size:15.5px; color:var(--ink-soft);}
+  .mini-bar{max-width:420px; height:12px; margin:8px auto 26px; border-radius:10px;
+    background:linear-gradient(90deg,var(--c-red),var(--c-pink) 25%,var(--c-mauve) 38%,var(--c-purple) 50%,var(--c-blue) 60%,var(--c-teal) 70%,var(--c-green) 80%,var(--c-lime));}
+  .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:28px 26px; margin:0 auto 26px; border:1px solid var(--line);}
+  .card h2{font-family:var(--fd); font-weight:800; font-size:clamp(22px,3.2vw,29px); margin:0 0 10px; line-height:1.2;}
+  .card > p{color:var(--ink-soft); font-size:15px; margin:0 0 14px;}
+  .lead{font-size:15px; color:var(--ink-soft); margin:0 0 16px;}
+  table{width:100%; border-collapse:collapse; font-size:14.5px;}
+  th,td{padding:10px 12px; text-align:left; vertical-align:top; border-bottom:1px solid #F0E6F6;}
+  th{background:#5B3A92; color:#fff; font-weight:600;}
+  tr:nth-child(even) td{background:#FBF8FD;}
+  .tbl{overflow-x:auto; border-radius:14px; border:1px solid var(--line);}
+  .grid2{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px;}
+  @media (max-width:720px){ .grid2{grid-template-columns:1fr;} .card{padding:22px 18px;} }
+  .tag{display:inline-block; font-size:12.5px; font-weight:700; padding:3px 10px; border-radius:999px; color:#fff;}
+  ul.tick{list-style:none; padding:0; margin:8px 0 0;}
+  ul.tick li{position:relative; padding:6px 0 6px 28px; font-size:14.8px;}
+  ul.tick li::before{content:"✓"; position:absolute; left:4px; top:6px; font-weight:800; color:var(--c-green);}
+  ul.no li::before{content:"✕"; color:var(--c-red);}
+  .note{font-size:13px; color:var(--ink-soft); background:#F7F2FC; border-radius:12px; padding:10px 14px; margin-top:14px;}
+  .src{font-size:12.5px; color:var(--ink-soft); text-align:center; margin-top:8px;}
+  .foot{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:30px;}
+</style>
+<style>
+  .scale{margin:4px 0 0;}
+  .scale .bar{height:18px; border-radius:10px; background:linear-gradient(90deg,#D7263D 0%,#E8508C 18%,#B04FB0 34%,#7B4FB8 46%,#4B5FC9 58%,#2F9C9A 70%,#3DAA5C 84%,#B8C934 100%);}
+  .scale .ticks{display:flex; justify-content:space-between; font-size:12px; color:var(--ink-soft); margin-top:4px;}
+  .pts{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:16px;}
+  @media (max-width:720px){ .pts{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  .pts div{background:#fff; border:1px solid var(--line); border-radius:14px; padding:10px 12px; font-size:13.5px; display:flex; gap:10px; align-items:center;}
+  .pts b{font-family:var(--fd); font-size:18px; min-width:44px; text-align:center; border-radius:10px; padding:2px 6px; color:#fff;}
+  .topic{border-radius:var(--radius); background:#fff; box-shadow:var(--shadow); border:1px solid var(--line); margin:0 auto 26px; overflow:hidden;}
+  .topic .hd{display:flex; gap:14px; align-items:center; padding:20px 24px; background:var(--bg); border-bottom:1px solid var(--line);}
+  .topic .hd .em{font-size:40px; line-height:1;}
+  .topic .hd small{display:block; font-weight:700; font-size:13px; color:var(--c);}
+  .topic .hd h2{font-family:var(--fd); font-weight:800; font-size:clamp(22px,3vw,28px); margin:0; line-height:1.15;}
+  .topic .bd{padding:20px 24px 22px; display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,1fr); gap:22px;}
+  @media (max-width:760px){ .topic .bd{grid-template-columns:1fr; padding:18px;} .topic .hd{padding:16px 18px;} }
+  .topic h3{font-size:15.5px; margin:0 0 6px; color:var(--c);}
+  .topic p{margin:0 0 12px; font-size:14.8px;}
+  .eq{font-family:'Courier New',monospace; font-size:14px; background:#F7F2FC; border-radius:10px; padding:8px 12px; margin:6px 0 12px; overflow-x:auto; white-space:nowrap;}
+  .tips{background:#F6FAF3; border-radius:16px; padding:14px 16px;}
+  .tips ul{margin:0; padding-left:20px; font-size:14.5px;}
+  .tips li{margin:4px 0;}
+  .green{margin-top:12px; background:#EEF7EF; border-left:5px solid var(--c-green); border-radius:12px; padding:10px 14px; font-size:14.3px;}
+  .green b{color:#2E7D32;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="sub-hero">
+  <h1>🔭 Mở rộng kiến thức</h1>
+  <p>Kiến thức acid – base – oxide – muối không chỉ nằm trong sách. Bốn thẻ dưới đây đưa bài học vào răng miệng, đôi tay, vườn rau và gian bếp của ngôi nhà em.</p>
+  <div class="mini-bar"></div>
+</div>
+
+<section class="card">
+  <h2>🌈 pH của một số chất quen thuộc</h2>
+  <p class="lead">pH &lt; 7: môi trường acid · pH = 7: trung tính · pH &gt; 7: môi trường base. Giá trị dưới đây là gần đúng, chỉ để tham khảo; pH thật phụ thuộc từng sản phẩm và độ pha loãng.</p>
+  <div class="scale"><div class="bar"></div><div class="ticks"><span>0</span><span>2</span><span>4</span><span>6</span><span>7</span><span>8</span><span>10</span><span>12</span><span>14</span></div></div>
+  <div class="pts">
+    <div><b style="background:#D7263D">≈ 2</b>Nước chanh</div>
+    <div><b style="background:#D7263D">≈ 3</b>Giấm ăn</div>
+    <div><b style="background:#E8508C">≈ 3,5</b>Nước cam</div>
+    <div><b style="background:#B04FB0">≈ 5,6</b>Nước mưa bình thường</div>
+    <div><b style="background:#7B4FB8">7</b>Nước tinh khiết</div>
+    <div><b style="background:#4B5FC9">≈ 8,3</b>Dung dịch baking soda</div>
+    <div><b style="background:#3DAA5C">≈ 9 – 10</b>Nước xà phòng</div>
+    <div><b style="background:#B8C934;color:#2b3a00">≈ 12</b>Nước vôi trong</div>
+  </div>
+</section>
+
+<section class="topic" style="--c:var(--c-red);--bg:#FDECEF">
+  <div class="hd"><span class="em">😁</span><div><small>THẺ CỦA NHÓM 1 · BÀI 8 ACID</small><h2>Acid và răng miệng</h2></div></div>
+  <div class="bd"><div><h3>Vì sao đồ uống chua làm mòn răng?</h3><p>Men răng được tạo chủ yếu từ hydroxyapatite, một hợp chất của calcium. Khi pH trong miệng xuống dưới khoảng <b>5,5</b>, acid bắt đầu hòa tan men răng. Nước chanh, nước cam, nước ngọt có gas đều có pH thấp hơn mức này.</p><h3>Nước bọt là “chất trung hòa” tự nhiên</h3><p>Sau khi ăn uống, nước bọt cần một khoảng thời gian để đưa pH trong miệng trở lại gần trung tính. Nhấm nháp đồ chua liên tục cả ngày khiến răng ở trong môi trường acid lâu hơn.</p></div><div><div class="tips"><h3>🏠 Áp dụng ở nhà</h3><ul><li>Uống đồ chua trong bữa ăn, không nhấm nháp kéo dài.</li><li>Dùng ống hút để đồ uống ít chạm vào răng.</li><li>Súc miệng bằng nước lọc sau khi uống.</li><li>Đợi khoảng 30 phút rồi mới đánh răng, vì men răng vừa tiếp xúc acid dễ bị mài mòn.</li></ul></div><div class="green"><b>🌿 Câu hỏi xanh:</b> nước mưa bình thường có pH khoảng 5,6 do CO₂ hòa tan. Khói từ đốt than, xăng dầu chứa SO₂ và NO₂; các khí này tạo acid trong nước mưa nên có nơi mưa chua hơn, gọi là <b>mưa acid</b>, làm hại cây cối và công trình.</div></div></div>
+</section>
+<section class="topic" style="--c:var(--c-purple);--bg:#F1E9FA">
+  <div class="hd"><span class="em">🧼</span><div><small>THẺ CỦA NHÓM 2 · BÀI 9 BASE – THANG pH</small><h2>Base và đôi tay</h2></div></div>
+  <div class="bd"><div><h3>Da khỏe có tính acid nhẹ</h3><p>Bề mặt da có pH khoảng <b>4,5 – 5,5</b>. Lớp màng acid nhẹ cùng lớp dầu tự nhiên giúp da giữ ẩm và chống vi khuẩn.</p><h3>Vì sao chất tẩy rửa làm khô da?</h3><p>Xà phòng, bột giặt có tính base. Base mạnh và chất tẩy rửa hòa tan lớp dầu bảo vệ, làm thay đổi pH bề mặt da nên da khô, nứt nẻ khi tiếp xúc thường xuyên. Chất có pH càng xa 4,5 – 5,5 thì càng dễ gây khô da.</p></div><div><div class="tips"><h3>🏠 Áp dụng ở nhà</h3><ul><li>Đeo găng tay khi rửa chén, giặt đồ bằng tay.</li><li>Pha chất tẩy rửa đúng liều ghi trên bao bì, không dùng đậm đặc.</li><li>Rửa lại tay bằng nước sạch rồi thoa kem dưỡng ẩm.</li><li>Nếu da đỏ, ngứa hoặc rát kéo dài, nên đi khám bác sĩ da liễu.</li></ul></div><div class="green"><b>🌿 Câu hỏi xanh:</b> chất tẩy rửa dùng quá liều theo nước thải ra cống, ao hồ, tạo bọt và gây ô nhiễm nguồn nước. Dùng đúng liều, ưu tiên sản phẩm dễ phân hủy sinh học là một hành động xanh trong mỗi gia đình.</div></div></div>
+</section>
+<section class="topic" style="--c:var(--c-blue);--bg:#E9EEFB">
+  <div class="hd"><span class="em">🌱</span><div><small>THẺ CỦA NHÓM 3 · BÀI 10 OXIDE</small><h2>Oxide và đất trồng</h2></div></div>
+  <div class="bd"><div><h3>Vôi khử chua đất như thế nào?</h3><p>Đất chua (pH thấp) làm nhiều loại rau kém phát triển. Vôi sống CaO là một <b>oxide base</b>; khi gặp nước tạo thành Ca(OH)₂, chất này trung hòa acid trong đất.</p><div class="eq">CaO + H₂O → Ca(OH)₂</div><h3>CO₂ là oxide acid</h3><p>CO₂ tan trong nước tạo carbonic acid nên nước soda có gas và hơi thở làm màu chỉ thị chuyển về phía acid. Khi thổi hơi thở vào nước vôi trong, CO₂ phản ứng với Ca(OH)₂ tạo CaCO₃ làm nước vẩn đục.</p><div class="eq">CO₂ + Ca(OH)₂ → CaCO₃↓ + H₂O</div></div><div><div class="tips"><h3>🏠 Áp dụng ở nhà</h3><ul><li>Thử nước đất vườn bằng kit trước khi bón vôi: đất có chua mới cần bón.</li><li>Bón đúng liều, rải đều; bón quá nhiều làm đất có tính base, cây khó hút chất dinh dưỡng.</li><li>Không bón vôi cùng lúc với phân đạm amoni, vì sẽ làm thất thoát đạm.</li><li>Đeo găng, khẩu trang khi rải vôi; vôi sống gặp nước tỏa nhiệt mạnh.</li></ul></div><div class="green"><b>🌿 Câu hỏi xanh:</b> CO₂ thải ra từ đốt nhiên liệu là nguyên nhân chính gây hiệu ứng nhà kính và làm nước biển chua dần. Đi bộ, đi xe đạp, tắt điện khi không dùng là cách giảm CO₂ ngay tại nhà.</div></div></div>
+</section>
+<section class="topic" style="--c:var(--c-green);--bg:#EAF6EC">
+  <div class="hd"><span class="em">🧂</span><div><small>THẺ CỦA NHÓM 4 · BÀI 11 MUỐI</small><h2>Muối trong gian bếp</h2></div></div>
+  <div class="bd"><div><h3>Muối không phải lúc nào cũng trung tính</h3><p>Muối ăn NaCl tan trong nước cho dung dịch trung tính. Nhưng baking soda NaHCO₃ cho dung dịch có tính base nhẹ, còn phèn chua cho dung dịch có tính acid nhẹ.</p><h3>Baking soda gặp giấm</h3><p>Baking soda phản ứng với acetic acid trong giấm, sinh ra khí CO₂ nên sủi bọt. Màu chỉ thị chuyển dần từ xanh về tím, rồi hồng khi giấm dư.</p><div class="eq">NaHCO₃ + CH₃COOH → CH₃COONa + H₂O + CO₂↑</div><h3>Phèn chua làm trong nước</h3><p>Trong nước, phèn chua tạo ra Al(OH)₃ dạng keo, kéo các hạt cặn nhỏ lắng xuống đáy. Nước trong hơn nhưng chưa được khử trùng, vẫn phải đun sôi trước khi uống.</p></div><div><div class="tips"><h3>🏠 Áp dụng ở nhà</h3><ul><li>Nọc kiến có formic acid; chấm nước baking soda giúp trung hòa bớt acid nên đỡ châm chích.</li><li>Baking soda dùng làm bánh, khử mùi tủ lạnh, làm sạch vết bám.</li><li>Dùng phèn chua đúng liều; không thay thế việc đun sôi nước.</li><li>Đựng muối, baking soda, phèn chua trong lọ có nhãn rõ ràng, để xa tầm tay trẻ nhỏ.</li></ul></div><div class="green"><b>🌿 Câu hỏi xanh:</b> baking soda và giấm có thể thay chất tẩy rửa mạnh trong nhiều việc nhà như làm sạch bồn rửa, khử mùi cống thoát nước, lau vết ố trên ấm, cốc.</div></div></div>
+</section>
+<p class="src">Biên soạn dựa trên SGK Khoa học tự nhiên 8 (Kết nối tri thức với cuộc sống), Bài 8 – 11, và tình huống của 4 nhóm trên trang Mở đầu.</p>
+
+<div class="foot">🥬 WEBSITE pH NHÀ EM · DỰ ÁN STEM KHTN 8 · Trường THCS Nguyễn An Khương</div>
+</div>
+</body>
+</html>

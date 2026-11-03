@@ -1,5 +1,5 @@
 {
-  "cap_nhat": "2026-11-02T10:01:47.380Z",
+  "cap_nhat": "2026-11-01T00:00:00.000Z",
   "thong_bao": [],
   "anh": [],
   "bai_tap": [
@@ -21,15 +21,5 @@
       "loai": "pdf",
       "ngay": "2026-10-28"
     }
-  ],
-  "ho_so": {
-    "ten": "Lê Thị Việt Hà",
-    "chuc_danh": "Giáo viên Khoa học tự nhiên",
-    "truong": "Trường THCS Nguyễn An Khương",
-    "lop": "8A4",
-    "nam_hoc": "2026–2027",
-    "email": "",
-    "gioi_thieu": "",
-    "anh": "uploads/anh-dai-dien/mvz3afwb-le-thi-viet-ha.jpg"
-  }
+  ]
 }

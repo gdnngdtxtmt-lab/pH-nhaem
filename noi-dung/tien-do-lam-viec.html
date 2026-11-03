@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiến độ làm việc | pH Nhà Em</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16202C; --ink-soft:#3F5266; --card:#FFFFFF; --line:#EFE2F5;
+    --c-red:#D7263D; --c-pink:#E8508C; --c-mauve:#B04FB0; --c-purple:#7B4FB8;
+    --c-blue:#4B5FC9; --c-teal:#2F9C9A; --c-green:#3DAA5C; --c-lime:#B8C934;
+    --radius:26px; --shadow:0 14px 28px rgba(31,92,134,.14);
+    --fd:'Baloo 2',sans-serif; --fb:'Be Vietnam Pro',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{font-family:var(--fb); color:var(--ink); background:#FFFBF0; padding:22px 12px 60px; line-height:1.65;}
+  .wrap{max-width:1040px; margin:0 auto;}
+  a{color:var(--c-purple); font-weight:600;}
+  .sub-hero{text-align:center; padding:12px 16px 8px;}
+  .sub-hero h1{font-family:var(--fd); font-weight:800; line-height:1.08; font-size:clamp(30px,5vw,50px); margin:0 0 6px;
+    background:linear-gradient(92deg,var(--c-red),var(--c-pink) 22%,var(--c-purple) 45%,var(--c-blue) 62%,var(--c-green) 82%,var(--c-lime));
+    -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .sub-hero p{max-width:680px; margin:0 auto 12px; font-size:15.5px; color:var(--ink-soft);}
+  .mini-bar{max-width:420px; height:12px; margin:8px auto 26px; border-radius:10px;
+    background:linear-gradient(90deg,var(--c-red),var(--c-pink) 25%,var(--c-mauve) 38%,var(--c-purple) 50%,var(--c-blue) 60%,var(--c-teal) 70%,var(--c-green) 80%,var(--c-lime));}
+  .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:28px 26px; margin:0 auto 26px; border:1px solid var(--line);}
+  .card h2{font-family:var(--fd); font-weight:800; font-size:clamp(22px,3.2vw,29px); margin:0 0 10px; line-height:1.2;}
+  .card > p{color:var(--ink-soft); font-size:15px; margin:0 0 14px;}
+  .lead{font-size:15px; color:var(--ink-soft); margin:0 0 16px;}
+  table{width:100%; border-collapse:collapse; font-size:14.5px;}
+  th,td{padding:10px 12px; text-align:left; vertical-align:top; border-bottom:1px solid #F0E6F6;}
+  th{background:#5B3A92; color:#fff; font-weight:600;}
+  tr:nth-child(even) td{background:#FBF8FD;}
+  .tbl{overflow-x:auto; border-radius:14px; border:1px solid var(--line);}
+  .grid2{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px;}
+  @media (max-width:720px){ .grid2{grid-template-columns:1fr;} .card{padding:22px 18px;} }
+  .tag{display:inline-block; font-size:12.5px; font-weight:700; padding:3px 10px; border-radius:999px; color:#fff;}
+  ul.tick{list-style:none; padding:0; margin:8px 0 0;}
+  ul.tick li{position:relative; padding:6px 0 6px 28px; font-size:14.8px;}
+  ul.tick li::before{content:"✓"; position:absolute; left:4px; top:6px; font-weight:800; color:var(--c-green);}
+  ul.no li::before{content:"✕"; color:var(--c-red);}
+  .note{font-size:13px; color:var(--ink-soft); background:#F7F2FC; border-radius:12px; padding:10px 14px; margin-top:14px;}
+  .src{font-size:12.5px; color:var(--ink-soft); text-align:center; margin-top:8px;}
+  .foot{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:30px;}
+</style>
+<style>
+  .tl{position:relative; margin:6px 0 0; padding:0; list-style:none;}
+  .tl::before{content:""; position:absolute; left:23px; top:8px; bottom:8px; width:4px; border-radius:4px;
+    background:linear-gradient(180deg,var(--c-red),var(--c-pink),var(--c-purple),var(--c-blue),var(--c-teal),var(--c-green),var(--c-lime));}
+  .tl > li{position:relative; display:grid; grid-template-columns:50px minmax(0,1fr); gap:14px; padding:0 0 22px;}
+  .tl > li:last-child{padding-bottom:0;}
+  .tl .dot{width:50px; height:50px; border-radius:50%; background:#fff; border:4px solid var(--c); display:grid; place-items:center;
+    font-family:var(--fd); font-weight:800; font-size:15px; color:var(--c); position:relative; z-index:1; line-height:1;}
+  .tl .box{background:#fff; border:1px solid var(--line); border-left:5px solid var(--c); border-radius:16px; padding:14px 18px;}
+  .tl .when{font-family:var(--fd); font-weight:700; font-size:19px; color:var(--c); margin:0;}
+  .tl .what{font-weight:600; margin:0 0 6px;}
+  .tl ul{margin:4px 0 0; padding-left:20px; font-size:14.5px; color:var(--ink-soft);}
+  .tl .out{margin-top:8px; font-size:13.5px; background:#F6F9F2; border-radius:10px; padding:6px 10px;}
+  .tl .out b{color:#2E7D32;}
+  .grp{border-radius:18px; padding:16px 18px; border:1px solid var(--line); background:#fff; border-top:6px solid var(--c);}
+  .grp h3{font-family:var(--fd); font-size:20px; margin:0 0 2px; color:var(--c);}
+  .grp .s{font-weight:600; margin:0 0 8px;}
+  .grp ul{margin:0; padding-left:20px; font-size:14.3px; color:var(--ink-soft);}
+  .deliv{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:12px;}
+  @media (max-width:900px){ .deliv{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  .deliv div{background:#fff; border:1px solid var(--line); border-radius:16px; padding:14px; text-align:center; font-size:13.5px; color:var(--ink-soft);}
+  .deliv .e{font-size:28px; display:block;} .deliv b{display:block; color:var(--ink); font-size:14.5px; margin:4px 0;}
+  .kit{display:grid; grid-template-columns:1fr auto 1fr; gap:14px; align-items:stretch;}
+  .kit .v{background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px 18px;}
+  .kit .v h3{font-family:var(--fd); margin:0 0 6px; font-size:20px;}
+  .kit .arrow{display:grid; place-items:center; font-size:30px; color:var(--c-purple);}
+  @media (max-width:720px){ .kit{grid-template-columns:1fr;} .kit .arrow{transform:rotate(90deg);} }
+  .flow{display:flex; gap:10px; flex-wrap:wrap; align-items:center; font-weight:600; font-size:14.5px;}
+  .flow span{background:#F3EEFA; border-radius:999px; padding:8px 14px;}
+  .flow i{font-style:normal; color:var(--c-purple);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="sub-hero">
+  <h1>⏱️ Tiến độ làm việc</h1>
+  <p>Lịch làm việc của Biệt đội Hóa học xanh: từ trước Tiết 1, qua 6 ngày làm dự án ở nhà, đến buổi trình bày ở Tiết 2. Trưởng nhóm cập nhật tiến độ của nhóm mỗi ngày.</p>
+  <div class="mini-bar"></div>
+</div>
+
+<section class="card">
+  <h2>🗓️ Lịch 6 ngày</h2>
+  <p class="lead">Mỗi ngày có một việc chính để không dồn việc vào cuối. Ô màu xanh là sản phẩm cần có khi xong bước đó.</p>
+  <ol class="tl">
+    <li style="--c:var(--c-red)"><span class="dot">0</span><div class="box">
+      <p class="when">Trước Tiết 1</p><p class="what">Tìm hiểu nhiệm vụ, tập làm website</p>
+      <ul><li>Xem video khởi động và đọc nhiệm vụ trên trang <a href="/mo-dau" target="_top">Mở đầu</a>.</li>
+      <li>Điền cột K và W của phiếu KWL.</li>
+      <li>Đọc kĩ trang <a href="/quy-tac-an-toan" target="_top">Quy tắc an toàn</a> (khoảng 20 phút cho cả ba việc trên).</li>
+      <li>Làm nhiệm vụ khởi động trên site tập thử: tạo trang, chèn ảnh có chú thích, nhúng Google Forms.</li></ul>
+      <div class="out"><b>Sản phẩm:</b> phiếu KWL (cột K, W), trang tập thử.</div></div></li>
+    <li style="--c:var(--c-pink)"><span class="dot">T1</span><div class="box">
+      <p class="when">Tiết 1 · Phòng thí nghiệm</p><p class="what">Lớp học 4 trạm và phân vai</p>
+      <ul><li>Luân phiên qua 4 trạm: Đồ uống (Bài 8), Chất tẩy rửa (Bài 9), Vườn rau (Bài 10), Gian bếp (Bài 11).</li>
+      <li>Thí nghiệm lượng nhỏ trên khay 12 ô, lập bảng màu chuẩn của lớp.</li>
+      <li>Nhận thẻ vai, tự phân công và ghi tên vai vào tiến độ của nhóm.</li></ul>
+      <div class="out"><b>Sản phẩm:</b> bảng màu chuẩn, bảng phân vai của nhóm.</div></div></li>
+    <li style="--c:var(--c-mauve)"><span class="dot">N1</span><div class="box">
+      <p class="when">Ngày 1</p><p class="what">Thiết kế sản phẩm theo người dùng</p>
+      <ul><li>Xác định người dùng của nhóm (em trai, mẹ, ông bà…) và điều họ cần biết.</li>
+      <li>Phác thảo phần web của nhóm trên giấy, thống nhất trước khi làm trên web.</li></ul>
+      <div class="out"><b>Sản phẩm:</b> phiếu thiết kế, bản phác thảo.</div></div></li>
+    <li style="--c:var(--c-blue)"><span class="dot">N2–4</span><div class="box">
+      <p class="when">Ngày 2 – 4</p><p class="what">Chế tạo kit, thí nghiệm, quay clip</p>
+      <ul><li>Chiết dịch bắp cải tím và hoa đậu biếc, làm Bộ kit thử pH tự nhiên phiên bản 1.</li>
+      <li>Thử 5 chất của tình huống, mỗi chất 2 lần; xếp 5 ly theo pH tăng dần; chụp ảnh dãy màu.</li>
+      <li>Nhập kết quả vào Google Forms; hỏi AI 1 câu và kiểm chứng bằng kit.</li>
+      <li>Quay clip ≤ 3 phút (chỉ quay tay và dụng cụ); thu gom, trung hòa chất thải.</li></ul>
+      <div class="out"><b>Sản phẩm:</b> kit phiên bản 1 → 2, ảnh dãy màu, số liệu trên Forms, clip, nhật ký kiểm chứng AI.</div></div></li>
+    <li style="--c:var(--c-teal)"><span class="dot">N5</span><div class="box">
+      <p class="when">Ngày 5</p><p class="what">Đăng nội dung lên website</p>
+      <ul><li>Điền khối bài của nhóm theo mẫu: Định nghĩa → Tính chất → Ví dụ đời sống → Tình huống → Kết quả thử 5 chất → Video → Khuyến cáo.</li>
+      <li>Tự kiểm theo danh sách kiểm, rồi đổi cho nhóm bạn kiểm chéo.</li></ul>
+      <div class="out"><b>Sản phẩm:</b> khối bài, khu trưng bày, thẻ mở rộng kiến thức của nhóm.</div></div></li>
+    <li style="--c:var(--c-green)"><span class="dot">N6</span><div class="box">
+      <p class="when">Ngày 6</p><p class="what">Thử nghiệm với người dùng và chỉnh sửa</p>
+      <ul><li>Mời ít nhất 3 người dùng (bố mẹ, ông bà, bạn lớp khác) mở website trên điện thoại và làm một nhiệm vụ cụ thể.</li>
+      <li>Người dùng điền phiếu góp ý; nhóm sửa website trước Tiết 2 và ghi lại “Thay đổi gì – Vì sao – Kết quả”.</li></ul>
+      <div class="out"><b>Sản phẩm:</b> phiếu góp ý, danh sách lỗi đã sửa.</div></div></li>
+    <li style="--c:var(--c-lime)"><span class="dot">T2</span><div class="box">
+      <p class="when">Tiết 2 · Trình bày</p><p class="what">Lan tỏa sản phẩm</p>
+      <ul><li>Mỗi nhóm trình bày 4 phút trên tivi: Người dùng – Thông điệp – Bằng chứng – Đã sửa gì sau kiểm thử.</li>
+      <li>Nhóm khác thao tác thử trên phần web của nhóm bạn, hỏi “Trợ lý pH Nhà Em” và chấm rubric.</li>
+      <li>Thử thách “Mẫu bí ẩn – Đổi kit”; điền cột L của phiếu KWL.</li></ul>
+      <div class="out"><b>Sản phẩm:</b> bài trình bày, phiếu chấm rubric, phiếu KWL hoàn chỉnh.</div></div></li>
+  </ol>
+</section>
+
+<section class="card">
+  <h2>👥 Phân công 4 nhóm</h2>
+  <p class="lead">Mỗi nhóm 8 – 9 học sinh phụ trách một bài, một tình huống trong gia đình. Khối lượng việc trên website của 4 nhóm tương đương nhau.</p>
+  <div class="grid2">
+    <div class="grp" style="--c:var(--c-red)"><h3>Nhóm 1 · Bài 8 Acid</h3><p class="s">😁 Bảo vệ nụ cười</p>
+      <ul><li>Khối bài Acid trên trang Kiến thức bài học</li><li>Thẻ “Răng miệng” trên trang Mở rộng kiến thức</li><li>Khu trưng bày của nhóm</li><li>Trang chuyên trách: Quy tắc an toàn</li></ul></div>
+    <div class="grp" style="--c:var(--c-purple)"><h3>Nhóm 2 · Bài 9 Base – Thang pH</h3><p class="s">🧼 Đôi tay của mẹ</p>
+      <ul><li>Khối bài Base – Thang pH</li><li>Thẻ “Da tay”</li><li>Khu trưng bày của nhóm</li><li>Trang chuyên trách: điều phối Trưng bày sản phẩm</li></ul></div>
+    <div class="grp" style="--c:var(--c-blue)"><h3>Nhóm 3 · Bài 10 Oxide</h3><p class="s">🌱 Vườn rau của ông bà</p>
+      <ul><li>Khối bài Oxide</li><li>Thẻ “Đất trồng”</li><li>Khu trưng bày của nhóm</li><li>Trang chuyên trách: Bài tập; kiểm tra đường dẫn Tài liệu tham khảo</li></ul></div>
+    <div class="grp" style="--c:var(--c-green)"><h3>Nhóm 4 · Bài 11 Muối</h3><p class="s">🧂 Gian bếp của mẹ</p>
+      <ul><li>Khối bài Muối</li><li>Thẻ “Muối trong bếp”</li><li>Khu trưng bày của nhóm</li><li>Trang chuyên trách: Hỗ trợ học sinh, kịch bản “Trợ lý pH Nhà Em”</li></ul></div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🎭 Thẻ vai trong nhóm</h2>
+  <p class="lead">Ngoài vai chính, mỗi bạn làm ít nhất một việc “chạm tay” vào website: viết một đoạn, chèn một ảnh hoặc sửa một lỗi.</p>
+  <div class="tbl"><table>
+    <tr><th>Vai</th><th>Số bạn</th><th>Việc trên website</th><th>Sản phẩm phải nộp</th></tr>
+    <tr><td><b>Trưởng nhóm</b></td><td>1</td><td>Lập kế hoạch, cập nhật tiến độ, nhắc hạn, liên hệ giáo viên</td><td>Tiến độ nhóm cập nhật hằng ngày</td></tr>
+    <tr><td><b>Kĩ thuật viên</b></td><td>2</td><td>Dựng trang theo mẫu, nhúng Forms, video, xử lí lỗi</td><td>Khối bài, khu trưng bày hoạt động tốt</td></tr>
+    <tr><td><b>Người thử nghiệm</b></td><td>2</td><td>Làm thí nghiệm, nhập số liệu, vẽ biểu đồ</td><td>Dữ liệu trên Forms, biểu đồ</td></tr>
+    <tr><td><b>Phóng viên</b></td><td>1 – 2</td><td>Chụp ảnh, quay và cắt clip ≤ 3 phút</td><td>Ảnh có chú thích, clip có tiêu đề</td></tr>
+    <tr><td><b>Biên tập viên</b></td><td>1</td><td>Viết nội dung, khuyến cáo, kiểm tra chính tả, ghi nguồn</td><td>Bài viết, trang tài liệu</td></tr>
+    <tr><td><b>Người kiểm chứng</b></td><td>1</td><td>Kiểm tra nguồn tin, câu trả lời AI, chạy danh sách kiểm</td><td>Nhật ký kiểm chứng, danh sách kiểm</td></tr>
+  </table></div>
+</section>
+
+<section class="card">
+  <h2>🧪 Cải tiến Bộ kit: phiên bản 1 → 2</h2>
+  <div class="kit">
+    <div class="v"><h3 style="color:var(--c-pink)">Phiên bản 1</h3>
+      <ul class="tick"><li>Chiết dịch bắp cải tím và hoa đậu biếc</li><li>Thử 2 nồng độ với giấm – nước lọc – baking soda</li><li>Đóng vào lọ tái sử dụng, dán nhãn</li><li>Lập bảng màu chuẩn</li></ul></div>
+    <div class="arrow">➜</div>
+    <div class="v"><h3 style="color:var(--c-green)">Phiên bản 2</h3>
+      <p style="margin:0 0 6px;font-size:14.5px;color:var(--ink-soft)">Mỗi nhóm tự đề xuất cải tiến sau khi dùng thử phiên bản 1 và ghi lại theo mẫu:</p>
+      <div class="flow"><span>Thay đổi gì</span><i>→</i><span>Vì sao</span><i>→</i><span>Kết quả</span></div>
+      <p style="margin:10px 0 0;font-size:13.5px;color:var(--ink-soft)">Nhật ký cải tiến của các nhóm được giáo viên đăng ở cuối trang này.</p></div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>📦 Sản phẩm cần nộp trước Tiết 2</h2>
+  <div class="deliv">
+    <div><span class="e">🧪</span><b>Bộ kit thử pH</b>2 lọ dịch chỉ thị có nhãn, bảng màu</div>
+    <div><span class="e">🌈</span><b>Dãy màu & kết quả</b>Ảnh dãy 5 chất, số liệu trên Google Forms</div>
+    <div><span class="e">🎬</span><b>Clip ≤ 3 phút</b>Chế tạo kit, thử 5 chất, xử lí chất thải</div>
+    <div><span class="e">🔍</span><b>Nhật ký kiểm chứng AI</b>Câu đã hỏi, câu AI trả lời, kết quả thử bằng kit</div>
+    <div><span class="e">💡</span><b>Khuyến cáo & hành động xanh</b>Lời khuyên cho gia đình, đăng trên website</div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>✅ Quy trình duyệt nội dung</h2>
+  <p class="lead">Nội dung chỉ được công khai sau khi qua đủ 3 bước.</p>
+  <div class="flow"><span>1. Nhóm tự kiểm (chính tả, nguồn, ảnh không lộ mặt)</span><i>→</i><span>2. Nhóm bạn kiểm chéo</span><i>→</i><span>3. Giáo viên duyệt nội dung khoa học</span></div>
+</section>
+
+<div class="foot">🥬 WEBSITE pH NHÀ EM · DỰ ÁN STEM KHTN 8 · Trường THCS Nguyễn An Khương</div>
+</div>
+</body>
+</html>

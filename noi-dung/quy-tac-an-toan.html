@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quy tắc an toàn | pH Nhà Em</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16202C; --ink-soft:#3F5266; --card:#FFFFFF; --line:#EFE2F5;
+    --c-red:#D7263D; --c-pink:#E8508C; --c-mauve:#B04FB0; --c-purple:#7B4FB8;
+    --c-blue:#4B5FC9; --c-teal:#2F9C9A; --c-green:#3DAA5C; --c-lime:#B8C934;
+    --radius:26px; --shadow:0 14px 28px rgba(31,92,134,.14);
+    --fd:'Baloo 2',sans-serif; --fb:'Be Vietnam Pro',sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{font-family:var(--fb); color:var(--ink); background:#FFFBF0; padding:22px 12px 60px; line-height:1.65;}
+  .wrap{max-width:1040px; margin:0 auto;}
+  a{color:var(--c-purple); font-weight:600;}
+  .sub-hero{text-align:center; padding:12px 16px 8px;}
+  .sub-hero h1{font-family:var(--fd); font-weight:800; line-height:1.08; font-size:clamp(30px,5vw,50px); margin:0 0 6px;
+    background:linear-gradient(92deg,var(--c-red),var(--c-pink) 22%,var(--c-purple) 45%,var(--c-blue) 62%,var(--c-green) 82%,var(--c-lime));
+    -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .sub-hero p{max-width:680px; margin:0 auto 12px; font-size:15.5px; color:var(--ink-soft);}
+  .mini-bar{max-width:420px; height:12px; margin:8px auto 26px; border-radius:10px;
+    background:linear-gradient(90deg,var(--c-red),var(--c-pink) 25%,var(--c-mauve) 38%,var(--c-purple) 50%,var(--c-blue) 60%,var(--c-teal) 70%,var(--c-green) 80%,var(--c-lime));}
+  .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:28px 26px; margin:0 auto 26px; border:1px solid var(--line);}
+  .card h2{font-family:var(--fd); font-weight:800; font-size:clamp(22px,3.2vw,29px); margin:0 0 10px; line-height:1.2;}
+  .card > p{color:var(--ink-soft); font-size:15px; margin:0 0 14px;}
+  .lead{font-size:15px; color:var(--ink-soft); margin:0 0 16px;}
+  table{width:100%; border-collapse:collapse; font-size:14.5px;}
+  th,td{padding:10px 12px; text-align:left; vertical-align:top; border-bottom:1px solid #F0E6F6;}
+  th{background:#5B3A92; color:#fff; font-weight:600;}
+  tr:nth-child(even) td{background:#FBF8FD;}
+  .tbl{overflow-x:auto; border-radius:14px; border:1px solid var(--line);}
+  .grid2{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px;}
+  @media (max-width:720px){ .grid2{grid-template-columns:1fr;} .card{padding:22px 18px;} }
+  .tag{display:inline-block; font-size:12.5px; font-weight:700; padding:3px 10px; border-radius:999px; color:#fff;}
+  ul.tick{list-style:none; padding:0; margin:8px 0 0;}
+  ul.tick li{position:relative; padding:6px 0 6px 28px; font-size:14.8px;}
+  ul.tick li::before{content:"✓"; position:absolute; left:4px; top:6px; font-weight:800; color:var(--c-green);}
+  ul.no li::before{content:"✕"; color:var(--c-red);}
+  .note{font-size:13px; color:var(--ink-soft); background:#F7F2FC; border-radius:12px; padding:10px 14px; margin-top:14px;}
+  .src{font-size:12.5px; color:var(--ink-soft); text-align:center; margin-top:8px;}
+  .foot{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:30px;}
+</style>
+<style>
+  .rule{border-radius:20px; background:#fff; border:1px solid var(--line); padding:18px 20px; border-top:6px solid var(--c);}
+  .rule h3{font-family:var(--fd); font-size:21px; margin:0 0 4px; color:var(--c);}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;}
+  .chips span{border-radius:999px; padding:6px 12px; font-size:13.5px; font-weight:600;}
+  .ok span{background:#EAF6EC; color:#1E6B34;}
+  .ban span{background:#FDECEE; color:#9B1C2C;}
+  .alert{background:#FBEAE8; border-left:6px solid #B23A2F; border-radius:14px; padding:14px 18px; font-size:14.8px;}
+  .alert b{color:#B23A2F;}
+  .steps{counter-reset:s; list-style:none; padding:0; margin:8px 0 0;}
+  .steps li{counter-increment:s; position:relative; padding:8px 0 8px 44px; font-size:14.8px;}
+  .steps li::before{content:counter(s); position:absolute; left:0; top:6px; width:30px; height:30px; border-radius:50%; background:var(--c-green); color:#fff; font-weight:700; display:grid; place-items:center;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="sub-hero">
+  <h1>🛡️ Quy tắc an toàn</h1>
+  <p>Đọc kĩ trước khi làm thí nghiệm ở nhà và trước khi đăng bất cứ thứ gì lên website. An toàn hóa chất, an toàn số và dùng AI có trách nhiệm.</p>
+  <div class="mini-bar"></div>
+</div>
+
+<section class="card">
+  <h2>🧪 An toàn khi làm thí nghiệm</h2>
+  <div class="alert"><b>Luôn có người lớn giám sát</b> khi dùng nước sôi, pha nước vôi, nước tro. <b>Không nếm, không ngửi trực tiếp</b> bất kì chất nào. <b>Đeo găng tay</b> khi thử chất tẩy rửa, nước vôi, nước tro tàu, phèn chua.</div>
+  <div class="grid2" style="margin-top:18px">
+    <div class="rule" style="--c:var(--c-green)"><h3>✓ Chất được thử</h3><p style="margin:0;font-size:14px;color:var(--ink-soft)">Chỉ dùng lượng nhỏ: 2 thìa mẫu + 10 giọt dịch chỉ thị.</p>
+      <div class="chips ok"><span>Nước chanh</span><span>Giấm ăn</span><span>Nước ngọt có gas</span><span>Nước cam</span><span>Sữa chua uống</span><span>Dầu gội, sữa tắm (pha loãng)</span><span>Nước rửa chén (pha loãng)</span><span>Kem đánh răng hòa nước</span><span>Nước xà phòng bánh</span><span>Bột giặt (pha loãng)</span><span>Nước soda</span><span>Nước vôi trong (pha loãng)</span><span>Phèn chua (pha loãng)</span><span>Nước muối ăn</span><span>Baking soda</span><span>Nước tro tàu (pha loãng)</span></div></div>
+    <div class="rule" style="--c:var(--c-red)"><h3>✕ Tuyệt đối không thử</h3><p style="margin:0;font-size:14px;color:var(--ink-soft)">Các chất này ăn mòn, độc hoặc dễ cháy, không dùng cho dự án.</p>
+      <div class="chips ban"><span>Nước Javel</span><span>Chất thông cống</span><span>Nước tẩy bồn cầu</span><span>Xăng dầu</span><span>Thuốc trừ sâu</span><span>Phân bón hóa học</span></div></div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🚑 Nếu lỡ bị dính hóa chất</h2>
+  <ol class="steps">
+    <li>Dừng thí nghiệm, báo ngay cho người lớn.</li>
+    <li>Rửa chỗ bị dính dưới vòi nước sạch nhiều lần; nếu bắn vào mắt, rửa mắt bằng nước sạch liên tục, không dụi mắt.</li>
+    <li>Nếu vẫn đau, rát, đỏ hoặc nuốt phải hóa chất, đưa đến cơ sở y tế gần nhất và mang theo bao bì của chất đó.</li>
+  </ol>
+</section>
+
+<section class="card">
+  <h2>🌿 Nguyên tắc xanh khi xử lí chất thải</h2>
+  <ul class="tick">
+    <li>Dùng lượng nhỏ, đủ để thấy màu là được.</li>
+    <li>Gộp cốc acid và cốc base dư, nhỏ dịch bắp cải kiểm tra đến khi có màu tím (trung tính) rồi mới đổ.</li>
+    <li>Bã bắp cải, hoa đậu biếc bỏ thùng rác hữu cơ hoặc ủ phân.</li>
+    <li>Rửa và giữ lại chai, lọ để dùng cho kit phiên bản 2.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>🔒 An toàn số trên website</h2>
+  <div class="grid2">
+    <div class="rule" style="--c:var(--c-purple)"><h3>Bảo vệ thông tin cá nhân</h3><ul class="tick">
+      <li>Không đăng ảnh rõ mặt, họ tên đầy đủ, địa chỉ, số điện thoại.</li>
+      <li>Video chỉ quay tay và dụng cụ thí nghiệm.</li>
+      <li>Dùng tài khoản trường cấp, không chia sẻ mật khẩu cho người khác.</li></ul></div>
+    <div class="rule" style="--c:var(--c-blue)"><h3>Tôn trọng bản quyền</h3><ul class="tick">
+      <li>Ưu tiên ảnh, video do nhóm tự làm.</li>
+      <li>Dùng tài liệu của người khác thì ghi nguồn theo mẫu: <i>Tác giả/Tổ chức – Tên tài liệu – Đường dẫn</i>.</li>
+      <li>Mọi nguồn được tập hợp ở trang <a href="/tai-lieu-tham-khao" target="_top">Tài liệu tham khảo</a>.</li></ul></div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>🤖 Quy tắc dùng AI</h2>
+  <div class="grid2">
+    <div><ul class="tick">
+      <li>Chatbot AI trên lớp do giáo viên thao tác trên tivi.</li>
+      <li>Đặt câu hỏi theo cấu trúc <b>vai trò – bối cảnh – câu hỏi</b>.</li>
+      <li>Mọi câu trả lời của AI phải được <b>kiểm chứng bằng kit</b> hoặc sách giáo khoa.</li>
+      <li>Nội dung có AI hỗ trợ phải ghi nhãn “có AI hỗ trợ”.</li></ul></div>
+    <div><ul class="tick no">
+      <li>Không đưa họ tên, ảnh, địa chỉ vào chatbot.</li>
+      <li>Không dùng AI tạo số liệu hay ảnh kết quả thí nghiệm.</li>
+      <li>Không chép nguyên câu trả lời của AI làm bài của nhóm.</li></ul></div>
+  </div>
+  <p class="note">Cần hỏi bài? Dùng Trợ lý AI “Bé pH” trên trang <a href="/ho-tro-hoc-sinh" target="_top">Hỗ trợ học sinh</a>, rồi ghi lại vào Nhật ký kiểm chứng AI.</p>
+</section>
+
+<div class="foot">🥬 WEBSITE pH NHÀ EM · DỰ ÁN STEM KHTN 8 · Trường THCS Nguyễn An Khương</div>
+</div>
+</body>
+</html>
