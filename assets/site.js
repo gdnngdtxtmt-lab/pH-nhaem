@@ -56,6 +56,8 @@
         var h = a.getAttribute('href');
         if (/^\/(?!\/)/.test(h)) a.setAttribute('target', '_top');
       });
+      /* Liên kết trong khung nội dung cũng hiện màn hình chờ */
+      d.addEventListener('click', function(e){ var a = e.target.closest && e.target.closest('a[href]'); if (a && /^\/(?!\/)/.test(a.getAttribute('href') || '') && !e.defaultPrevented && window.phLoading) window.phLoading(); });
       d.addEventListener('click', function(e){
         var a = e.target.closest && e.target.closest('a[href^="#"]');
         if (!a) return;
@@ -432,4 +434,36 @@
     return true;
   }
   var tries = 0; (function wait(){ if (go() || ++tries > 30) return; setTimeout(wait, 300); })();
+})();
+
+/* ---------- Màn hình chờ khi chuyển trang: nền tối + “Đang tải…” ---------- */
+(function(){
+  'use strict';
+  var L = document.createElement('div');
+  L.className = 'pg-load on'; L.setAttribute('role', 'status'); L.setAttribute('aria-live', 'polite');
+  L.innerHTML = '<div class="pg-load-box"><div class="pg-drops" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>' +
+    '<b>Đang tải…</b><span>Bạn vui lòng chờ đợi trong giây lát</span></div>';
+  document.body.appendChild(L);
+  function show(){ L.classList.add('on'); }
+  function hide(){ L.classList.remove('on'); }
+  window.phLoading = show;
+  /* Khi vừa vào trang: che đến lúc nội dung chính tải xong (tối đa 5 giây) */
+  var done = false; function fin(){ if (done) return; done = true; setTimeout(hide, 120); }
+  var fr = document.querySelector('iframe.embed');
+  if (fr){
+    fr.addEventListener('load', fin);
+    try { var d = fr.contentDocument; if (d && d.readyState === 'complete' && d.URL !== 'about:blank') fin(); } catch(e){}
+  } else if (document.readyState === 'complete') fin(); else window.addEventListener('load', fin);
+  setTimeout(fin, 5000);
+  window.addEventListener('pageshow', function(e){ if (e.persisted) hide(); });
+  /* Khi bấm liên kết sang trang khác của website */
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || a.hasAttribute('download')) return;
+    var t = a.getAttribute('target'); if (t && t !== '_self' && t !== '_top') return;
+    var u; try { u = new URL(a.href, location.href); } catch(x){ return; }
+    if (u.origin !== location.origin) return;
+    if (u.pathname === location.pathname && u.search === location.search) return;
+    show();
+  });
 })();
