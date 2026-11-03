@@ -272,8 +272,13 @@
   function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
   /* Bỏ dấu tiếng Việt, giữ nguyên độ dài để tô sáng đúng vị trí */
   function foldCh(c){ var f = c.normalize('NFD').replace(/[̀-ͯ]/g, ''); f = f.replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase(); return f.length === 1 ? f : (f.charAt(0) || c.toLowerCase()); }
-  function fold(s){ s = String(s || ''); var o = ''; for (var i = 0; i < s.length; i++) o += foldCh(s.charAt(i)); return o; }
-  function words(q){ return fold(q).split(/[^a-z0-9₀-₉]+/i).filter(function(w){ return w.length > 0; }); }
+  function fold0(s){ s = String(s || ''); var o = ''; for (var i = 0; i < s.length; i++) o += foldCh(s.charAt(i)); return o; }
+  /* Gõ có dấu thì tìm đúng dấu (vôi ≠ với); gõ không dấu thì tìm mọi dấu */
+  var EXACT = false;
+  function lowerKeep(s){ s = String(s || ''); var o = ''; for (var i = 0; i < s.length; i++){ var c = s.charAt(i), l = c.toLowerCase(); o += l.length === 1 ? l : c; } return o; }
+  function fold(s){ return EXACT ? lowerKeep(s) : fold0(s); }
+  function setMode(t){ t = String(t || '').normalize('NFC'); EXACT = lowerKeep(t) !== fold0(t); return t; }
+  function words(q){ return fold(q).split(/[\s,.;:!?()"“”'\/\-–]+/).filter(function(w){ return w.length > 0; }); }
   function pageUrl(slug){ return slug === 'index' ? '/' : '/' + slug; }
 
   var QUICK = ['Lịch 6 ngày', 'An toàn', 'Bắp cải tím', 'Thang pH', 'Baking soda', 'Bé pH', 'Rubric', 'Mưa acid'];
@@ -333,7 +338,7 @@
     return (st > 0 ? '… ' : '') + o + (en < text.length ? ' …' : '');
   }
   function search(raw){
-    var ws = words(raw); if (!ws.length) return home();
+    raw = setMode(raw); var ws = words(raw); if (!ws.length) return home();
     var res = [];
     IDX.forEach(function(p){
       p.secs.forEach(function(s){
@@ -381,7 +386,7 @@
   var term = (location.search.match(/[?&]tim=([^&]+)/) || [])[1];
   if (!term) return;
   try { term = decodeURIComponent(term.replace(/\+/g, ' ')); } catch(e){ return; }
-  var tws = words(term); if (!tws.length) return;
+  term = setMode(term); var tws = words(term); if (!tws.length) return;
   function findIn(doc){
     var walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT, { acceptNode: function(n){
       var p = n.parentNode; if (!p || /^(SCRIPT|STYLE|NOSCRIPT)$/.test(p.nodeName) || p.closest('.ast, .topbar, .drawer, .foot')) return NodeFilter.FILTER_REJECT;
